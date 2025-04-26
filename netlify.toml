@@ -3,11 +3,21 @@
   functions = "netlify/functions"
 
 [[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/:splat"
+  from = "/"
+  to = "/dashboard.html"
+  status = 200
+
+[[redirects]]
+  from = "/api/stocks"
+  to = "/.netlify/functions/getStocks"
+  status = 200
+
+[[redirects]]
+  from = "/api/prices"
+  to = "/.netlify/functions/getPrices"
   status = 200
 
 [[headers]]
   for = "/*"
     [headers.values]
-    Access-Control-Allow-Origin = "*" 
+    Access-Control-Allow-Origin = "*"
