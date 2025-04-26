@@ -3,15 +3,14 @@
 
 class ApiService {
     constructor() {
-        // Base URL for API calls - for local development, use '/api'
-        // For production (Netlify), the redirects in netlify.toml will handle this
-        this.baseUrl = '/api';
+        // Use direct function paths for reliability in production
+        this.baseUrl = '/.netlify/functions';
     }
 
     // Fetch all available stocks
     async fetchStocks() {
         try {
-            const response = await fetch(`${this.baseUrl}/stocks`);
+            const response = await fetch(`${this.baseUrl}/getStocks`);
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
@@ -25,7 +24,7 @@ class ApiService {
     // Fetch current stock prices
     async fetchPrices() {
         try {
-            const response = await fetch(`${this.baseUrl}/prices`);
+            const response = await fetch(`${this.baseUrl}/getPrices`);
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
@@ -38,4 +37,4 @@ class ApiService {
 }
 
 // Create and export a single instance
-const apiService = new ApiService(); 
+const apiService = new ApiService();
