@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: '16'
           cache: 'npm'
-          cache-dependency-path: 'a-main/package-lock.json'
+          cache-dependency-path: 'package-lock.json'
           
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -28,17 +28,14 @@ jobs:
           
       - name: Install Python dependencies
         run: |
-          cd a-main
           python -m pip install --upgrade pip
           python -m pip install pandas matplotlib numpy openpyxl glob2
           
       - name: Install Node.js dependencies
         run: |
-          cd a-main
           npm ci
           
       - name: Run data scripts
         run: |
-          cd a-main
           # Run the scheduler with the --now flag to execute immediately
           node data-scripts/scheduler.js --now 
