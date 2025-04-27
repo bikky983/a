@@ -20,6 +20,8 @@ jobs:
           ls -la
           echo "Content of data-scripts folder:"
           ls -la data-scripts || echo "data-scripts folder not found"
+          echo "Content of nepse_downloader.js:"
+          cat data-scripts/nepse_downloader.js
           
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -35,8 +37,13 @@ jobs:
       - name: Install Node.js dependencies
         run: |
           echo "Installing npm dependencies..."
+          # Install all dependencies from package.json
           npm install --verbose
-          npm install puppeteer
+          # Install puppeteer and other potentially needed packages
+          npm install puppeteer cheerio axios node-schedule fs-extra
+          # List installed packages
+          echo "Installed packages:"
+          npm list --depth=0
           
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -48,8 +55,18 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install pandas matplotlib numpy openpyxl glob2
           
-      - name: Run data scripts
+      - name: Run data scripts with debugging
         run: |
-          echo "Running data scripts..."
-          # Run the scheduler with the --now flag to execute immediately
-          node data-scripts/scheduler.js --now 
+          echo "Running data scripts with debugging..."
+          # Check if scheduler.js exists
+          if [ -f "data-scripts/scheduler.js" ]; then
+            echo "scheduler.js exists"
+          else
+            echo "scheduler.js does not exist"
+          fi
+          
+          # Try to run with more detailed error output
+          NODE_DEBUG=module node data-scripts/scheduler.js --now || {
+            echo "Script failed. Trying to identify required modules..."
+            grep -r "require(" data-scripts/
+          } 
