@@ -14,12 +14,28 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         
+      - name: List directory contents
+        run: |
+          echo "Checking repository structure:"
+          ls -la
+          echo "Content of data-scripts folder:"
+          ls -la data-scripts || echo "data-scripts folder not found"
+          
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '16'
           cache: 'npm'
-          cache-dependency-path: 'package-lock.json'
+          
+      - name: Debug package.json
+        run: |
+          echo "Contents of package.json:"
+          cat package.json || echo "package.json not found"
+          
+      - name: Install Node.js dependencies
+        run: |
+          echo "Installing npm dependencies..."
+          npm install --verbose
           
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -31,11 +47,8 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install pandas matplotlib numpy openpyxl glob2
           
-      - name: Install Node.js dependencies
-        run: |
-          npm ci
-          
       - name: Run data scripts
         run: |
+          echo "Running data scripts..."
           # Run the scheduler with the --now flag to execute immediately
           node data-scripts/scheduler.js --now 
