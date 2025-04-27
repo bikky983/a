@@ -20,6 +20,12 @@ document.addEventListener('DOMContentLoaded', function() {
     loadUserStocks();
     setupEventListeners();
     
+    // Load saved stoploss checkbox state
+    const addToStoploss = localStorage.getItem('addToStoploss');
+    if (addToStoploss !== null) {
+        document.getElementById('addToStoplossCheck').checked = addToStoploss === 'true';
+    }
+    
     // Start with an initial load
     loadCurrentPrices();
     filterStocksNearSupport();
@@ -83,6 +89,11 @@ function setupEventListeners() {
     
     document.getElementById('generateOrderCodeBtn').addEventListener('click', generateOrderCode);
     document.getElementById('copyCodeBtn').addEventListener('click', copyToClipboard);
+    
+    // Add event listener for addToStoplossCheck to save state
+    document.getElementById('addToStoplossCheck').addEventListener('change', (e) => {
+        localStorage.setItem('addToStoploss', e.target.checked);
+    });
     
     // Auto-refresh toggle
     const autoRefreshBtn = document.getElementById('autoRefreshBtn');
@@ -634,29 +645,40 @@ function generateOrderCode() {
     
     code += `\n  .then(result => console.log('All orders completed!'));\n`;
     
-    // Mark selected stocks as bought
-    selectedStocks.forEach(stock => {
-        // Only add to bought stocks if not already there
-        if (!isBoughtStock(stock.symbol)) {
-            const boughtStock = {
-                symbol: stock.symbol,
-                buyPrice: stock.buyPrice,
-                buyDate: new Date().toISOString(),
-                quantity: DEFAULT_QUANTITY
-            };
-            
-            boughtStocks.push(boughtStock);
-            
-            // Update the stock in the support list
-            const index = supportStocks.findIndex(s => s.symbol === stock.symbol);
-            if (index !== -1) {
-                supportStocks[index].isBought = true;
-            }
-        }
-    });
+    // Check if we should add to stoploss/bought stocks
+    const addToStoploss = document.getElementById('addToStoplossCheck').checked;
     
-    // Save bought stocks to localStorage
-    localStorage.setItem('boughtStocks', JSON.stringify(boughtStocks));
+    if (addToStoploss) {
+        // Mark selected stocks as bought
+        selectedStocks.forEach(stock => {
+            // Only add to bought stocks if not already there
+            if (!isBoughtStock(stock.symbol)) {
+                const boughtStock = {
+                    symbol: stock.symbol,
+                    buyPrice: stock.buyPrice,
+                    buyDate: new Date().toISOString(),
+                    quantity: DEFAULT_QUANTITY
+                };
+                
+                boughtStocks.push(boughtStock);
+                
+                // Update the stock in the support list
+                const index = supportStocks.findIndex(s => s.symbol === stock.symbol);
+                if (index !== -1) {
+                    supportStocks[index].isBought = true;
+                }
+            }
+        });
+        
+        // Save bought stocks to localStorage
+        localStorage.setItem('boughtStocks', JSON.stringify(boughtStocks));
+        
+        // Show success message
+        showSuccess(`${selectedStocks.length} stocks added to order code and stoploss page`);
+    } else {
+        // Just show message about order code
+        showSuccess(`${selectedStocks.length} stocks added to order code`);
+    }
     
     // Refresh the display
     displaySupportStocks();
