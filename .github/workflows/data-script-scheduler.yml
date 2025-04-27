@@ -36,6 +36,7 @@ jobs:
         run: |
           echo "Installing npm dependencies..."
           npm install --verbose
+          npm install puppeteer
           
       - name: Setup Python
         uses: actions/setup-python@v4
