@@ -1,0 +1,9 @@
+{
+  "name": "stock-screener-functions",
+  "version": "1.0.0",
+  "description": "Serverless functions for NEPSE Stock Screener",
+  "dependencies": {
+    "axios": "^0.21.4",
+    "cheerio": "^1.0.0"
+  }
+} 
