@@ -33,6 +33,9 @@ document.addEventListener('DOMContentLoaded', function() {
         createChartPopup();
     }
     
+    // Add styles for watchlist and bought items
+    addWatchlistStyles();
+    
     // Fetch historical data
     fetchHistoricalData();
     
@@ -131,6 +134,29 @@ function setupEventListeners() {
         generateOrderBtn.addEventListener('click', generateOrderCode);
         generateOrderBtn.style.display = 'none'; // Initially hidden
         viewToggles.appendChild(generateOrderBtn);
+        
+        // Add stoploss checkbox next to Generate Order Code button
+        const stoplossLabel = document.createElement('label');
+        stoplossLabel.className = 'stoploss-label';
+        stoplossLabel.title = 'Add to Stoploss Page';
+        stoplossLabel.style.display = 'none'; // Initially hidden
+        stoplossLabel.innerHTML = `
+            <input type="checkbox" id="addToStoplossCheck" checked>
+            SL
+        `;
+        viewToggles.appendChild(stoplossLabel);
+        
+        // Load saved stoploss checkbox state
+        const addToStoploss = localStorage.getItem('addToStoploss');
+        if (addToStoploss !== null) {
+            document.getElementById('addToStoplossCheck').checked = addToStoploss === 'true';
+        }
+        
+        // Add event listener for stoploss checkbox
+        const stoplossCheck = stoplossLabel.querySelector('#addToStoplossCheck');
+        stoplossCheck.addEventListener('change', (e) => {
+            localStorage.setItem('addToStoploss', e.target.checked);
+        });
         
         // Auto-refresh toggle
         const autoRefreshBtn = document.createElement('button');
@@ -466,6 +492,7 @@ async function displayUserStocks(stocks) {
                 <td class="${currentPrice > stock.upperLimit ? 'upper-limit-exceeded' : ''}">${upperLimitDiff}%</td>
                 <td>
                     <button data-watchlist="${stock.symbol}" onclick="toggleWatchlist('${stock.symbol}')" class="action-btn watchlist-btn ${stock.watchlist ? 'active' : ''}" title="${stock.watchlist ? 'Remove from Watchlist' : 'Add to Watchlist'}">${stock.watchlist ? '★' : '☆'}</button>
+                    <button data-bought="${stock.symbol}" onclick="toggleBought('${stock.symbol}')" class="action-btn bought-btn ${isBoughtStock(stock.symbol) ? 'active' : ''}" title="${isBoughtStock(stock.symbol) ? 'Mark as Not Bought' : 'Mark as Bought'}">🛒</button>
                     <button onclick="editStock('${stock.symbol}')" class="action-btn edit-btn">Edit</button>
                     <button onclick="deleteStock('${stock.symbol}')" class="action-btn delete-btn">Delete</button>
                     <button onclick="showFullScreenChart('${stock.symbol}')" class="action-btn chart-btn">Chart</button>
@@ -963,18 +990,24 @@ function showLoading(show) {
 // API calls
 async function fetchAvailableStocks() {
     try {
-        availableStocks = await apiService.fetchStocks();
-        return availableStocks;
+        const response = await fetch('/api/stocks');
+        availableStocks = await response.json();
+        updateSuggestions('');
     } catch (error) {
-        showError('Failed to load available stocks');
         console.error('Error fetching stocks:', error);
-        return [];
+        showError('Failed to fetch available stocks');
     }
 }
 
 async function fetchCurrentPrices() {
     try {
-        return await apiService.fetchPrices();
+        const response = await fetch('/api/prices');
+        const prices = await response.json();
+        
+        // Store prices in localStorage for other pages to use
+        localStorage.setItem('currentPrices', JSON.stringify(prices));
+        
+        return prices;
     } catch (error) {
         console.error('Error fetching prices:', error);
         return {};
@@ -1151,6 +1184,12 @@ function toggleWatchlistView() {
         generateOrderBtn.style.display = showOnlyWatchlist ? 'block' : 'none';
     }
     
+    // Show/hide stoploss checkbox
+    const stoplossLabel = document.querySelector('.stoploss-label');
+    if (stoplossLabel) {
+        stoplossLabel.style.display = showOnlyWatchlist ? 'inline-flex' : 'none';
+    }
+    
     // Reload with filter applied
     loadUserStocks();
     
@@ -1214,32 +1253,38 @@ function generateOrderCode() {
             selected: true
         }));
         
+        // Check if we should add to stoploss
+        const addToStoplossCheck = document.getElementById('addToStoplossCheck');
+        const addToStoploss = addToStoplossCheck ? addToStoplossCheck.checked : true;
+        
         // Add selected stocks to boughtStocks if they're not already there
         const boughtStocks = JSON.parse(localStorage.getItem('boughtStocks') || '[]');
         let boughtStocksUpdated = false;
         let newStocksCount = 0;
         
-        selectedStocks.forEach(selected => {
-            const existingIndex = boughtStocks.findIndex(stock => stock.symbol === selected.symbol);
+        if (addToStoploss) {
+            selectedStocks.forEach(selected => {
+                const existingIndex = boughtStocks.findIndex(stock => stock.symbol === selected.symbol);
+                
+                if (existingIndex === -1) {
+                    // Add new stock to boughtStocks
+                    boughtStocks.push({
+                        symbol: selected.symbol,
+                        buyPrice: selected.buyPrice,
+                        buyDate: new Date().toISOString(),
+                        stoplossPrice: selected.buyPrice * 0.85, // Default 15% stoploss
+                        quantity: DEFAULT_QUANTITY
+                    });
+                    boughtStocksUpdated = true;
+                    newStocksCount++;
+                }
+            });
             
-            if (existingIndex === -1) {
-                // Add new stock to boughtStocks
-                boughtStocks.push({
-                    symbol: selected.symbol,
-                    buyPrice: selected.buyPrice,
-                    buyDate: new Date().toISOString(),
-                    stoplossPrice: selected.buyPrice * 0.85, // Default 15% stoploss
-                    quantity: DEFAULT_QUANTITY
-                });
-                boughtStocksUpdated = true;
-                newStocksCount++;
+            // Save updated boughtStocks if changes were made
+            if (boughtStocksUpdated) {
+                localStorage.setItem('boughtStocks', JSON.stringify(boughtStocks));
+                showSuccess(`Added ${newStocksCount} watchlisted stocks to Stoploss Tracker`);
             }
-        });
-        
-        // Save updated boughtStocks if changes were made
-        if (boughtStocksUpdated) {
-            localStorage.setItem('boughtStocks', JSON.stringify(boughtStocks));
-            showSuccess(`Added ${newStocksCount} watchlisted stocks to Stoploss Tracker`);
         }
         
         // Create the code
@@ -1505,15 +1550,151 @@ function placeOrder(symbol, quantity, price) {
             });
             
           }, 1000); // 1-second delay after entering symbol
-        }, 1000); // 1-second delay before pressing Enter
-      });
-    } else {
-      console.error("Symbol element not found");
+        });
+      } else {
+        console.error("Symbol element not found");
+        return Promise.resolve(false);
+      }
+    } catch (error) {
+      console.error("Error placing order:", error);
       return Promise.resolve(false);
     }
-  } catch (error) {
-    console.error("Error placing order:", error);
-    return Promise.resolve(false);
-  }
 }`;
+}
+
+// Check if a stock is marked as bought
+function isBoughtStock(symbol) {
+    return boughtStocks.some(stock => stock.symbol === symbol);
+}
+
+// Toggle bought status for a stock
+function toggleBought(symbol) {
+    // Find stock in userStocks
+    const userStocks = JSON.parse(localStorage.getItem('userStocks') || '[]');
+    const stock = userStocks.find(s => s.symbol === symbol);
+    
+    if (!stock) return;
+    
+    // Get current price for the stock
+    const currentPrice = getCurrentPrice(symbol) || 0;
+    
+    // Check if already bought
+    const boughtIndex = boughtStocks.findIndex(s => s.symbol === symbol);
+    
+    if (boughtIndex === -1) {
+        // Add to bought stocks
+        const boughtStock = {
+            symbol: symbol,
+            buyPrice: currentPrice,
+            buyDate: new Date().toISOString(),
+            quantity: DEFAULT_QUANTITY
+        };
+        
+        boughtStocks.push(boughtStock);
+        showSuccess(`${symbol} marked as bought at ${currentPrice.toFixed(2)}`);
+    } else {
+        // Remove from bought stocks
+        boughtStocks.splice(boughtIndex, 1);
+        showSuccess(`${symbol} marked as not bought`);
+    }
+    
+    // Save to localStorage
+    localStorage.setItem('boughtStocks', JSON.stringify(boughtStocks));
+    
+    // Refresh the display
+    loadUserStocks();
+}
+
+// Helper to get current price for a stock
+function getCurrentPrice(symbol) {
+    const prices = JSON.parse(localStorage.getItem('currentPrices') || '{}');
+    return prices[symbol] || 0;
+}
+
+// Add styles for watchlist items if not already present
+function addWatchlistStyles() {
+    // Check if the styles are already added
+    if (document.getElementById('watchlist-styles')) return;
+    
+    // Create style element
+    const style = document.createElement('style');
+    style.id = 'watchlist-styles';
+    style.textContent = `
+        .watchlist-item {
+            background-color: rgba(33, 150, 243, 0.1) !important;
+        }
+        
+        .watchlist-btn {
+            background-color: #eee;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 4px 8px;
+            margin-right: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .watchlist-btn.active {
+            background-color: #ffeb3b;
+            color: #333;
+            border-color: #ffc107;
+        }
+        
+        .watchlist-btn:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .watchlist-btn.active:hover {
+            background-color: #ffd740;
+        }
+        
+        /* Bought button styles */
+        .bought-btn {
+            background-color: #eee;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 4px 8px;
+            margin-right: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .bought-btn.active {
+            background-color: #4caf50;
+            color: white;
+            border-color: #388e3c;
+        }
+        
+        .bought-btn:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .bought-btn.active:hover {
+            background-color: #43a047;
+        }
+        
+        /* Stoploss checkbox styling */
+        .stoploss-label {
+            display: inline-flex;
+            align-items: center;
+            background-color: #e91e63;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-left: 5px;
+        }
+        
+        .stoploss-label:hover {
+            background-color: #c2185b;
+        }
+        
+        .stoploss-label input {
+            margin-right: 5px;
+        }
+    `;
+    
+    // Add to document head
+    document.head.appendChild(style);
 }
