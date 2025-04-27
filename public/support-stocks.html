@@ -81,6 +81,27 @@
             background-color: rgba(33, 150, 243, 0.1) !important;
         }
         
+        /* Stoploss checkbox styling */
+        .stoploss-label {
+            display: inline-flex;
+            align-items: center;
+            background-color: #e91e63;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-left: 5px;
+        }
+        
+        .stoploss-label:hover {
+            background-color: #c2185b;
+        }
+        
+        .stoploss-label input {
+            margin-right: 5px;
+        }
+        
         /* Actions cell */
         .actions-cell {
             white-space: nowrap;
@@ -156,6 +177,10 @@
         <div class="action-buttons">
             <button id="refreshSupportListBtn">Refresh List</button>
             <button id="generateOrderCodeBtn">Generate Order Code</button>
+            <label class="stoploss-label" title="Add to Stoploss Page">
+                <input type="checkbox" id="addToStoplossCheck" checked>
+                SL
+            </label>
             <button id="autoRefreshBtn" class="toggle-btn">Enable Auto Refresh</button>
             <button id="addManualStockBtn">Add Stock Manually</button>
         </div>
