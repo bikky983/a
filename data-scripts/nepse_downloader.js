@@ -1,6 +1,7 @@
 const puppeteer = require('puppeteer');
 const path = require('path');
 const fs = require('fs');
+const schedule = require('node-schedule');
 
 // Function to format date as mm/dd/yyyy
 function formatDate(date) {
@@ -110,5 +111,34 @@ async function downloadNepseData() {
   }
 }
 
-// Run the download function
-downloadNepseData(); 
+// Function to schedule the downloader
+function scheduleTask() {
+  // Nepal is UTC+5:45
+  const rule = new schedule.RecurrenceRule();
+  rule.hour = 15; // 3 PM
+  rule.minute = 10; // 10 minutes
+  rule.tz = 'Asia/Kathmandu';
+  
+  console.log('Task scheduled to run at 3:10 PM Nepal time daily');
+  
+  schedule.scheduleJob(rule, function() {
+    console.log(`Running scheduled task at ${new Date().toLocaleString()}`);
+    downloadNepseData();
+  });
+}
+
+// If run directly, execute the function based on arguments
+if (require.main === module) {
+  const args = process.argv.slice(2);
+  if (args.includes('--now')) {
+    downloadNepseData();
+  } else {
+    scheduleTask();
+    console.log('Script is running in scheduled mode. Use --now flag to run immediately.');
+  }
+}
+
+module.exports = {
+  downloadNepseData,
+  scheduleTask
+}; 
