@@ -1,7 +1,6 @@
 const puppeteer = require('puppeteer');
 const path = require('path');
 const fs = require('fs');
-const schedule = require('node-schedule');
 
 // Function to format date as mm/dd/yyyy
 function formatDate(date) {
@@ -23,7 +22,10 @@ async function downloadNepseData() {
       '--disable-setuid-sandbox',
       '--disable-dev-shm-usage',
       '--disable-accelerated-2d-canvas',
-      '--disable-gpu'
+      '--disable-gpu',
+      '--disable-web-security',
+      '--disable-features=IsolateOrigins,site-per-process',
+      '--window-size=1920,1080'
     ],
     defaultViewport: { width: 1920, height: 1080 }
   });
@@ -31,6 +33,9 @@ async function downloadNepseData() {
   try {
     // Open page
     const page = await browser.newPage();
+    
+    // Set user agent to mimic a real browser
+    await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
     
     // Set download behavior
     const downloadPath = path.resolve('./data-scripts');
@@ -40,16 +45,32 @@ async function downloadNepseData() {
       downloadPath: downloadPath
     });
     
-    // Navigate to website
+    // Navigate to website with retry logic
     console.log('Navigating to website...');
-    await page.goto('https://nepalstock.com.np/today-price', { 
-      waitUntil: 'networkidle2',
-      timeout: 60000 
-    });
+    let retryCount = 0;
+    const maxRetries = 3;
     
-    // Wait for 5 seconds for page to load properly
+    while (retryCount < maxRetries) {
+      try {
+        await page.goto('https://nepalstock.com.np/today-price', { 
+          waitUntil: 'networkidle2',
+          timeout: 60000  // Increased timeout to 1 minutes
+        });
+        break;  // If successful, break the retry loop
+      } catch (error) {
+        retryCount++;
+        console.log(`Attempt ${retryCount} failed: ${error.message}`);
+        if (retryCount === maxRetries) {
+          throw new Error(`Failed to connect after ${maxRetries} attempts: ${error.message}`);
+        }
+        // Wait before retrying
+        await new Promise(resolve => setTimeout(resolve, 10000));
+      }
+    }
+    
+    // Wait for 10 seconds for page to load properly
     console.log('Waiting for page to load...');
-    await new Promise(resolve => setTimeout(resolve, 5000));
+    await new Promise(resolve => setTimeout(resolve, 10000));
     
     // Enter date
     console.log(`Setting date to ${todayDate}...`);
@@ -61,9 +82,9 @@ async function downloadNepseData() {
     await dateInput.click({ clickCount: 3 });
     await dateInput.type(todayDate);
     
-    // Wait 2 seconds before clicking filter
+    // Wait 5 seconds before clicking filter
     console.log('Waiting before clicking filter...');
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await new Promise(resolve => setTimeout(resolve, 5000));
     
     // Click filter button
     console.log('Clicking filter button...');
@@ -73,9 +94,9 @@ async function downloadNepseData() {
     }
     await filterButton.click();
     
-    // Wait 5 seconds before clicking download
+    // Wait 10 seconds before clicking download
     console.log('Waiting before downloading...');
-    await new Promise(resolve => setTimeout(resolve, 5000));
+    await new Promise(resolve => setTimeout(resolve, 10000));
     
     // Click download as CSV
     console.log('Clicking download as CSV...');
@@ -87,7 +108,7 @@ async function downloadNepseData() {
     
     // Wait for download to complete
     console.log('Waiting for download to complete...');
-    await new Promise(resolve => setTimeout(resolve, 5000));
+    await new Promise(resolve => setTimeout(resolve, 10000));
     
     console.log('Download completed successfully!');
     console.log(`CSV file should be saved in: ${downloadPath}`);
@@ -111,34 +132,5 @@ async function downloadNepseData() {
   }
 }
 
-// Function to schedule the downloader
-function scheduleTask() {
-  // Nepal is UTC+5:45
-  const rule = new schedule.RecurrenceRule();
-  rule.hour = 15; // 3 PM
-  rule.minute = 10; // 10 minutes
-  rule.tz = 'Asia/Kathmandu';
-  
-  console.log('Task scheduled to run at 3:10 PM Nepal time daily');
-  
-  schedule.scheduleJob(rule, function() {
-    console.log(`Running scheduled task at ${new Date().toLocaleString()}`);
-    downloadNepseData();
-  });
-}
-
-// If run directly, execute the function based on arguments
-if (require.main === module) {
-  const args = process.argv.slice(2);
-  if (args.includes('--now')) {
-    downloadNepseData();
-  } else {
-    scheduleTask();
-    console.log('Script is running in scheduled mode. Use --now flag to run immediately.');
-  }
-}
-
-module.exports = {
-  downloadNepseData,
-  scheduleTask
-}; 
+// Run the download function
+downloadNepseData(); 
