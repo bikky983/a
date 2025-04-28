@@ -14,11 +14,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Fetch all history for proper git operations
         
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '18'  # Updated to Node.js 18
           cache: 'npm'
           
       - name: Install Node.js dependencies
@@ -35,22 +37,28 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           
+      - name: Create necessary directories
+        run: |
+          mkdir -p data-scripts
+          mkdir -p public
+          
       - name: Run NEPSE downloader
         run: |
           echo "Running NEPSE downloader..."
-          node data-scripts/nepse_downloader.js --now
+          node nepse_downloader.js
         timeout-minutes: 10  # Set step timeout to 10 minutes
           
       - name: Run Python script
         run: |
           echo "Running Python script..."
-          node data-scripts/run_py_script.js --now
+          node run_py_script.js --now
         timeout-minutes: 15  # Set step timeout to 15 minutes
           
       - name: Commit and push changes
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add data-scripts/*.csv public/organized_nepse_data.json
-          git commit -m "Update NEPSE data [skip ci]" || echo "No changes to commit"
-          git push 
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add .
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update NEPSE data [skip ci]" && git push)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
