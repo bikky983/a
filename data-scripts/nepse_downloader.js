@@ -1,7 +1,6 @@
 const puppeteer = require('puppeteer');
 const path = require('path');
 const fs = require('fs');
-const schedule = require('node-schedule');
 
 // Function to format date as mm/dd/yyyy
 function formatDate(date) {
@@ -11,14 +10,13 @@ function formatDate(date) {
   return `${month}/${day}/${year}`;
 }
 
-// Function to download the CSV file
 async function downloadNepseData() {
   console.log('Starting download process...');
   const todayDate = formatDate(new Date());
   
   // Launch browser
   const browser = await puppeteer.launch({
-    headless: false, // Change to true in production
+    headless: false,
     defaultViewport: null
   });
   
@@ -26,9 +24,8 @@ async function downloadNepseData() {
     // Open page
     const page = await browser.newPage();
     
-    // Set download behavior to save in data-scripts folder
-    const downloadPath = path.resolve('./a-main/data-scripts'); // Updated path
-    
+    // Set download behavior
+    const downloadPath = path.resolve('./data-scripts');
     const client = await page.target().createCDPSession();
     await client.send('Page.setDownloadBehavior', {
       behavior: 'allow',
@@ -37,35 +34,52 @@ async function downloadNepseData() {
     
     // Navigate to website
     console.log('Navigating to website...');
-    await page.goto('https://nepalstock.com.np/today-price', { waitUntil: 'networkidle2' });
+    await page.goto('https://nepalstock.com.np/today-price', { 
+      waitUntil: 'networkidle2',
+      timeout: 60000 
+    });
+    
+    // Wait for 5 seconds for page to load properly
+    console.log('Waiting for page to load...');
+    await new Promise(resolve => setTimeout(resolve, 5000));
     
     // Enter date
     console.log(`Setting date to ${todayDate}...`);
-    await page.waitForXPath('/html/body/app-root/div/main/div/app-today-price/div/div[2]/div/div/div/input');
-    const dateInput = await page.$x('/html/body/app-root/div/main/div/app-today-price/div/div[2]/div/div/div/input');
-    await dateInput[0].click({ clickCount: 3 }); // Triple click to select all text
-    await dateInput[0].type(todayDate);
+    const dateInput = await page.$('input.ng-untouched.ng-pristine.ng-valid[type="text"]');
+    if (!dateInput) {
+      throw new Error('Could not find date input element');
+    }
+    
+    await dateInput.click({ clickCount: 3 });
+    await dateInput.type(todayDate);
     
     // Wait 2 seconds before clicking filter
-    await page.waitForTimeout(2000);
+    console.log('Waiting before clicking filter...');
+    await new Promise(resolve => setTimeout(resolve, 2000));
     
     // Click filter button
     console.log('Clicking filter button...');
-    await page.waitForXPath('/html/body/app-root/div/main/div/app-today-price/div/div[2]/div/div[4]/button');
-    const filterButton = await page.$x('/html/body/app-root/div/main/div/app-today-price/div/div[2]/div/div[4]/button');
-    await filterButton[0].click();
+    const filterButton = await page.$('button.box__filter--search[type="button"]');
+    if (!filterButton) {
+      throw new Error('Could not find filter button');
+    }
+    await filterButton.click();
     
     // Wait 5 seconds before clicking download
-    await page.waitForTimeout(5000);
+    console.log('Waiting before downloading...');
+    await new Promise(resolve => setTimeout(resolve, 5000));
     
     // Click download as CSV
     console.log('Clicking download as CSV...');
-    await page.waitForXPath('/html/body/app-root/div/main/div/app-today-price/div/div[2]/div[2]/a');
-    const downloadButton = await page.$x('/html/body/app-root/div/main/div/app-today-price/div/div[2]/div[2]/a');
-    await downloadButton[0].click();
+    const downloadButton = await page.$('a.table__file');
+    if (!downloadButton) {
+      throw new Error('Could not find download button');
+    }
+    await downloadButton.click();
     
-    // Wait for download to complete (approximate)
-    await page.waitForTimeout(5000);
+    // Wait for download to complete
+    console.log('Waiting for download to complete...');
+    await new Promise(resolve => setTimeout(resolve, 5000));
     
     console.log('Download completed successfully!');
     console.log(`CSV file should be saved in: ${downloadPath}`);
@@ -79,6 +93,7 @@ async function downloadNepseData() {
     } catch (err) {
       console.error('Error listing download directory:', err);
     }
+    
   } catch (error) {
     console.error('Error during download process:', error);
   } finally {
@@ -87,35 +102,5 @@ async function downloadNepseData() {
   }
 }
 
-// Function to schedule the task at 3:10 PM Nepal time every day
-function scheduleTask() {
-  // Nepal is UTC+5:45
-  const rule = new schedule.RecurrenceRule();
-  rule.hour = 15; // 3 PM
-  rule.minute = 10; // 10 minutes
-  rule.tz = 'Asia/Kathmandu';
-  
-  console.log('Task scheduled to run at 3:10 PM Nepal time daily');
-  
-  schedule.scheduleJob(rule, function() {
-    console.log(`Running scheduled task at ${new Date().toLocaleString()}`);
-    downloadNepseData();
-  });
-}
-
-// If run directly, execute the download immediately
-if (require.main === module) {
-  // Check if test mode or scheduled mode
-  const args = process.argv.slice(2);
-  if (args.includes('--now')) {
-    downloadNepseData();
-  } else {
-    scheduleTask();
-    console.log('Script is running in scheduled mode. Use --now flag to run immediately.');
-  }
-}
-
-module.exports = {
-  downloadNepseData,
-  scheduleTask
-}; 
+// Run the download function
+downloadNepseData(); 
