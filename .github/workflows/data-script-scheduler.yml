@@ -45,13 +45,13 @@ jobs:
       - name: Run NEPSE downloader
         run: |
           echo "Running NEPSE downloader..."
-          node nepse_downloader.js
+          node data-scripts/nepse_downloader.js
         timeout-minutes: 10  # Set step timeout to 10 minutes
           
       - name: Run Python script
         run: |
           echo "Running Python script..."
-          node run_py_script.js --now
+          node data-scripts/run_py_script.js --now
         timeout-minutes: 15  # Set step timeout to 15 minutes
           
       - name: Commit and push changes
