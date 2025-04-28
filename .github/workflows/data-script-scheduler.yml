@@ -6,6 +6,9 @@ on:
     - cron: '25 9 * * 0-5'  # Sunday to Friday at 9:25 AM UTC
   workflow_dispatch:  # Allow manual triggering
 
+permissions:
+  contents: write  # This is required for pushing changes
+
 jobs:
   process-data:
     runs-on: ubuntu-latest
@@ -70,6 +73,4 @@ jobs:
           else
             git commit -m "Update NEPSE data [skip ci]"
             git push
-          fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+          fi 
