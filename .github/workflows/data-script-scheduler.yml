@@ -45,7 +45,7 @@ jobs:
       - name: Run NEPSE downloader
         run: |
           echo "Running NEPSE downloader..."
-          node data-scripts/nepse_downloader.js
+          node data-scripts/nepse_downloader.js --now
         timeout-minutes: 10  # Set step timeout to 10 minutes
           
       - name: Run Python script
