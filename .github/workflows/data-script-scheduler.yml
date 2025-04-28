@@ -54,11 +54,22 @@ jobs:
           node data-scripts/run_py_script.js --now
         timeout-minutes: 15  # Set step timeout to 15 minutes
           
+      - name: Clean up CSV files
+        run: |
+          rm -f data-scripts/*.csv
+          
       - name: Commit and push changes
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add .
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Update NEPSE data [skip ci]" && git push)
+          # Only add the JSON file
+          git add public/organized_nepse_data.json
+          # Check if there are any changes
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update NEPSE data [skip ci]"
+            git push
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
