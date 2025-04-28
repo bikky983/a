@@ -146,109 +146,241 @@ function setupExcelHandlers() {
 
         const reader = new FileReader();
         reader.onload = function(e) {
-            const data = new Uint8Array(e.target.result);
-            const workbook = XLSX.read(data, { type: 'array' });
+            let json = [];
             
-            // Process the uploaded Excel file
-            if (workbook.SheetNames.length > 0) {
-                const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-                const json = XLSX.utils.sheet_to_json(worksheet);
+            // Check if it's a CSV file
+            if (file.name.toLowerCase().endsWith('.csv')) {
+                // Parse CSV data
+                const csvData = e.target.result;
+                const lines = csvData.split(/\r?\n/); // Handle different line endings
                 
-                if (json.length === 0) {
-                    showError('No data found in the Excel file');
+                if (lines.length === 0) {
+                    showError('No data found in the CSV file');
                     return;
                 }
                 
-                // Log the first row to check structure
-                console.log("First row of Excel data:", json[0]);
+                // Detect delimiter - check if it's tab, comma, or space separated
+                let delimiter = ','; // Default delimiter
+                const firstLine = lines[0];
                 
-                // Get existing bought stocks
-                const existingBoughtStocks = JSON.parse(localStorage.getItem('boughtStocks') || '[]');
+                // Count occurrences of potential delimiters
+                const delimiterCounts = {
+                    ',': (firstLine.match(/,/g) || []).length,
+                    '\t': (firstLine.match(/\t/g) || []).length,
+                    ' ': (firstLine.match(/ {2,}/g) || []).length // Multiple spaces as delimiter
+                };
                 
-                // Process each row from the Excel file - handle trade report format
-                const newBoughtStocks = json
-                    .filter(row => {
-                        // Only include 'Buy' trades
-                        return row['BUY/SELL'] === 'Buy' || row['BUY/SELL'] === 'buy' || 
-                               row.BUY === 'Buy' || row.BUY === 'buy';
-                    })
-                    .map(row => {
-                        // Today's date as string in ISO format - this will be the import date
-                        const today = new Date().toISOString().split('T')[0];
-                        
-                        // Extract symbol - handle different possible column names
-                        const symbol = row.SYMBOL || row.Symbol || row.symbol;
-                        
-                        // Extract price - handle different possible column names
-                        let buyPrice = 0;
-                        if (row['PRICE(NPR)'] !== undefined) {
-                            buyPrice = Number(row['PRICE(NPR)']);
-                        } else if (row.PRICE !== undefined) {
-                            buyPrice = Number(row.PRICE);
-                        } else if (row.Price !== undefined) {
-                            buyPrice = Number(row.Price);
-                        }
-                        
-                        // Extract quantity - handle different possible column names
-                        let quantity = 10; // Default
-                        if (row['TRADE QTY'] !== undefined) {
-                            quantity = Number(row['TRADE QTY']);
-                        } else if (row.QTY !== undefined) {
-                            quantity = Number(row.QTY);
-                        } else if (row.Quantity !== undefined) {
-                            quantity = Number(row.Quantity);
-                        }
-                        
-                        // Calculate default stoploss price (15% below buy price)
-                        const defaultStoplossPercent = parseInt(document.getElementById('defaultStoplossPercent').value) || DEFAULT_STOPLOSS_PERCENT;
-                        const stoplossPrice = buyPrice * (1 - defaultStoplossPercent / 100);
-                        
-                        return {
-                            symbol: symbol,
-                            buyPrice: buyPrice,
-                            buyDate: today,
-                            stoplossPrice: stoplossPrice,
-                            quantity: quantity
-                        };
-                    });
-                
-                if (newBoughtStocks.length === 0) {
-                    showError('No valid buy trades found in the Excel file');
-                    return;
+                // Determine most likely delimiter
+                if (delimiterCounts['\t'] > 0) {
+                    delimiter = '\t';
+                } else if (delimiterCounts[','] > 0) {
+                    delimiter = ',';
+                } else if (delimiterCounts[' '] > 0) {
+                    // For space delimited files, we'll split by multiple spaces
+                    delimiter = ' ';
                 }
                 
-                // Remove duplicates and merge with existing stocks
-                const mergedStocks = [...existingBoughtStocks];
+                // Extract headers (first line)
+                let headers;
+                if (delimiter === ' ') {
+                    // For space-delimited files, split by multiple spaces and trim
+                    headers = firstLine.split(/\s{2,}/).map(header => header.trim());
+                } else {
+                    headers = firstLine.split(delimiter).map(header => header.trim());
+                }
                 
-                newBoughtStocks.forEach(newStock => {
-                    // Find if this stock already exists
-                    const existingIndex = mergedStocks.findIndex(stock => stock.symbol === newStock.symbol);
+                // Process each line
+                for (let i = 1; i < lines.length; i++) {
+                    if (lines[i].trim() === '') continue; // Skip empty lines
                     
-                    if (existingIndex >= 0) {
-                        // Update existing stock
-                        mergedStocks[existingIndex] = {
-                            ...mergedStocks[existingIndex],
-                            ...newStock
-                        };
+                    let values;
+                    if (delimiter === ' ') {
+                        // For space-delimited files, split by multiple spaces
+                        values = lines[i].split(/\s{2,}/).map(value => value.trim());
                     } else {
-                        // Add new stock
-                        mergedStocks.push(newStock);
+                        values = lines[i].split(delimiter).map(value => value.trim());
                     }
+                    
+                    const row = {};
+                    
+                    // Map values to headers
+                    headers.forEach((header, index) => {
+                        if (index < values.length) {
+                            row[header] = values[index];
+                        }
+                    });
+                    
+                    json.push(row);
+                }
+                
+                // Handle specific format from the user's image
+                // Map column names to expected fields if needed
+                json = json.map(row => {
+                    const mappedRow = {...row};
+                    
+                    // Map common column names from the user's format
+                    if (row['CONTRACT NO'] !== undefined) mappedRow['CONTRACT_NO'] = row['CONTRACT NO'];
+                    if (row['CLIENT'] !== undefined) mappedRow['CLIENT_ID'] = row['CLIENT'];
+                    if (row['CLIENT NAME'] !== undefined) mappedRow['CLIENT_NAME'] = row['CLIENT NAME'];
+                    if (row['SYMBOL'] !== undefined) mappedRow['SYMBOL'] = row['SYMBOL'];
+                    if (row['TYPE'] !== undefined) mappedRow['BUY'] = row['TYPE']; // Map TYPE to BUY for compatibility
+                    if (row['PRICE'] !== undefined) mappedRow['PRICE'] = row['PRICE'];
+                    if (row['QTY'] !== undefined) mappedRow['QTY'] = row['QTY'];
+                    if (row['VALUE'] !== undefined) mappedRow['VALUE'] = row['VALUE'];
+                    if (row['ORDER ID'] !== undefined) mappedRow['ORDER_ID'] = row['ORDER ID'];
+                    if (row['TRADE TIME'] !== undefined) mappedRow['TRADE_TIME'] = row['TRADE TIME'];
+                    
+                    return mappedRow;
                 });
-                
-                // Save the updated bought stocks
-                localStorage.setItem('boughtStocks', JSON.stringify(mergedStocks));
-                
-                // Reload the bought stocks and process stoploss
-                loadBoughtStocks();
-                processStoplossStocks();
-                
-                showSuccess(`${newBoughtStocks.length} stocks imported successfully!`);
             } else {
-                showError('Invalid Excel file: No sheets found');
+                // Process Excel file as before
+                const data = new Uint8Array(e.target.result);
+                const workbook = XLSX.read(data, { type: 'array' });
+                
+                if (workbook.SheetNames.length > 0) {
+                    const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+                    json = XLSX.utils.sheet_to_json(worksheet);
+                } else {
+                    showError('Invalid Excel file: No sheets found');
+                    return;
+                }
             }
+            
+            if (json.length === 0) {
+                showError('No data found in the file');
+                return;
+            }
+            
+            // Log the first row to check structure
+            console.log("First row of imported data:", json[0]);
+            
+            // Get existing bought stocks
+            const existingBoughtStocks = JSON.parse(localStorage.getItem('boughtStocks') || '[]');
+            
+            // Process each row from the file - support both traditional format and new CSV format
+            const newBoughtStocks = json
+                .filter(row => {
+                    // For traditional Excel format
+                    if (row['BUY/SELL'] !== undefined) {
+                        return row['BUY/SELL'] === 'Buy' || row['BUY/SELL'] === 'buy';
+                    }
+                    
+                    // For BUY column format
+                    if (row.BUY !== undefined) {
+                        return row.BUY === 'Buy' || row.BUY === 'buy';
+                    }
+                    
+                    // For TYPE column format (from user's CSV)
+                    if (row.TYPE !== undefined) {
+                        return row.TYPE === 'Buy' || row.TYPE === 'buy';
+                    }
+                    
+                    return false;
+                })
+                .map(row => {
+                    // Today's date as string in ISO format - this will be the import date
+                    const today = new Date().toISOString().split('T')[0];
+                    
+                    // Try to extract actual date from TRADE TIME if available
+                    let buyDate = today;
+                    if (row['TRADE TIME']) {
+                        try {
+                            // Example format: 2025-04-27 14:40:22
+                            const datePart = row['TRADE TIME'].split(' ')[0];
+                            if (datePart && datePart.includes('-')) {
+                                buyDate = datePart;
+                            }
+                        } catch (e) {
+                            console.error('Error parsing trade date:', e);
+                        }
+                    } else if (row['TRADE_TIME']) {
+                        try {
+                            // Alternative field name
+                            const datePart = row['TRADE_TIME'].split(' ')[0];
+                            if (datePart && datePart.includes('-')) {
+                                buyDate = datePart;
+                            }
+                        } catch (e) {
+                            console.error('Error parsing trade date:', e);
+                        }
+                    }
+                    
+                    // Extract symbol - handle different possible column names
+                    const symbol = row.SYMBOL || row.Symbol || row.symbol;
+                    
+                    // Extract price - handle different possible column names
+                    let buyPrice = 0;
+                    if (row['PRICE(NPR)'] !== undefined) {
+                        buyPrice = Number(row['PRICE(NPR)']);
+                    } else if (row.PRICE !== undefined) {
+                        buyPrice = Number(row.PRICE);
+                    } else if (row.Price !== undefined) {
+                        buyPrice = Number(row.Price);
+                    }
+                    
+                    // Extract quantity - handle different possible column names
+                    let quantity = 10; // Default
+                    if (row['TRADE QTY'] !== undefined) {
+                        quantity = Number(row['TRADE QTY']);
+                    } else if (row.QTY !== undefined) {
+                        quantity = Number(row.QTY);
+                    } else if (row.Quantity !== undefined) {
+                        quantity = Number(row.Quantity);
+                    }
+                    
+                    // Calculate default stoploss price (15% below buy price)
+                    const defaultStoplossPercent = parseInt(document.getElementById('defaultStoplossPercent').value) || DEFAULT_STOPLOSS_PERCENT;
+                    const stoplossPrice = buyPrice * (1 - defaultStoplossPercent / 100);
+                    
+                    return {
+                        symbol: symbol,
+                        buyPrice: buyPrice,
+                        buyDate: buyDate,
+                        stoplossPrice: stoplossPrice,
+                        quantity: quantity
+                    };
+                });
+            
+            if (newBoughtStocks.length === 0) {
+                showError('No valid buy trades found in the file');
+                return;
+            }
+            
+            // Remove duplicates and merge with existing stocks
+            const mergedStocks = [...existingBoughtStocks];
+            
+            newBoughtStocks.forEach(newStock => {
+                // Find if this stock already exists
+                const existingIndex = mergedStocks.findIndex(stock => stock.symbol === newStock.symbol);
+                
+                if (existingIndex >= 0) {
+                    // Update existing stock
+                    mergedStocks[existingIndex] = {
+                        ...mergedStocks[existingIndex],
+                        ...newStock
+                    };
+                } else {
+                    // Add new stock
+                    mergedStocks.push(newStock);
+                }
+            });
+            
+            // Save the updated bought stocks
+            localStorage.setItem('boughtStocks', JSON.stringify(mergedStocks));
+            
+            // Reload the bought stocks and process stoploss
+            loadBoughtStocks();
+            processStoplossStocks();
+            
+            showSuccess(`${newBoughtStocks.length} stocks imported successfully!`);
         };
-        reader.readAsArrayBuffer(file);
+        
+        // Read the file - determine how to read it based on file type
+        if (file.name.toLowerCase().endsWith('.csv')) {
+            reader.readAsText(file);
+        } else {
+            reader.readAsArrayBuffer(file);
+        }
     });
 }
 
