@@ -5,7 +5,11 @@
     "build": "echo 'No build step required'",
     "start": "node server.js",
     "download": "node data-scripts/nepse_downloader.js",
-    "process": "node data-scripts/run_py_script.js --now"
+    "process": "node data-scripts/run_py_script.js --now",
+    "schedule": "node data-scripts/scheduler.js",
+    "run-now": "node data-scripts/scheduler.js --now",
+    "download-only": "node data-scripts/scheduler.js --download-only",
+    "process-only": "node data-scripts/scheduler.js --process-only"
   },
   "dependencies": {
     "axios": "^0.21.4",
