@@ -9,6 +9,7 @@ on:
 jobs:
   process-data:
     runs-on: ubuntu-latest
+    timeout-minutes: 30  # Set job timeout to 30 minutes
     
     steps:
       - name: Checkout repository
@@ -22,8 +23,7 @@ jobs:
           
       - name: Install Node.js dependencies
         run: |
-          npm install --verbose
-          npm install puppeteer cheerio axios node-schedule fs-extra
+          npm install
           
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -33,17 +33,19 @@ jobs:
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install pandas matplotlib numpy openpyxl glob2
+          pip install -r requirements.txt
           
       - name: Run NEPSE downloader
         run: |
           echo "Running NEPSE downloader..."
-          node data-scripts/nepse_downloader.js
+          node data-scripts/nepse_downloader.js --now
+        timeout-minutes: 10  # Set step timeout to 10 minutes
           
       - name: Run Python script
         run: |
           echo "Running Python script..."
           node data-scripts/run_py_script.js --now
+        timeout-minutes: 15  # Set step timeout to 15 minutes
           
       - name: Commit and push changes
         run: |
@@ -51,4 +53,4 @@ jobs:
           git config --local user.name "GitHub Action"
           git add data-scripts/*.csv public/organized_nepse_data.json
           git commit -m "Update NEPSE data [skip ci]" || echo "No changes to commit"
-          git push
+          git push 
