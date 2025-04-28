@@ -14,10 +14,17 @@ async function downloadNepseData() {
   console.log('Starting download process...');
   const todayDate = formatDate(new Date());
   
-  // Launch browser
+  // Launch browser with headless mode for CI environment
   const browser = await puppeteer.launch({
-    headless: false,
-    defaultViewport: null
+    headless: 'new',  // Use new headless mode
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+      '--disable-accelerated-2d-canvas',
+      '--disable-gpu'
+    ],
+    defaultViewport: { width: 1920, height: 1080 }
   });
   
   try {
@@ -96,6 +103,7 @@ async function downloadNepseData() {
     
   } catch (error) {
     console.error('Error during download process:', error);
+    process.exit(1); // Exit with error code for GitHub Actions
   } finally {
     // Close browser
     await browser.close();
