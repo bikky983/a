@@ -486,6 +486,9 @@ function filterTrendlineStocks() {
     const showBoughtStocks = document.getElementById('showBoughtStocks').checked;
     const showWatchlistOnly = document.getElementById('showWatchlistOnly').checked;
     
+    // Load user stocks from dashboard
+    const userStocks = JSON.parse(localStorage.getItem('userStocks') || '[]');
+    
     console.log(`Filtering with enhanced settings: lookback=${lookbackPeriod}, minTouches=${minTouches}, proximity=${proximityThreshold}, atrMultiplier=${atrMultiplier}, direction=${trendDirection}, minDuration=${minTrendDuration}, quality=${minTrendQuality}, volumeConfirm=${requireVolumeConfirmation}`);
     console.log(`Total stocks to process: ${Object.keys(stockHistoricalData).length}`);
     console.log(`Current prices available for ${Object.keys(currentPrices).length} stocks`);
@@ -494,8 +497,8 @@ function filterTrendlineStocks() {
     Object.keys(stockHistoricalData).forEach(symbol => {
         // If dashboard stocks only is checked, skip non-dashboard stocks
         if (showWatchlistOnly) {
-            // Use the direct isInWatchlist function
-            if (!isInWatchlist(symbol)) {
+            // Check if stock exists in userStocks (dashboard stocks)
+            if (!userStocks.some(stock => stock.symbol === symbol)) {
                 return;
             }
         }
