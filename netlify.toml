@@ -1,7 +1,7 @@
 [build]
   publish = "public"
   functions = "netlify/functions"
-  command = ""
+  command = "npm run build"
 
 [functions]
   node_bundler = "esbuild"
@@ -29,3 +29,4 @@
   for = "/*"
     [headers.values]
     Access-Control-Allow-Origin = "*"
+
