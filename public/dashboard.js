@@ -1550,7 +1550,8 @@ function placeOrder(symbol, quantity, price) {
             });
             
           }, 1000); // 1-second delay after entering symbol
-        });
+    }, 1000); // THIS CLOSING BRACE AND TIMEOUT VALUE WAS ADDED HERE - proper closure of the outer setTimeout
+  });
       } else {
         console.error("Symbol element not found");
         return Promise.resolve(false);
