@@ -15,6 +15,19 @@ document.addEventListener('DOMContentLoaded', function() {
         // Don't delete the original as other scripts may depend on it
     }
     
+    // Initialize default stoploss percent input field right away
+    const defaultStoplossInput = document.getElementById('defaultStoplossPercent');
+    if (defaultStoplossInput) {
+        const storedStoplossPercent = localStorage.getItem('defaultStoplossPercent');
+        if (storedStoplossPercent) {
+            defaultStoplossInput.value = storedStoplossPercent;
+        } else {
+            defaultStoplossInput.value = DEFAULT_STOPLOSS_PERCENT;
+            // Also save it to localStorage
+            localStorage.setItem('defaultStoplossPercent', DEFAULT_STOPLOSS_PERCENT.toString());
+        }
+    }
+    
     initializePage();
     setupEventListeners();
     
@@ -115,9 +128,18 @@ function setupEventListeners() {
     });
     
     // Set default stoploss percent from localStorage or default
-    const storedStoplossPercent = localStorage.getItem('defaultStoplossPercent');
-    if (storedStoplossPercent) {
-        document.getElementById('defaultStoplossPercent').value = storedStoplossPercent;
+    // Only set if the input field is empty or has no value (don't overwrite value set in DOMContentLoaded)
+    const defaultStoplossInput = document.getElementById('defaultStoplossPercent');
+    if (defaultStoplossInput && (!defaultStoplossInput.value || defaultStoplossInput.value === '0')) {
+        const storedStoplossPercent = localStorage.getItem('defaultStoplossPercent');
+        if (storedStoplossPercent) {
+            defaultStoplossInput.value = storedStoplossPercent;
+            console.log(`setupEventListeners: Set stoploss to stored value: ${storedStoplossPercent}%`);
+        } else {
+            defaultStoplossInput.value = DEFAULT_STOPLOSS_PERCENT;
+            localStorage.setItem('defaultStoplossPercent', DEFAULT_STOPLOSS_PERCENT.toString());
+            console.log(`setupEventListeners: No stored stoploss found, using default: ${DEFAULT_STOPLOSS_PERCENT}%`);
+        }
     }
     
     // Handle window resize for responsive charts
@@ -145,7 +167,7 @@ function setupExcelHandlers() {
         // Get bought stocks for export
         const boughtStocks = JSON.parse(localStorage.getItem('boughtStocks') || '[]');
         
-        // Format data to match the simple format with dark header shown in the image
+        // Format data to match the simpler format shown in the image
         const formattedData = boughtStocks.map(stock => {
             return {
                 'SYMBOL': stock.symbol,
@@ -155,58 +177,31 @@ function setupExcelHandlers() {
             };
         });
         
+        // Create worksheet with the formatted data
+        const worksheet = XLSX.utils.json_to_sheet(formattedData);
+        
         // Define column order to match screenshot exactly
         const columnOrder = ['SYMBOL', 'BUY/SELL', 'TRADE QTY', 'PRICE(NPR)'];
         
-        // Create workbook and worksheet manually to ensure proper styling
-        const wb = XLSX.utils.book_new();
-        const ws = XLSX.utils.aoa_to_sheet([columnOrder]);
-        
-        // Add data rows after the header
-        const dataRows = formattedData.map(row => [
-            row['SYMBOL'],
-            row['BUY/SELL'],
-            row['TRADE QTY'],
-            row['PRICE(NPR)']
-        ]);
-        XLSX.utils.sheet_add_aoa(ws, dataRows, { origin: "A2" });
-        
-        // Set column widths
-        ws['!cols'] = [
+        // Set column widths to match screenshot format
+        const columnWidths = [
             { wch: 15 }, // SYMBOL
             { wch: 10 }, // BUY/SELL 
             { wch: 10 }, // TRADE QTY
             { wch: 12 }  // PRICE(NPR)
         ];
         
-        // Add the styled header - this is crucial for the highlighting to work
-        // Need to directly set the cell styling properties
-        for (let C = 0; C < columnOrder.length; C++) {
-            const cellRef = XLSX.utils.encode_cell({r: 0, c: C});
-            if (!ws[cellRef]) continue;
-            
-            // Set style directly using SheetJS format
-            if (!ws[cellRef].s) ws[cellRef].s = {};
-            
-            ws[cellRef].s = {
-                fill: {
-                    fgColor: { rgb: "FF7A7A7A" }, // Exact gray color with FF prefix
-                    patternType: "solid"
-                },
-                font: {
-                    name: "Calibri",
-                    sz: 11,
-                    color: { rgb: "FFFFFFFF" }, // White text
-                    bold: false
-                }
-            };
-        }
+        // Apply column widths
+        worksheet['!cols'] = columnWidths;
         
-        // Add the worksheet to the workbook
-        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1'); // Match exact sheet name from working file
+        // Create a workbook
+        const workbook = XLSX.utils.book_new();
         
-        // Generate file and download
-        XLSX.writeFile(wb, 'Trade Book Details.xlsx'); // Match exact filename from working file
+        // Add the worksheet
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Stoploss');
+        
+        // Generate buffer and download
+        XLSX.writeFile(workbook, 'stoploss_stocks.xlsx');
     });
 
     // Set up upload Excel button
@@ -340,14 +335,9 @@ function setupExcelHandlers() {
                         return row.BUY === 'Buy' || row.BUY === 'buy';
                     }
                     
-                    // For TYPE column format (from Trade Book Details)
+                    // For TYPE column format (from user's CSV)
                     if (row.TYPE !== undefined) {
                         return row.TYPE === 'Buy' || row.TYPE === 'buy';
-                    }
-                    
-                    // Also check for TYPE with different case (Excel column headers can vary)
-                    if (row.Type !== undefined) {
-                        return row.Type === 'Buy' || row.Type === 'buy';
                     }
                     
                     return false;
@@ -378,16 +368,6 @@ function setupExcelHandlers() {
                         } catch (e) {
                             console.error('Error parsing trade date:', e);
                         }
-                    } else if (row['Trade Time']) {
-                        try {
-                            // Alternative capitalization
-                            const datePart = row['Trade Time'].split(' ')[0];
-                            if (datePart && datePart.includes('-')) {
-                                buyDate = datePart;
-                            }
-                        } catch (e) {
-                            console.error('Error parsing trade date:', e);
-                        }
                     }
                     
                     // Extract symbol - handle different possible column names
@@ -401,8 +381,6 @@ function setupExcelHandlers() {
                         buyPrice = Number(row.PRICE);
                     } else if (row.Price !== undefined) {
                         buyPrice = Number(row.Price);
-                    } else if (row['PRICE'] !== undefined) { // Exact match for Trade Book Details
-                        buyPrice = Number(row['PRICE']);
                     }
                     
                     // Extract quantity - handle different possible column names
@@ -413,8 +391,6 @@ function setupExcelHandlers() {
                         quantity = Number(row.QTY);
                     } else if (row.Quantity !== undefined) {
                         quantity = Number(row.Quantity);
-                    } else if (row['QTY'] !== undefined) { // Exact match for Trade Book Details
-                        quantity = Number(row['QTY']);
                     }
                     
                     // Calculate default stoploss price (15% below buy price)
@@ -590,6 +566,7 @@ async function fetchCurrentPrices() {
 
 function processStoplossStocks() {
     const defaultStoplossPercent = parseInt(document.getElementById('defaultStoplossPercent').value) || DEFAULT_STOPLOSS_PERCENT;
+    console.log(`Processing stoploss stocks with defaultStoplossPercent: ${defaultStoplossPercent}`);
     
     stoplossStocks = [];
     
@@ -609,6 +586,7 @@ function processStoplossStocks() {
         // If stoploss price is missing or invalid, calculate it based on the default percentage
         if (isNaN(stoplossPrice) || stoplossPrice <= 0) {
             stoplossPrice = stock.buyPrice * (1 - defaultStoplossPercent / 100);
+            console.log(`Fixed stoploss price for ${stock.symbol}: ${stoplossPrice} (${defaultStoplossPercent}%)`);
         }
         
         // Calculate stoploss difference
@@ -1276,9 +1254,25 @@ function loadStoplossData() {
     // Load bought stocks first
     loadBoughtStocks();
     
+    // Ensure default stoploss percent is set correctly
+    const defaultStoplossInput = document.getElementById('defaultStoplossPercent');
+    if (defaultStoplossInput) {
+        const storedStoplossPercent = localStorage.getItem('defaultStoplossPercent');
+        if (!storedStoplossPercent) {
+            // If no stored value, set input to default and save to localStorage
+            defaultStoplossInput.value = DEFAULT_STOPLOSS_PERCENT;
+            localStorage.setItem('defaultStoplossPercent', DEFAULT_STOPLOSS_PERCENT.toString());
+            console.log(`Set default stoploss percent to ${DEFAULT_STOPLOSS_PERCENT}%`);
+        } else {
+            defaultStoplossInput.value = storedStoplossPercent;
+            console.log(`Using saved stoploss percent: ${storedStoplossPercent}%`);
+        }
+    }
+    
     // Validate stoploss prices for all stocks
     console.log("Validating stoploss prices for all stocks...");
-    const defaultStoplossPercent = parseInt(document.getElementById('defaultStoplossPercent').value) || DEFAULT_STOPLOSS_PERCENT;
+    const defaultStoplossPercent = parseInt(defaultStoplossInput.value) || DEFAULT_STOPLOSS_PERCENT;
+    console.log(`Default stoploss percent: ${defaultStoplossPercent}%`);
     
     // Fix any missing or invalid stoploss prices
     let fixedCount = 0;
