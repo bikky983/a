@@ -94,13 +94,19 @@ function setupEventListeners() {
     document.getElementById('showBrokenStoploss').addEventListener('change', (e) => {
         // Get the checked state
         const showHighlighting = e.target.checked;
+        console.log(`Toggling broken stoploss highlighting: ${showHighlighting ? 'ON' : 'OFF'}`);
         
         // Update all rows directly for immediate visual feedback
-        document.querySelectorAll('#stoplossTable tbody tr.broken-stoploss').forEach(row => {
+        const brokenRows = document.querySelectorAll('#stoplossTable tbody tr.broken-stoploss');
+        console.log(`Found ${brokenRows.length} rows with broken stoploss to update`);
+        
+        brokenRows.forEach(row => {
             if (showHighlighting) {
                 row.classList.remove('highlight-disabled');
+                console.log(`Enabling highlight for ${row.querySelector('.clickable-symbol').textContent}`);
             } else {
                 row.classList.add('highlight-disabled');
+                console.log(`Disabling highlight for ${row.querySelector('.clickable-symbol').textContent}`);
             }
         });
         
@@ -353,11 +359,11 @@ function setupExcelHandlers() {
                     
                     // Calculate default stoploss price (15% below buy price)
                     const defaultStoplossPercent = parseInt(document.getElementById('defaultStoplossPercent').value) || DEFAULT_STOPLOSS_PERCENT;
-                    const stoplossPrice = buyPrice * (1 - defaultStoplossPercent / 100);
+                    const stoplossPrice = parseFloat((buyPrice * (1 - defaultStoplossPercent / 100)).toFixed(2));
                     
                     return {
                         symbol: symbol,
-                        buyPrice: buyPrice,
+                        buyPrice: parseFloat(buyPrice.toFixed(2)),
                         buyDate: buyDate,
                         stoplossPrice: stoplossPrice,
                         quantity: quantity
@@ -368,6 +374,8 @@ function setupExcelHandlers() {
                 showError('No valid buy trades found in the file');
                 return;
             }
+            
+            console.log('Preview of stocks to be imported:', newBoughtStocks);
             
             // Remove duplicates and merge with existing stocks
             const mergedStocks = [...existingBoughtStocks];
@@ -411,18 +419,32 @@ function setupExcelHandlers() {
             // Reload the bought stocks
             loadBoughtStocks();
             
-            // Make sure we have current prices
-            fetchCurrentPrices().then(() => {
+            // Always refetch current prices to ensure up-to-date data
+            showLoading(true);
+            fetchCurrentPrices().then((prices) => {
+                // Update current prices
+                currentPrices = prices;
+                
+                // Force checking if any stocks have broken stoploss
+                mergedStocks.forEach(stock => {
+                    const currentPrice = currentPrices[stock.symbol] || 0;
+                    if (currentPrice > 0 && currentPrice <= stock.stoplossPrice) {
+                        console.log(`IMPORT CHECK: ${stock.symbol} has broken stoploss: LTP=${currentPrice}, Stoploss=${stock.stoplossPrice}`);
+                    }
+                });
+                
                 // Process stoploss stocks after prices are fetched
                 processStoplossStocks();
                 
                 // Show success message after processing is complete
                 showSuccess(`${newBoughtStocks.length} stocks imported successfully!`);
+                showLoading(false);
             }).catch(error => {
                 console.error('Error fetching prices after import:', error);
                 // Still process with whatever prices we have
                 processStoplossStocks();
                 showSuccess(`${newBoughtStocks.length} stocks imported, but price data may be incomplete.`);
+                showLoading(false);
             });
         };
         
@@ -511,6 +533,9 @@ function processStoplossStocks() {
     
     stoplossStocks = [];
     
+    // Debug counter for monitoring
+    let brokenCount = 0;
+    
     boughtStocks.forEach(stock => {
         const currentPrice = currentPrices[stock.symbol] || 0;
         if (currentPrice <= 0) return;
@@ -518,14 +543,24 @@ function processStoplossStocks() {
         // Calculate return percentage
         const returnPercent = ((currentPrice - stock.buyPrice) / stock.buyPrice) * 100;
         
-        // Calculate stoploss price
-        const stoplossPrice = stock.stoplossPrice || (stock.buyPrice * (1 - defaultStoplossPercent / 100));
+        // Calculate stoploss price - ensure we have a valid stoploss price
+        let stoplossPrice = parseFloat(stock.stoplossPrice);
+        
+        // If stoploss price is missing or invalid, calculate it based on the default percentage
+        if (isNaN(stoplossPrice) || stoplossPrice <= 0) {
+            stoplossPrice = stock.buyPrice * (1 - defaultStoplossPercent / 100);
+        }
         
         // Calculate stoploss difference
         const stoplossDiff = ((currentPrice - stoplossPrice) / stoplossPrice) * 100;
         
-        // Check if stoploss is broken - ensure precise comparison
+        // Check if stoploss is broken - using stricter comparison with parsed values
         const isBroken = parseFloat(currentPrice) <= parseFloat(stoplossPrice);
+        
+        if (isBroken) {
+            brokenCount++;
+            console.log(`${stock.symbol} has broken stoploss: LTP=${currentPrice}, Stoploss=${stoplossPrice}`);
+        }
         
         stoplossStocks.push({
             symbol: stock.symbol,
@@ -539,6 +574,8 @@ function processStoplossStocks() {
             isBroken: isBroken
         });
     });
+    
+    console.log(`Total stocks with broken stoploss: ${brokenCount}/${boughtStocks.length}`);
     
     // Sort by broken stoploss first, then by stoploss difference
     stoplossStocks.sort((a, b) => {
@@ -581,6 +618,12 @@ function displayStoplossStocks() {
     // Count broken stoploss stocks
     const brokenStoplossCount = stoplossStocks.filter(stock => stock.isBroken).length;
     
+    // Log for debugging
+    console.log(`Displaying ${stoplossStocks.length} stocks, ${brokenStoplossCount} have broken stoploss.`);
+    stoplossStocks.filter(stock => stock.isBroken).forEach(stock => {
+        console.log(`Displaying broken stoploss: ${stock.symbol}, LTP: ${stock.ltp}, SL: ${stock.stoplossPrice}`);
+    });
+    
     // Update the stoploss counter
     const stoplossCounterEl = document.getElementById('stoplossCounter');
     if (brokenStoplossCount > 0) {
@@ -593,6 +636,9 @@ function displayStoplossStocks() {
     
     stoplossStocks.forEach((stock, index) => {
         const row = document.createElement('tr');
+        
+        // Always add a data attribute for isBroken status - this helps debugging
+        row.setAttribute('data-broken', stock.isBroken ? 'true' : 'false');
         
         // Add broken-stoploss class if the stock has broken stoploss
         // Always apply highlighting for broken stoploss, but only make it visible
@@ -1169,6 +1215,31 @@ function loadStoplossData() {
     
     // Load bought stocks first
     loadBoughtStocks();
+    
+    // Validate stoploss prices for all stocks
+    console.log("Validating stoploss prices for all stocks...");
+    const defaultStoplossPercent = parseInt(document.getElementById('defaultStoplossPercent').value) || DEFAULT_STOPLOSS_PERCENT;
+    
+    // Fix any missing or invalid stoploss prices
+    let fixedCount = 0;
+    const updatedStocks = boughtStocks.map(stock => {
+        // Make sure the stoploss price is valid
+        if (!stock.stoplossPrice || isNaN(parseFloat(stock.stoplossPrice)) || parseFloat(stock.stoplossPrice) <= 0) {
+            console.log(`Fixing missing stoploss price for ${stock.symbol}`);
+            fixedCount++;
+            return {
+                ...stock,
+                stoplossPrice: parseFloat((stock.buyPrice * (1 - defaultStoplossPercent / 100)).toFixed(2))
+            };
+        }
+        return stock;
+    });
+    
+    if (fixedCount > 0) {
+        console.log(`Fixed ${fixedCount} stocks with missing or invalid stoploss prices`);
+        boughtStocks = updatedStocks;
+        localStorage.setItem('boughtStocks', JSON.stringify(boughtStocks));
+    }
     
     // Fetch current prices and then process stoploss stocks
     fetchCurrentPrices().then(() => {
