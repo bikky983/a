@@ -43,30 +43,10 @@
         }
         
         .broken-stoploss {
-            background-color: rgba(244, 67, 54, 0.15);
-        }
-        
-        /* Make broken-stoploss override tr:hover */
-        #stoplossTable tr.broken-stoploss {
-            background-color: rgba(244, 67, 54, 0.15) !important;
-        }
-        
-        /* Ensure hover state keeps the highlighting */
-        #stoplossTable tr.broken-stoploss:hover {
-            background-color: rgba(244, 67, 54, 0.25) !important;
-        }
-        
-        /* Stoploss counter styling */
-        #brokenStoplossCounter {
-            display: inline-block;
-            margin-left: 15px;
+            background-color: rgba(244, 67, 54, 0.4);
             font-weight: bold;
-            color: white;
-            background-color: #f44336;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 14px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            border-left: 4px solid #f44336;
+            color: #000 !important;
         }
         
         .negative-return {
@@ -140,6 +120,26 @@
             font-weight: bold;
             box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
         }
+        
+        /* Stoploss counter styling */
+        #stoplossCounter {
+            margin-bottom: 15px; 
+            font-weight: bold;
+            font-size: 16px;
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        #stoplossCounter.has-broken {
+            color: #fff;
+            background-color: rgba(244, 67, 54, 0.8);
+        }
+        
+        #stoplossCounter.no-broken {
+            color: #fff;
+            background-color: rgba(76, 175, 80, 0.8);
+        }
     </style>
 </head>
 <body>
@@ -177,6 +177,9 @@
         <div id="loadingIndicator" class="loading-spinner" style="display: none;">
             <div class="spinner"></div>
         </div>
+
+        <!-- Add stoploss counter -->
+        <div id="stoplossCounter"></div>
 
         <main>
             <table id="stoplossTable">
