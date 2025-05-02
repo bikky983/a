@@ -174,23 +174,25 @@ function setupExcelHandlers() {
         // Apply column widths
         worksheet['!cols'] = columnWidths;
         
-        // Add style to header row (make it darker)
+        // Add style to header row (match the exact style from Trade Book Details file)
         // First, we need to get the range of the sheet
         const range = XLSX.utils.decode_range(worksheet['!ref']);
         
-        // Create a new style object for header cells
+        // Create a style object with the EXACT same properties as the Trade Book Details file
         const headerStyle = {
             fill: {
-                fgColor: { rgb: "808080" }, // Dark gray
-                patternType: "solid"
+                patternType: "solid",
+                fgColor: { rgb: "FF7A7A7A" } // Exact gray color from the Trade Book Details file
             },
             font: {
-                color: { rgb: "FFFFFF" }, // White text
-                bold: true
+                name: "Calibri",
+                sz: 11,
+                color: { rgb: "FFFFFFFF" }, // White text
+                bold: false
             }
         };
         
-        // Apply the style to the header row
+        // Apply the style to the header row (row 0)
         for (let C = range.s.c; C <= range.e.c; ++C) {
             const cellRef = XLSX.utils.encode_cell({r: 0, c: C});
             if (!worksheet[cellRef]) continue;
