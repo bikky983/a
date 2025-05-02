@@ -158,6 +158,20 @@ function setupExcelHandlers() {
         // Create worksheet with the formatted data
         const worksheet = XLSX.utils.json_to_sheet(formattedData);
         
+        // Define column order to match screenshot exactly
+        const columnOrder = ['SYMBOL', 'BUY/SELL', 'TRADE QTY', 'PRICE(NPR)'];
+        
+        // Set column widths to match screenshot format
+        const columnWidths = [
+            { wch: 15 }, // SYMBOL
+            { wch: 10 }, // BUY/SELL 
+            { wch: 10 }, // TRADE QTY
+            { wch: 12 }  // PRICE(NPR)
+        ];
+        
+        // Apply column widths
+        worksheet['!cols'] = columnWidths;
+        
         // Create a workbook
         const workbook = XLSX.utils.book_new();
         
