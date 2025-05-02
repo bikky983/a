@@ -203,10 +203,10 @@ function setupExcelHandlers() {
         }
         
         // Add the worksheet to the workbook
-        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1'); // Match exact sheet name from working file
+        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1'); // Keep the working sheet name
         
-        // Generate file and download
-        XLSX.writeFile(wb, 'Trade Book Details.xlsx'); // Match exact filename from working file
+        // Generate file and download with the desired filename
+        XLSX.writeFile(wb, 'stoploss_stocks.xlsx'); // Changed from Trade Book Details.xlsx
     });
 
     // Set up upload Excel button
