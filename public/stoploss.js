@@ -158,56 +158,55 @@ function setupExcelHandlers() {
         // Define column order to match screenshot exactly
         const columnOrder = ['SYMBOL', 'BUY/SELL', 'TRADE QTY', 'PRICE(NPR)'];
         
-        // Create worksheet using the defined column order
-        const worksheet = XLSX.utils.json_to_sheet(formattedData, {
-            header: columnOrder
-        });
+        // Create workbook and worksheet manually to ensure proper styling
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.aoa_to_sheet([columnOrder]);
+        
+        // Add data rows after the header
+        const dataRows = formattedData.map(row => [
+            row['SYMBOL'],
+            row['BUY/SELL'],
+            row['TRADE QTY'],
+            row['PRICE(NPR)']
+        ]);
+        XLSX.utils.sheet_add_aoa(ws, dataRows, { origin: "A2" });
         
         // Set column widths
-        const columnWidths = [
+        ws['!cols'] = [
             { wch: 15 }, // SYMBOL
             { wch: 10 }, // BUY/SELL 
             { wch: 10 }, // TRADE QTY
             { wch: 12 }  // PRICE(NPR)
         ];
         
-        // Apply column widths
-        worksheet['!cols'] = columnWidths;
-        
-        // Add style to header row (match the exact style from Trade Book Details file)
-        // First, we need to get the range of the sheet
-        const range = XLSX.utils.decode_range(worksheet['!ref']);
-        
-        // Create a style object with the EXACT same properties as the Trade Book Details file
-        const headerStyle = {
-            fill: {
-                patternType: "solid",
-                fgColor: { rgb: "FF7A7A7A" } // Exact gray color from the Trade Book Details file
-            },
-            font: {
-                name: "Calibri",
-                sz: 11,
-                color: { rgb: "FFFFFFFF" }, // White text
-                bold: false
-            }
-        };
-        
-        // Apply the style to the header row (row 0)
-        for (let C = range.s.c; C <= range.e.c; ++C) {
+        // Add the styled header - this is crucial for the highlighting to work
+        // Need to directly set the cell styling properties
+        for (let C = 0; C < columnOrder.length; C++) {
             const cellRef = XLSX.utils.encode_cell({r: 0, c: C});
-            if (!worksheet[cellRef]) continue;
+            if (!ws[cellRef]) continue;
             
-            worksheet[cellRef].s = headerStyle;
+            // Set style directly using SheetJS format
+            if (!ws[cellRef].s) ws[cellRef].s = {};
+            
+            ws[cellRef].s = {
+                fill: {
+                    fgColor: { rgb: "FF7A7A7A" }, // Exact gray color with FF prefix
+                    patternType: "solid"
+                },
+                font: {
+                    name: "Calibri",
+                    sz: 11,
+                    color: { rgb: "FFFFFFFF" }, // White text
+                    bold: false
+                }
+            };
         }
         
-        // Create a workbook
-        const workbook = XLSX.utils.book_new();
+        // Add the worksheet to the workbook
+        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1'); // Match exact sheet name from working file
         
-        // Add the worksheet
-        XLSX.utils.book_append_sheet(workbook, worksheet, 'Stoploss');
-        
-        // Generate buffer and download
-        XLSX.writeFile(workbook, 'stoploss_stocks.xlsx');
+        // Generate file and download
+        XLSX.writeFile(wb, 'Trade Book Details.xlsx'); // Match exact filename from working file
     });
 
     // Set up upload Excel button
