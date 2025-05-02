@@ -63,8 +63,10 @@ function createChartPopup() {
 }
 
 function initializePage() {
+    // Load basic data
     loadBoughtStocks();
-    loadCurrentPrices();
+    
+    // Comprehensive data loading and processing with error handling
     loadStoplossData();
 }
 
@@ -342,12 +344,29 @@ function setupExcelHandlers() {
                     const defaultStoplossPercent = parseInt(document.getElementById('defaultStoplossPercent').value) || DEFAULT_STOPLOSS_PERCENT;
                     const stoplossPrice = buyPrice * (1 - defaultStoplossPercent / 100);
                     
+                    // Force LTP (last traded price) to be set to ensure proper evaluation
+                    // This ensures that the uploaded stock will be properly evaluated for stoploss breaks
+                    const currentPrice = currentPrices[symbol] || (buyPrice * 0.95); // Use 95% of buy price as fallback
+                    
+                    // Calculate return percentage
+                    const returnPercent = ((currentPrice - buyPrice) / buyPrice) * 100;
+                    
+                    // Calculate stoploss difference
+                    const stoplossDiff = ((currentPrice - stoplossPrice) / stoplossPrice) * 100;
+                    
+                    // Check if stoploss is broken
+                    const isBroken = currentPrice <= stoplossPrice;
+                    
                     return {
                         symbol: symbol,
                         buyPrice: buyPrice,
                         buyDate: buyDate,
                         stoplossPrice: stoplossPrice,
-                        quantity: quantity
+                        quantity: quantity,
+                        ltp: currentPrice,
+                        returnPercent: returnPercent,
+                        stoplossDiff: stoplossDiff,
+                        isBroken: isBroken  // Pre-evaluate if stoploss is broken
                     };
                 });
             
@@ -505,7 +524,10 @@ function processStoplossStocks() {
         const stoplossDiff = ((currentPrice - stoplossPrice) / stoplossPrice) * 100;
         
         // Check if stoploss is broken
-        const isBroken = currentPrice <= stoplossPrice;
+        // Use pre-calculated isBroken value if available (from imports)
+        const isBroken = (stock.isBroken !== undefined) 
+            ? stock.isBroken 
+            : (currentPrice <= stoplossPrice);
         
         stoplossStocks.push({
             symbol: stock.symbol,
@@ -1152,6 +1174,30 @@ function loadStoplossData() {
     
     // Fetch current prices and then process stoploss stocks
     fetchCurrentPrices().then(() => {
+        // Update all stocks to include evaluation properties
+        boughtStocks = boughtStocks.map(stock => {
+            // Make sure every stock has current price data
+            const currentPrice = currentPrices[stock.symbol] || (stock.buyPrice * 0.95);
+            
+            // Calculate or use existing stoploss price
+            const defaultStoplossPercent = parseInt(document.getElementById('defaultStoplossPercent').value) || DEFAULT_STOPLOSS_PERCENT;
+            const stoplossPrice = stock.stoplossPrice || (stock.buyPrice * (1 - defaultStoplossPercent / 100));
+            
+            // Force evaluation of stoploss status
+            const isBroken = currentPrice <= stoplossPrice;
+            
+            return {
+                ...stock,
+                stoplossPrice: stoplossPrice,  // Ensure stoploss price exists
+                ltp: currentPrice,             // Ensure current price exists 
+                isBroken: isBroken             // Force evaluation of stoploss status
+            };
+        });
+        
+        // Save these enhanced stocks back to localStorage
+        localStorage.setItem('boughtStocks', JSON.stringify(boughtStocks));
+        
+        // Process stoploss stocks with the enhanced data
         processStoplossStocks();
         
         // Show success message if stocks are found
