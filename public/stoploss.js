@@ -505,6 +505,19 @@ function processStoplossStocks() {
     if (!brokenStoplossCounter) {
         brokenStoplossCounter = document.createElement('span');
         brokenStoplossCounter.id = 'brokenStoplossCounter';
+        
+        // Older browser compatibility
+        if (navigator.userAgent.indexOf('Edge') !== -1 || navigator.userAgent.indexOf('Trident') !== -1) {
+            brokenStoplossCounter.style.display = 'inline-block';
+            brokenStoplossCounter.style.marginLeft = '15px';
+            brokenStoplossCounter.style.fontWeight = 'bold';
+            brokenStoplossCounter.style.color = 'white';
+            brokenStoplossCounter.style.backgroundColor = '#f44336';
+            brokenStoplossCounter.style.padding = '4px 10px';
+            brokenStoplossCounter.style.borderRadius = '12px';
+            brokenStoplossCounter.style.fontSize = '14px';
+        }
+        
         stoplossOptionsContainer.appendChild(brokenStoplossCounter);
     }
     
@@ -553,10 +566,20 @@ function displayStoplossStocks() {
         // Add broken-stoploss class if the stock has broken stoploss and the checkbox is checked
         if (stock.isBroken && showBrokenStoploss) {
             row.classList.add('broken-stoploss');
-            // Directly set the background color for stronger effect
-            row.style.backgroundColor = 'rgba(244, 67, 54, 0.25)';
-            // Add a border for more visibility
-            row.style.borderLeft = '4px solid #f44336';
+            
+            // Check for Edge/IE browser
+            const isEdge = navigator.userAgent.indexOf('Edge') !== -1 || navigator.userAgent.indexOf('Trident') !== -1;
+            
+            if (isEdge) {
+                // Edge-specific styling with simpler properties
+                row.style.backgroundColor = '#ffebee';
+                row.style.borderLeft = '3px solid #e53935';
+            } else {
+                // Modern browsers
+                row.style.backgroundColor = 'rgba(244, 67, 54, 0.25)';
+                row.style.borderLeft = '4px solid #f44336';
+            }
+            
             console.log(`Adding broken-stoploss class to ${stock.symbol}`);
         }
         
