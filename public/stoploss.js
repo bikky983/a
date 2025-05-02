@@ -126,13 +126,32 @@ function setupExcelHandlers() {
         // Get bought stocks for export
         const boughtStocks = JSON.parse(localStorage.getItem('boughtStocks') || '[]');
         
-        // Create worksheet with the boughtStocks data
-        const worksheet = XLSX.utils.json_to_sheet(boughtStocks);
+        // Format data to match upload format
+        const formattedData = boughtStocks.map(stock => {
+            // Get current date in YYYY-MM-DD format
+            const today = new Date().toISOString().split('T')[0];
+            
+            return {
+                'CONTRACT NO': '',
+                'CLIENT': '',
+                'CLIENT NAME': '',
+                'SYMBOL': stock.symbol,
+                'TYPE': 'Buy',
+                'PRICE': stock.buyPrice,
+                'QTY': stock.quantity || 10,
+                'VALUE': (stock.buyPrice * (stock.quantity || 10)).toFixed(2),
+                'ORDER ID': '',
+                'TRADE TIME': stock.buyDate || today
+            };
+        });
+        
+        // Create worksheet with the formatted data
+        const worksheet = XLSX.utils.json_to_sheet(formattedData);
         
         // Create a workbook
         const workbook = XLSX.utils.book_new();
         
-        // Add the boughtStocks worksheet
+        // Add the worksheet
         XLSX.utils.book_append_sheet(workbook, worksheet, 'Stoploss');
         
         // Generate buffer and download
