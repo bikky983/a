@@ -69,6 +69,23 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         
+        /* Edge compatibility fixes */
+        @supports (-ms-ime-align:auto) {
+            #brokenStoplossCounter {
+                border-radius: 10px;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+                padding: 3px 8px;
+            }
+            
+            #stoplossTable tr.broken-stoploss {
+                background-color: #ffebee !important; /* Lighter red for Edge */
+            }
+            
+            #stoplossTable tr.broken-stoploss:hover {
+                background-color: #ffcdd2 !important; /* Slightly darker on hover for Edge */
+            }
+        }
+        
         .negative-return {
             color: #f44336;
         }
