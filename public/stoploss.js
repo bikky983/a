@@ -145,41 +145,67 @@ function setupExcelHandlers() {
         // Get bought stocks for export
         const boughtStocks = JSON.parse(localStorage.getItem('boughtStocks') || '[]');
         
-        // Format data to match the simpler format shown in the image
+        // Format data to match the Trade Book Details format
         const formattedData = boughtStocks.map(stock => {
+            // Generate a random contract number
+            const contractNo = Math.floor(Math.random() * 10000000).toString().padStart(7, '0');
+            // Today's date and time for trade time
+            const today = new Date();
+            const tradeTime = today.toISOString().split('T')[0] + ' ' + 
+                              today.getHours().toString().padStart(2, '0') + ':' +
+                              today.getMinutes().toString().padStart(2, '0') + ':' +
+                              today.getSeconds().toString().padStart(2, '0');
+            
             return {
+                'CONTRACT NO': contractNo,
+                'CLIENT': '1234',
+                'CLIENT NAME': 'Trader',
                 'SYMBOL': stock.symbol,
-                'BUY/SELL': 'Buy',
-                'TRADE QTY': stock.quantity || 10,
-                'PRICE(NPR)': stock.buyPrice
+                'TYPE': 'Buy',
+                'PRICE': stock.buyPrice,
+                'QTY': stock.quantity || 10,
+                'VALUE': (stock.buyPrice * (stock.quantity || 10)).toFixed(2),
+                'ORDER ID': 'OID' + Math.floor(Math.random() * 1000000),
+                'TRADE TIME': tradeTime
             };
         });
         
-        // Create worksheet with the formatted data
-        const worksheet = XLSX.utils.json_to_sheet(formattedData);
+        // Define column order to match Trade Book Details format
+        const columnOrder = [
+            'CONTRACT NO', 'CLIENT', 'CLIENT NAME', 'SYMBOL', 
+            'TYPE', 'PRICE', 'QTY', 'VALUE', 'ORDER ID', 'TRADE TIME'
+        ];
         
-        // Define column order to match screenshot exactly
-        const columnOrder = ['SYMBOL', 'BUY/SELL', 'TRADE QTY', 'PRICE(NPR)'];
+        // Create worksheet using the defined column order
+        const orderedWorksheet = XLSX.utils.json_to_sheet(formattedData, {
+            header: columnOrder
+        });
         
-        // Set column widths to match screenshot format
+        // Set column widths to match Trade Book Details format
         const columnWidths = [
-            { wch: 15 }, // SYMBOL
-            { wch: 10 }, // BUY/SELL 
-            { wch: 10 }, // TRADE QTY
-            { wch: 12 }  // PRICE(NPR)
+            { wch: 15 }, // CONTRACT NO
+            { wch: 10 }, // CLIENT
+            { wch: 20 }, // CLIENT NAME
+            { wch: 10 }, // SYMBOL
+            { wch: 8 },  // TYPE
+            { wch: 10 }, // PRICE
+            { wch: 8 },  // QTY
+            { wch: 12 }, // VALUE
+            { wch: 15 }, // ORDER ID
+            { wch: 20 }  // TRADE TIME
         ];
         
         // Apply column widths
-        worksheet['!cols'] = columnWidths;
+        orderedWorksheet['!cols'] = columnWidths;
         
         // Create a workbook
         const workbook = XLSX.utils.book_new();
         
-        // Add the worksheet
-        XLSX.utils.book_append_sheet(workbook, worksheet, 'Stoploss');
+        // Add the worksheet with a better name
+        XLSX.utils.book_append_sheet(workbook, orderedWorksheet, 'Trade Book');
         
-        // Generate buffer and download
-        XLSX.writeFile(workbook, 'stoploss_stocks.xlsx');
+        // Generate buffer and download with a better name
+        XLSX.writeFile(workbook, 'Trade Book Details.xlsx');
     });
 
     // Set up upload Excel button
@@ -313,9 +339,14 @@ function setupExcelHandlers() {
                         return row.BUY === 'Buy' || row.BUY === 'buy';
                     }
                     
-                    // For TYPE column format (from user's CSV)
+                    // For TYPE column format (from Trade Book Details)
                     if (row.TYPE !== undefined) {
                         return row.TYPE === 'Buy' || row.TYPE === 'buy';
+                    }
+                    
+                    // Also check for TYPE with different case (Excel column headers can vary)
+                    if (row.Type !== undefined) {
+                        return row.Type === 'Buy' || row.Type === 'buy';
                     }
                     
                     return false;
@@ -346,6 +377,16 @@ function setupExcelHandlers() {
                         } catch (e) {
                             console.error('Error parsing trade date:', e);
                         }
+                    } else if (row['Trade Time']) {
+                        try {
+                            // Alternative capitalization
+                            const datePart = row['Trade Time'].split(' ')[0];
+                            if (datePart && datePart.includes('-')) {
+                                buyDate = datePart;
+                            }
+                        } catch (e) {
+                            console.error('Error parsing trade date:', e);
+                        }
                     }
                     
                     // Extract symbol - handle different possible column names
@@ -359,6 +400,8 @@ function setupExcelHandlers() {
                         buyPrice = Number(row.PRICE);
                     } else if (row.Price !== undefined) {
                         buyPrice = Number(row.Price);
+                    } else if (row['PRICE'] !== undefined) { // Exact match for Trade Book Details
+                        buyPrice = Number(row['PRICE']);
                     }
                     
                     // Extract quantity - handle different possible column names
@@ -369,6 +412,8 @@ function setupExcelHandlers() {
                         quantity = Number(row.QTY);
                     } else if (row.Quantity !== undefined) {
                         quantity = Number(row.Quantity);
+                    } else if (row['QTY'] !== undefined) { // Exact match for Trade Book Details
+                        quantity = Number(row['QTY']);
                     }
                     
                     // Calculate default stoploss price (15% below buy price)
