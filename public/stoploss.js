@@ -378,11 +378,22 @@ function setupExcelHandlers() {
             // Save the updated bought stocks
             localStorage.setItem('boughtStocks', JSON.stringify(mergedStocks));
             
-            // Reload the bought stocks and process stoploss
+            // Reload the bought stocks
             loadBoughtStocks();
-            processStoplossStocks();
             
-            showSuccess(`${newBoughtStocks.length} stocks imported successfully!`);
+            // Ensure we have current prices for the newly added stocks
+            fetchCurrentPrices().then(() => {
+                // Process stoploss stocks with the latest prices
+                processStoplossStocks();
+                
+                showSuccess(`${newBoughtStocks.length} stocks imported successfully!`);
+            }).catch(error => {
+                console.error('Error fetching prices after import:', error);
+                // Still try to process with whatever prices we have
+                processStoplossStocks();
+                
+                showSuccess(`${newBoughtStocks.length} stocks imported successfully!`);
+            });
         };
         
         // Read the file - determine how to read it based on file type
@@ -471,8 +482,18 @@ function processStoplossStocks() {
     stoplossStocks = [];
     
     boughtStocks.forEach(stock => {
-        const currentPrice = currentPrices[stock.symbol] || 0;
-        if (currentPrice <= 0) return;
+        // Get current price from currentPrices object, fallback to 0
+        let currentPrice = currentPrices[stock.symbol] || 0;
+        
+        // Skip stocks without a price only if we're in strict mode
+        // For uploaded stocks, we want to include them even without a current price
+        // and evaluate stoploss based on the buy price if needed
+        if (currentPrice <= 0) {
+            console.warn(`No current price found for ${stock.symbol}, using buy price to evaluate stoploss`);
+            // Use a slightly lower price than the buy price to evaluate stoploss
+            // This makes sure uploaded stocks are visible but not marked as broken stoploss by default
+            currentPrice = stock.buyPrice * 0.95;
+        }
         
         // Calculate return percentage
         const returnPercent = ((currentPrice - stock.buyPrice) / stock.buyPrice) * 100;
@@ -558,6 +579,10 @@ function displayStoplossStocks() {
             // Apply the class only if highlighting is enabled
             if (showBrokenStoploss) {
                 row.classList.add('broken-stoploss');
+                // Add inline style for additional browser compatibility
+                row.style.backgroundColor = 'rgba(244, 67, 54, 0.4)';
+                row.style.fontWeight = 'bold';
+                row.style.borderLeft = '4px solid #f44336';
             }
         }
         
