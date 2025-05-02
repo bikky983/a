@@ -6,8 +6,13 @@ let stockHistoricalData = {}; // To store historical data
 let chartInstances = {}; // To store chart instances by symbol
 let autoRefreshInterval = null;
 const DEFAULT_STOPLOSS_PERCENT = 15;
+// Add counter for broken stoploss stocks
+let brokenStoplossCount = 0;
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Add CSS styles for broken stoploss highlighting and counter
+    addStoplossStyles();
+    
     // Store reference to common watchlist function to avoid naming conflicts
     // IMPORTANT: Save the reference before our own toggleWatchlist is exported
     if (typeof window.toggleWatchlist === 'function') {
@@ -38,6 +43,63 @@ document.addEventListener('DOMContentLoaded', function() {
     // Setup Excel upload and download event listeners
     setupExcelHandlers();
 });
+
+// Add CSS styles for broken stoploss highlighting and counter
+function addStoplossStyles() {
+    const styleElement = document.createElement('style');
+    styleElement.textContent = `
+        /* Broken stoploss highlighting */
+        tr.broken-stoploss {
+            background-color: rgba(244, 67, 54, 0.15) !important;
+            position: relative;
+        }
+        
+        tr.broken-stoploss:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background-color: #f44336;
+        }
+        
+        tr.broken-stoploss.hide-highlight {
+            background-color: inherit !important;
+        }
+        
+        tr.broken-stoploss.hide-highlight:before {
+            display: none;
+        }
+        
+        /* Broken stoploss counter */
+        .broken-stoploss-counter {
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-size: 16px;
+            text-align: center;
+            background-color: #f5f5f5;
+            border-left: 4px solid #999;
+        }
+        
+        .broken-stoploss-counter.warning {
+            background-color: rgba(255, 152, 0, 0.1);
+            border-left: 4px solid #ff9800;
+        }
+        
+        .broken-stoploss-counter.high-warning {
+            background-color: rgba(255, 87, 34, 0.1);
+            border-left: 4px solid #ff5722;
+        }
+        
+        .broken-stoploss-counter.critical-warning {
+            background-color: rgba(244, 67, 54, 0.1);
+            border-left: 4px solid #f44336;
+        }
+    `;
+    document.head.appendChild(styleElement);
+}
 
 // Create chart popup element
 function createChartPopup() {
@@ -91,7 +153,20 @@ function setupEventListeners() {
     });
     
     // Show broken stoploss checkbox
-    document.getElementById('showBrokenStoploss').addEventListener('change', () => {
+    document.getElementById('showBrokenStoploss').addEventListener('change', function() {
+        // Immediately toggle visibility of highlighted rows
+        const rows = document.querySelectorAll('tr.broken-stoploss');
+        const showHighlight = this.checked;
+        
+        rows.forEach(row => {
+            if (showHighlight) {
+                row.classList.remove('hide-highlight');
+            } else {
+                row.classList.add('hide-highlight');
+            }
+        });
+        
+        // Then update processing to maintain state
         processStoplossStocks();
     });
     
@@ -459,7 +534,6 @@ function processStoplossStocks() {
     const defaultStoplossPercent = parseInt(document.getElementById('defaultStoplossPercent').value) || DEFAULT_STOPLOSS_PERCENT;
     
     stoplossStocks = [];
-    let brokenCount = 0;
     
     boughtStocks.forEach(stock => {
         const currentPrice = currentPrices[stock.symbol] || 0;
@@ -474,14 +548,8 @@ function processStoplossStocks() {
         // Calculate stoploss difference
         const stoplossDiff = ((currentPrice - stoplossPrice) / stoplossPrice) * 100;
         
-        // Check if stoploss is broken - current price is LESS THAN OR EQUAL TO stoploss price
+        // Check if stoploss is broken
         const isBroken = currentPrice <= stoplossPrice;
-        
-        // For debugging
-        if (isBroken) {
-            brokenCount++;
-            console.log(`Stoploss broken: ${stock.symbol}, Current: ${currentPrice}, Stoploss: ${stoplossPrice}`);
-        }
         
         stoplossStocks.push({
             symbol: stock.symbol,
@@ -495,34 +563,6 @@ function processStoplossStocks() {
             isBroken: isBroken
         });
     });
-    
-    console.log(`Total stocks with broken stoploss: ${brokenCount}`);
-    
-    // Update broken stoploss counter in UI
-    const stoplossOptionsContainer = document.querySelector('.stoploss-options');
-    let brokenStoplossCounter = document.getElementById('brokenStoplossCounter');
-    
-    if (!brokenStoplossCounter) {
-        brokenStoplossCounter = document.createElement('span');
-        brokenStoplossCounter.id = 'brokenStoplossCounter';
-        
-        // Older browser compatibility
-        if (navigator.userAgent.indexOf('Edge') !== -1 || navigator.userAgent.indexOf('Trident') !== -1) {
-            brokenStoplossCounter.style.display = 'inline-block';
-            brokenStoplossCounter.style.marginLeft = '15px';
-            brokenStoplossCounter.style.fontWeight = 'bold';
-            brokenStoplossCounter.style.color = 'white';
-            brokenStoplossCounter.style.backgroundColor = '#f44336';
-            brokenStoplossCounter.style.padding = '4px 10px';
-            brokenStoplossCounter.style.borderRadius = '12px';
-            brokenStoplossCounter.style.fontSize = '14px';
-        }
-        
-        stoplossOptionsContainer.appendChild(brokenStoplossCounter);
-    }
-    
-    brokenStoplossCounter.textContent = `${brokenCount} stocks broke stoploss`;
-    brokenStoplossCounter.style.display = brokenCount > 0 ? 'inline-block' : 'none';
     
     // Sort by broken stoploss first, then by stoploss difference
     stoplossStocks.sort((a, b) => {
@@ -540,12 +580,18 @@ function displayStoplossStocks() {
     const tableBody = document.querySelector('#stoplossTable tbody');
     tableBody.innerHTML = '';
     
+    // Reset the broken stoploss counter
+    brokenStoplossCount = 0;
+    
     if (stoplossStocks.length === 0) {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td colspan="9" class="no-data">No bought stocks found</td>
         `;
         tableBody.appendChild(row);
+        
+        // Update the broken stoploss counter element
+        updateBrokenStoplossCounter();
         return;
     }
     
@@ -558,29 +604,24 @@ function displayStoplossStocks() {
     });
     
     const showBrokenStoploss = document.getElementById('showBrokenStoploss').checked;
-    console.log(`Highlight checkbox state: ${showBrokenStoploss}`);
     
     stoplossStocks.forEach((stock, index) => {
+        // Count broken stoploss stocks
+        if (stock.isBroken) {
+            brokenStoplossCount++;
+        }
+        
         const row = document.createElement('tr');
         
-        // Add broken-stoploss class if the stock has broken stoploss and the checkbox is checked
-        if (stock.isBroken && showBrokenStoploss) {
+        // Add broken-stoploss class if the stock has broken stoploss
+        // Always add the class for styling, visibility will be controlled by CSS
+        if (stock.isBroken) {
             row.classList.add('broken-stoploss');
             
-            // Check for Edge/IE browser
-            const isEdge = navigator.userAgent.indexOf('Edge') !== -1 || navigator.userAgent.indexOf('Trident') !== -1;
-            
-            if (isEdge) {
-                // Edge-specific styling with simpler properties
-                row.style.backgroundColor = '#ffebee';
-                row.style.borderLeft = '3px solid #e53935';
-            } else {
-                // Modern browsers
-                row.style.backgroundColor = 'rgba(244, 67, 54, 0.25)';
-                row.style.borderLeft = '4px solid #f44336';
+            // If showBrokenStoploss is false, we'll still add the class but hide it via CSS
+            if (!showBrokenStoploss) {
+                row.classList.add('hide-highlight');
             }
-            
-            console.log(`Adding broken-stoploss class to ${stock.symbol}`);
         }
         
         // Format date
@@ -640,6 +681,9 @@ function displayStoplossStocks() {
         
         tableBody.appendChild(row);
     });
+    
+    // Update the broken stoploss counter display
+    updateBrokenStoplossCounter();
     
     // Add event listeners for stoploss input
     document.querySelectorAll('.stoploss-input').forEach(input => {
@@ -1176,4 +1220,99 @@ function loadStoplossData() {
 
 function loadCurrentPrices() {
     return fetchCurrentPrices();
+}
+
+// Add a function to update the broken stoploss counter
+function updateBrokenStoplossCounter() {
+    // Find or create the counter element
+    let counterElement = document.getElementById('brokenStoplossCounter');
+    
+    if (!counterElement) {
+        // Create the counter if it doesn't exist
+        counterElement = document.createElement('div');
+        counterElement.id = 'brokenStoplossCounter';
+        counterElement.className = 'broken-stoploss-counter';
+        
+        // Find a good position to insert the counter
+        // Try to find specific locations in order of preference
+        let inserted = false;
+        
+        // 1. Try to insert before the table if .stoploss-container exists
+        const tableContainer = document.querySelector('.stoploss-container');
+        if (tableContainer && document.getElementById('stoplossTable')) {
+            tableContainer.insertBefore(counterElement, document.getElementById('stoplossTable'));
+            inserted = true;
+        }
+        
+        // 2. Try to insert after the controls if .stoploss-controls exists
+        if (!inserted) {
+            const controlsArea = document.querySelector('.stoploss-controls');
+            if (controlsArea) {
+                // If it has a next sibling, insert before that
+                if (controlsArea.nextSibling) {
+                    controlsArea.parentNode.insertBefore(counterElement, controlsArea.nextSibling);
+                } else {
+                    // Otherwise append to parent
+                    controlsArea.parentNode.appendChild(counterElement);
+                }
+                inserted = true;
+            }
+        }
+        
+        // 3. Try to insert after the show broken stoploss checkbox directly
+        if (!inserted) {
+            const checkboxLabel = document.querySelector('label[for="showBrokenStoploss"]');
+            if (checkboxLabel) {
+                // Insert after the label or its parent element
+                const targetElement = checkboxLabel.parentNode || checkboxLabel;
+                
+                if (targetElement.nextSibling) {
+                    targetElement.parentNode.insertBefore(counterElement, targetElement.nextSibling);
+                } else {
+                    targetElement.parentNode.appendChild(counterElement);
+                }
+                inserted = true;
+            }
+        }
+        
+        // 4. Last resort - append to the main content container or body
+        if (!inserted) {
+            const mainContent = document.querySelector('main') || document.querySelector('.main-content');
+            if (mainContent) {
+                mainContent.appendChild(counterElement);
+            } else {
+                // Absolute last resort
+                document.body.appendChild(counterElement);
+            }
+        }
+    }
+    
+    // Update the counter text with more detail
+    const totalStocks = stoplossStocks.length;
+    
+    // Format to add a percentage
+    let percentText = '';
+    if (totalStocks > 0) {
+        const brokenPercentage = (brokenStoplossCount / totalStocks) * 100;
+        percentText = ` (${brokenPercentage.toFixed(1)}%)`;
+    }
+    
+    let counterText = `<strong>${brokenStoplossCount}</strong> of <strong>${totalStocks}</strong> stocks have broken stoploss${percentText}`;
+    
+    // Add warning level class based on percentage
+    let warningClass = '';
+    if (totalStocks > 0) {
+        const brokenPercentage = (brokenStoplossCount / totalStocks) * 100;
+        if (brokenPercentage >= 50) {
+            warningClass = 'critical-warning';
+        } else if (brokenPercentage >= 25) {
+            warningClass = 'high-warning';
+        } else if (brokenPercentage > 0) {
+            warningClass = 'warning';
+        }
+    }
+    
+    // Set class and text
+    counterElement.className = `broken-stoploss-counter ${warningClass}`;
+    counterElement.innerHTML = counterText;
 } 
