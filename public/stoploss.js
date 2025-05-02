@@ -459,7 +459,6 @@ function processStoplossStocks() {
     const defaultStoplossPercent = parseInt(document.getElementById('defaultStoplossPercent').value) || DEFAULT_STOPLOSS_PERCENT;
     
     stoplossStocks = [];
-    let brokenCount = 0;
     
     boughtStocks.forEach(stock => {
         const currentPrice = currentPrices[stock.symbol] || 0;
@@ -474,14 +473,8 @@ function processStoplossStocks() {
         // Calculate stoploss difference
         const stoplossDiff = ((currentPrice - stoplossPrice) / stoplossPrice) * 100;
         
-        // Check if stoploss is broken - current price is LESS THAN OR EQUAL TO stoploss price
+        // Check if stoploss is broken
         const isBroken = currentPrice <= stoplossPrice;
-        
-        // For debugging
-        if (isBroken) {
-            brokenCount++;
-            console.log(`Stoploss broken: ${stock.symbol}, Current: ${currentPrice}, Stoploss: ${stoplossPrice}`);
-        }
         
         stoplossStocks.push({
             symbol: stock.symbol,
@@ -495,21 +488,6 @@ function processStoplossStocks() {
             isBroken: isBroken
         });
     });
-    
-    console.log(`Total stocks with broken stoploss: ${brokenCount}`);
-    
-    // Update broken stoploss counter in UI
-    const stoplossOptionsContainer = document.querySelector('.stoploss-options');
-    let brokenStoplossCounter = document.getElementById('brokenStoplossCounter');
-    
-    if (!brokenStoplossCounter) {
-        brokenStoplossCounter = document.createElement('span');
-        brokenStoplossCounter.id = 'brokenStoplossCounter';
-        stoplossOptionsContainer.appendChild(brokenStoplossCounter);
-    }
-    
-    brokenStoplossCounter.textContent = `${brokenCount} stocks broke stoploss`;
-    brokenStoplossCounter.style.display = brokenCount > 0 ? 'inline-block' : 'none';
     
     // Sort by broken stoploss first, then by stoploss difference
     stoplossStocks.sort((a, b) => {
@@ -533,6 +511,9 @@ function displayStoplossStocks() {
             <td colspan="9" class="no-data">No bought stocks found</td>
         `;
         tableBody.appendChild(row);
+        
+        // Reset stoploss counter
+        document.getElementById('stoplossCounter').textContent = '';
         return;
     }
     
@@ -545,19 +526,29 @@ function displayStoplossStocks() {
     });
     
     const showBrokenStoploss = document.getElementById('showBrokenStoploss').checked;
-    console.log(`Highlight checkbox state: ${showBrokenStoploss}`);
+    
+    // Count broken stoploss stocks
+    const brokenStoplossCount = stoplossStocks.filter(stock => stock.isBroken).length;
+    
+    // Update the stoploss counter
+    const stoplossCounterEl = document.getElementById('stoplossCounter');
+    if (brokenStoplossCount > 0) {
+        stoplossCounterEl.textContent = `Alert: ${brokenStoplossCount} stock${brokenStoplossCount > 1 ? 's' : ''} broke stoploss price!`;
+        stoplossCounterEl.className = 'has-broken';
+    } else {
+        stoplossCounterEl.textContent = 'No stocks have broken stoploss price';
+        stoplossCounterEl.className = 'no-broken';
+    }
     
     stoplossStocks.forEach((stock, index) => {
         const row = document.createElement('tr');
         
-        // Add broken-stoploss class if the stock has broken stoploss and the checkbox is checked
-        if (stock.isBroken && showBrokenStoploss) {
-            row.classList.add('broken-stoploss');
-            // Directly set the background color for stronger effect
-            row.style.backgroundColor = 'rgba(244, 67, 54, 0.25)';
-            // Add a border for more visibility
-            row.style.borderLeft = '4px solid #f44336';
-            console.log(`Adding broken-stoploss class to ${stock.symbol}`);
+        // Add broken-stoploss class if the stock has broken stoploss
+        if (stock.isBroken) {
+            // Apply the class only if highlighting is enabled
+            if (showBrokenStoploss) {
+                row.classList.add('broken-stoploss');
+            }
         }
         
         // Format date
