@@ -322,6 +322,10 @@ function setupExcelHandlers() {
             // Get existing bought stocks
             const existingBoughtStocks = JSON.parse(localStorage.getItem('boughtStocks') || '[]');
             
+            // Get current stoploss percentage for calculations
+            const defaultStoplossPercent = parseInt(document.getElementById('defaultStoplossPercent').value) || DEFAULT_STOPLOSS_PERCENT;
+            console.log(`Excel import using stoploss percentage: ${defaultStoplossPercent}%`);
+            
             // Process each row from the file - support both traditional format and new CSV format
             const newBoughtStocks = json
                 .filter(row => {
@@ -393,8 +397,7 @@ function setupExcelHandlers() {
                         quantity = Number(row.Quantity);
                     }
                     
-                    // Calculate default stoploss price (15% below buy price)
-                    const defaultStoplossPercent = parseInt(document.getElementById('defaultStoplossPercent').value) || DEFAULT_STOPLOSS_PERCENT;
+                    // Calculate stoploss price and mark as auto-generated so we can recalculate it later
                     const stoplossPrice = parseFloat((buyPrice * (1 - defaultStoplossPercent / 100)).toFixed(2));
                     
                     return {
@@ -402,7 +405,9 @@ function setupExcelHandlers() {
                         buyPrice: parseFloat(buyPrice.toFixed(2)),
                         buyDate: buyDate,
                         stoplossPrice: stoplossPrice,
-                        quantity: quantity
+                        quantity: quantity,
+                        importedViaExcel: true,  // Mark as imported via Excel
+                        stoplossPercentUsed: defaultStoplossPercent // Store the stoploss percent used for this calculation
                     };
                 });
             
@@ -427,14 +432,15 @@ function setupExcelHandlers() {
                     // If existing stock has a manually set stoploss (different from default),
                     // preserve it instead of overwriting with the default
                     if (existingStock.stoplossPrice) {
-                        const defaultStoplossPercent = parseInt(document.getElementById('defaultStoplossPercent').value) || DEFAULT_STOPLOSS_PERCENT;
-                        const calculatedStoploss = existingStock.buyPrice * (1 - defaultStoplossPercent / 100);
-                        
-                        // If existing stoploss is different from calculated, it was likely manually set
-                        // Only preserve if the buy price has not changed significantly
-                        if (Math.abs(existingStock.stoplossPrice - calculatedStoploss) > 0.01 &&
-                            Math.abs(existingStock.buyPrice - newStock.buyPrice) < 0.01) {
+                        // Check if this is a manually set stoploss or an auto-generated one
+                        const isManualStoploss = !existingStock.importedViaExcel || 
+                            (existingStock.importedViaExcel && existingStock.manuallyUpdated);
+                            
+                        if (isManualStoploss) {
+                            // If manually set, keep it
                             newStock.stoplossPrice = existingStock.stoplossPrice;
+                            newStock.manuallyUpdated = true; // Mark as manually updated
+                            console.log(`Keeping manually set stoploss for ${newStock.symbol}: ${newStock.stoplossPrice}`);
                         }
                     }
                     
@@ -573,6 +579,34 @@ function processStoplossStocks() {
     // Debug counter for monitoring
     let brokenCount = 0;
     
+    // First, update any auto-generated stoploss prices if the percentage has changed
+    // This makes Excel-imported stocks respond to stoploss percentage changes
+    const updatedBoughtStocks = boughtStocks.map(stock => {
+        // Only update stocks that were imported via Excel and haven't been manually modified
+        if (stock.importedViaExcel && !stock.manuallyUpdated) {
+            // Check if stoploss percentage has changed since import
+            if (stock.stoplossPercentUsed !== defaultStoplossPercent) {
+                const newStoplossPrice = parseFloat((stock.buyPrice * (1 - defaultStoplossPercent / 100)).toFixed(2));
+                console.log(`Updating stoploss for ${stock.symbol} from ${stock.stoplossPrice} to ${newStoplossPrice} (${stock.stoplossPercentUsed}% -> ${defaultStoplossPercent}%)`);
+                
+                // Update stoploss price and percentage used
+                return {
+                    ...stock,
+                    stoplossPrice: newStoplossPrice,
+                    stoplossPercentUsed: defaultStoplossPercent
+                };
+            }
+        }
+        return stock;
+    });
+    
+    // If any stocks were updated, save to localStorage
+    if (JSON.stringify(updatedBoughtStocks) !== JSON.stringify(boughtStocks)) {
+        boughtStocks = updatedBoughtStocks;
+        localStorage.setItem('boughtStocks', JSON.stringify(boughtStocks));
+        console.log("Updated stoploss prices for Excel-imported stocks based on new percentage");
+    }
+    
     boughtStocks.forEach(stock => {
         const currentPrice = currentPrices[stock.symbol] || 0;
         if (currentPrice <= 0) return;
@@ -609,7 +643,9 @@ function processStoplossStocks() {
             stoplossDiff: stoplossDiff,
             buyDate: stock.buyDate || 'Unknown',
             quantity: stock.quantity || 10,
-            isBroken: isBroken
+            isBroken: isBroken,
+            importedViaExcel: stock.importedViaExcel || false,
+            manuallyUpdated: stock.manuallyUpdated || false
         });
     });
     
@@ -799,7 +835,14 @@ function updateStoplossPrice(symbol, newStoplossPrice) {
     // Update in boughtStocks
     const stockIndex = boughtStocks.findIndex(stock => stock.symbol === symbol);
     if (stockIndex !== -1) {
-        boughtStocks[stockIndex].stoplossPrice = newStoplossPrice;
+        // Keep track of existing properties
+        const updatedStock = {
+            ...boughtStocks[stockIndex],
+            stoplossPrice: newStoplossPrice,
+            manuallyUpdated: true  // Mark as manually updated so it won't be auto-recalculated
+        };
+        
+        boughtStocks[stockIndex] = updatedStock;
         localStorage.setItem('boughtStocks', JSON.stringify(boughtStocks));
         
         // Update in current display
