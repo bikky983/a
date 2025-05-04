@@ -8,8 +8,13 @@ let showOnlyWatchlist = false; // New variable for watchlist filter
 let DEFAULT_QUANTITY = 10; // Default order quantity
 let boughtStocks = JSON.parse(localStorage.getItem('boughtStocks') || '[]'); // Store bought stocks
 
-// Use this to import D3
-document.write('<script src="https://d3js.org/d3.v7.min.js"></script>');
+// Use this to import D3 - modern approach
+(function loadD3() {
+    const script = document.createElement('script');
+    script.src = 'https://d3js.org/d3.v7.min.js';
+    script.async = false; // Keep it synchronous since charts depend on it
+    document.head.appendChild(script);
+})();
 
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize auto-refresh setting if not set (default to true)
