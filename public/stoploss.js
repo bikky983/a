@@ -7,6 +7,166 @@ let chartInstances = {}; // To store chart instances by symbol
 let autoRefreshInterval = null;
 const DEFAULT_STOPLOSS_PERCENT = 15;
 
+// Candlestick pattern recognition functions
+function detectCandlestickPattern(candle) {
+    // Make sure we have the necessary data
+    if (!candle || !candle.open || !candle.high || !candle.low || !candle.close) {
+        return { pattern: 'Unknown', description: 'Insufficient data' };
+    }
+    
+    const open = parseFloat(candle.open);
+    const high = parseFloat(candle.high);
+    const low = parseFloat(candle.low);
+    const close = parseFloat(candle.close);
+    
+    // Calculate candle properties
+    const bodySize = Math.abs(close - open);
+    const totalSize = high - low;
+    const upperShadow = high - Math.max(open, close);
+    const lowerShadow = Math.min(open, close) - low;
+    
+    // Determine if bullish or bearish
+    const isBullish = close > open;
+    const isBearish = close < open;
+    
+    // Calculate body percentage of the total candle
+    const bodyPercentage = (bodySize / totalSize) * 100;
+    
+    // Handle zero division
+    const upperRatio = bodySize === 0 ? 0 : upperShadow / bodySize;
+    const lowerRatio = bodySize === 0 ? 0 : lowerShadow / bodySize;
+    
+    // Doji patterns (very small body)
+    if (bodyPercentage < 10) {
+        // Dragonfly Doji (small body, no upper shadow, long lower shadow)
+        if (upperShadow < totalSize * 0.05 && lowerShadow > totalSize * 0.5) {
+            return { 
+                pattern: 'Dragonfly Doji', 
+                description: 'Potential reversal signal at bottom of downtrend',
+                bullish: true
+            };
+        }
+        
+        // Gravestone Doji (small body, long upper shadow, no lower shadow)
+        if (lowerShadow < totalSize * 0.05 && upperShadow > totalSize * 0.5) {
+            return { 
+                pattern: 'Gravestone Doji', 
+                description: 'Potential reversal signal at top of uptrend',
+                bullish: false
+            };
+        }
+        
+        // Long-Legged Doji (small body, long upper and lower shadows)
+        if (upperShadow > totalSize * 0.25 && lowerShadow > totalSize * 0.25) {
+            return { 
+                pattern: 'Long-Legged Doji', 
+                description: 'Indicates indecision in the market',
+                bullish: null
+            };
+        }
+        
+        // Regular Doji
+        return { 
+            pattern: 'Doji', 
+            description: 'Indicates indecision in the market',
+            bullish: null
+        };
+    }
+    
+    // Hammer and Hanging Man (small body, little or no upper shadow, long lower shadow)
+    if (bodyPercentage < 30 && upperShadow < bodySize * 0.5 && lowerShadow > bodySize * 2) {
+        if (isBullish) {
+            return { 
+                pattern: 'Hammer', 
+                description: 'Potential bullish reversal after downtrend',
+                bullish: true
+            };
+        } else {
+            return { 
+                pattern: 'Hanging Man', 
+                description: 'Potential bearish reversal after uptrend',
+                bullish: false
+            };
+        }
+    }
+    
+    // Inverted Hammer and Shooting Star (small body, long upper shadow, little or no lower shadow)
+    if (bodyPercentage < 30 && lowerShadow < bodySize * 0.5 && upperShadow > bodySize * 2) {
+        if (isBullish) {
+            return { 
+                pattern: 'Inverted Hammer', 
+                description: 'Potential bullish reversal after downtrend',
+                bullish: true
+            };
+        } else {
+            return { 
+                pattern: 'Shooting Star', 
+                description: 'Potential bearish reversal after uptrend',
+                bullish: false
+            };
+        }
+    }
+    
+    // Marubozu (long body with little or no shadows)
+    if (bodyPercentage > 80) {
+        if (isBullish) {
+            return { 
+                pattern: 'Bullish Marubozu', 
+                description: 'Strong buying pressure',
+                bullish: true
+            };
+        } else {
+            return { 
+                pattern: 'Bearish Marubozu', 
+                description: 'Strong selling pressure',
+                bullish: false
+            };
+        }
+    }
+    
+    // Spinning Top (small body, long upper and lower shadows)
+    if (bodyPercentage < 40 && upperShadow > bodySize && lowerShadow > bodySize) {
+        return { 
+            pattern: 'Spinning Top', 
+            description: 'Indicates indecision in the market',
+            bullish: null
+        };
+    }
+    
+    // Long Bullish/Bearish Candles (large body with short shadows)
+    if (bodyPercentage > 60) {
+        if (isBullish) {
+            return { 
+                pattern: 'Bullish Candle', 
+                description: 'Strong buying pressure',
+                bullish: true
+            };
+        } else {
+            return { 
+                pattern: 'Bearish Candle', 
+                description: 'Strong selling pressure',
+                bullish: false
+            };
+        }
+    }
+    
+    // Default: regular candle
+    return { 
+        pattern: isBullish ? 'Bullish' : 'Bearish', 
+        description: isBullish ? 'Price closed higher' : 'Price closed lower',
+        bullish: isBullish
+    };
+}
+
+// Get the latest candle from historical data
+function getLatestCandle(symbol) {
+    if (!stockHistoricalData[symbol] || stockHistoricalData[symbol].length === 0) {
+        return null;
+    }
+    
+    return stockHistoricalData[symbol][stockHistoricalData[symbol].length - 1];
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     // Store reference to common watchlist function to avoid naming conflicts
     // IMPORTANT: Save the reference before our own toggleWatchlist is exported
@@ -68,6 +228,63 @@ function createChartPopup() {
         </div>
     `;
     document.body.appendChild(popupElement);
+    
+    // Add styles for candle pattern tooltip in the popup
+    const styleElement = document.createElement('style');
+    styleElement.textContent = `
+        .chart-popup-header .candle-pattern {
+            display: inline-block;
+            margin-left: 10px;
+            padding: 3px 6px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            position: relative;
+        }
+        
+        .chart-popup-header .candle-pattern.bullish {
+            color: #4caf50;
+            border-color: #4caf50;
+            background-color: rgba(76, 175, 80, 0.1);
+        }
+        
+        .chart-popup-header .candle-pattern.bearish {
+            color: #f44336;
+            border-color: #f44336;
+            background-color: rgba(244, 67, 54, 0.1);
+        }
+        
+        .chart-popup-header .candle-pattern.neutral {
+            color: #ff9800;
+            border-color: #ff9800;
+            background-color: rgba(255, 152, 0, 0.1);
+        }
+        
+        .chart-popup-header .candle-pattern .tooltip-text {
+            visibility: hidden;
+            width: 180px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 4px;
+            padding: 5px;
+            position: absolute;
+            z-index: 10;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -90px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .chart-popup-header .candle-pattern:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+    `;
+    document.head.appendChild(styleElement);
     
     // Add event listener to close button
     document.querySelector('.chart-popup-close').addEventListener('click', () => {
@@ -763,6 +980,23 @@ function displayStoplossStocks() {
         const buyDate = new Date(stock.buyDate);
         const formattedDate = isNaN(buyDate) ? 'Unknown' : buyDate.toLocaleDateString();
         
+        // Get the latest candle pattern
+        const latestCandle = getLatestCandle(stock.symbol);
+        let candlePatternInfo = { pattern: 'Unknown', description: 'No data available', bullish: null };
+        
+        if (latestCandle) {
+            candlePatternInfo = detectCandlestickPattern(latestCandle);
+            console.log(`${stock.symbol} candle pattern: ${candlePatternInfo.pattern}`);
+        }
+        
+        // Determine CSS class for the candle pattern
+        let patternClass = 'neutral';
+        if (candlePatternInfo.bullish === true) {
+            patternClass = 'bullish';
+        } else if (candlePatternInfo.bullish === false) {
+            patternClass = 'bearish';
+        }
+        
         // Create the row HTML content (without the watchlist button)
         row.innerHTML = `
             <td class="clickable-symbol" data-symbol="${stock.symbol}">${stock.symbol}</td>
@@ -781,6 +1015,10 @@ function displayStoplossStocks() {
             <td class="actions-cell">
                 <button class="remove-stock-btn" data-symbol="${stock.symbol}">Remove</button>
                 <button class="chart-btn" onclick="showFullScreenChart('${stock.symbol}')">Chart</button>
+                <div class="candle-pattern-tooltip">
+                    <span class="candle-pattern ${patternClass}">${candlePatternInfo.pattern}</span>
+                    <span class="tooltip-text">${candlePatternInfo.description}</span>
+                </div>
             </td>
             <td class="chart-cell">
                 <div id="chart-container-${stock.symbol}" class="chart-container-small"></div>
@@ -1048,9 +1286,39 @@ function showFullScreenChart(symbol, stoplossPrice, buyPrice) {
     // Clear existing chart
     popupChartContainer.innerHTML = '';
     
-    // Set popup title
+    // Find the stock data
+    const stockData = stoplossStocks.find(stock => stock.symbol === symbol);
+    if (!stockData) return;
+    
+    // Use the provided stoploss and buy price or get them from stockData
+    stoplossPrice = stoplossPrice || stockData.stoplossPrice;
+    buyPrice = buyPrice || stockData.buyPrice;
+    
+    // Get candle pattern information
+    const latestCandle = getLatestCandle(symbol);
+    let candlePatternInfo = { pattern: 'Unknown', description: 'No data available', bullish: null };
+    
+    if (latestCandle) {
+        candlePatternInfo = detectCandlestickPattern(latestCandle);
+    }
+    
+    // Determine pattern class
+    let patternClass = 'neutral';
+    if (candlePatternInfo.bullish === true) {
+        patternClass = 'bullish';
+    } else if (candlePatternInfo.bullish === false) {
+        patternClass = 'bearish';
+    }
+    
+    // Set popup title with candle pattern
     if (popupTitle) {
-        popupTitle.textContent = `${symbol} Stock Chart`;
+        popupTitle.innerHTML = `
+            ${symbol} Stock Chart 
+            <span class="candle-pattern ${patternClass}" style="margin-left: 10px; font-size: 14px;">
+                ${candlePatternInfo.pattern}
+                <span class="tooltip-text" style="font-size: 12px;">${candlePatternInfo.description}</span>
+            </span>
+        `;
     }
     
     // Show popup
@@ -1068,14 +1336,6 @@ function showFullScreenChart(symbol, stoplossPrice, buyPrice) {
             popupContainer.style.display = 'none';
         });
     }
-    
-    // Find the stock data
-    const stockData = stoplossStocks.find(stock => stock.symbol === symbol);
-    if (!stockData) return;
-    
-    // Use the provided stoploss and buy price or get them from stockData
-    stoplossPrice = stoplossPrice || stockData.stoplossPrice;
-    buyPrice = buyPrice || stockData.buyPrice;
     
     // Check if we have data for this symbol
     if (!stockHistoricalData[symbol] || stockHistoricalData[symbol].length === 0) {
@@ -1270,9 +1530,33 @@ function processHistoricalData(data) {
             open: parseFloat(item.open),
             high: parseFloat(item.high),
             low: parseFloat(item.low),
-            close: parseFloat(item.close)
+            close: parseFloat(item.close),
+            date: item.date || null
         });
     });
+    
+    // Sort data by date if available
+    Object.keys(stockHistoricalData).forEach(symbol => {
+        if (stockHistoricalData[symbol].length > 0 && stockHistoricalData[symbol][0].date) {
+            stockHistoricalData[symbol].sort((a, b) => {
+                return new Date(a.date) - new Date(b.date);
+            });
+        }
+    });
+    
+    // Log the number of symbols with data
+    console.log(`Processed historical data for ${Object.keys(stockHistoricalData).length} symbols`);
+    
+    // Display candle patterns for stocks in the stoploss list
+    if (stoplossStocks && stoplossStocks.length > 0) {
+        stoplossStocks.forEach(stock => {
+            const latestCandle = getLatestCandle(stock.symbol);
+            if (latestCandle) {
+                const pattern = detectCandlestickPattern(latestCandle);
+                console.log(`${stock.symbol} latest candle pattern: ${pattern.pattern} (${pattern.description})`);
+            }
+        });
+    }
 }
 
 function showError(message) {
