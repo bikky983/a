@@ -2,8 +2,8 @@ name: NEPSE Data Processing Scheduler
 
 on:
   schedule:
-    # Run at 3:10 PM Nepal time (UTC+5:45) which is 9:25 AM UTC
-    - cron: '25 9 * * 0-5'  # Sunday to Friday at 9:25 AM UTC
+    # Run at 5:00 PM Nepal time (UTC+5:45), which is 11:15 AM UTC
+    - cron: '15 11 * * 0-5'  # Sunday to Friday at 11:15 AM UTC
   workflow_dispatch:  # Allow manual triggering
 
 permissions:
