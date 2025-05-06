@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -220,6 +221,33 @@
             visibility: visible;
             opacity: 1;
         }
+        
+        /* New styles for the pattern container */
+        .pattern-container {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-top: 5px;
+        }
+        
+        /* Direction indicators */
+        .candle-pattern.bullish:after {
+            content: " ↑";
+        }
+        
+        .candle-pattern.bearish:after {
+            content: " ↓";
+        }
+        
+        /* Expand tooltip for multi-day patterns */
+        .pattern-container .tooltip-text {
+            width: 220px;
+            margin-left: -110px;
+            line-height: 1.4;
+            text-align: left;
+            white-space: normal;
+            padding: 8px;
+        }
     </style>
 </head>
 <body>
@@ -260,15 +288,6 @@
 
         <!-- Add stoploss counter -->
         <div id="stoplossCounter"></div>
-
-        <!-- Add candle pattern info -->
-        <div class="candle-pattern-info" style="margin-bottom: 15px; font-size: 14px; background: #f9f9f9; padding: 10px; border-radius: 4px; border-left: 4px solid #2196F3;">
-            <strong>Candle Patterns:</strong> The table now shows the latest candlestick pattern for each stock. 
-            <span class="candle-pattern bullish" style="margin: 0 5px;">Bullish</span> patterns are green, 
-            <span class="candle-pattern bearish" style="margin: 0 5px;">Bearish</span> patterns are red, and 
-            <span class="candle-pattern neutral" style="margin: 0 5px;">Neutral</span> patterns are orange. 
-            Hover over a pattern to see its description.
-        </div>
 
         <main>
             <table id="stoplossTable">
