@@ -158,6 +158,416 @@ function detectCandlestickPattern(candle) {
     };
 }
 
+/**
+ * Multi-Day Candlestick Pattern Detection Functions
+ * These functions detect patterns that form across multiple days
+ */
+
+// Helper function to determine if we have enough candles for multi-day analysis
+function hasEnoughCandles(candles, required = 3) {
+    return candles && Array.isArray(candles) && candles.length >= required;
+}
+
+// Helper function to determine the trend direction over a period
+function determineTrend(candles, days = 5) {
+    if (!hasEnoughCandles(candles, days)) return null;
+    
+    const subset = candles.slice(-days);
+    const firstClose = parseFloat(subset[0].close);
+    const lastClose = parseFloat(subset[subset.length - 1].close);
+    
+    // Check more recent trend first (last 2-3 days)
+    if (days > 3) {
+        const recentCandles = candles.slice(-3);
+        const recentFirstClose = parseFloat(recentCandles[0].close);
+        const recentLastClose = parseFloat(recentCandles[recentCandles.length - 1].close);
+        
+        // If recent trend is strong, it overrides the longer trend
+        if (recentLastClose > recentFirstClose * 1.01) return 'uptrend'; // 1% up in last 3 days
+        if (recentLastClose < recentFirstClose * 0.99) return 'downtrend'; // 1% down in last 3 days
+    }
+    
+    // Latest day's pattern should have more weight
+    const latestCandle = candles[candles.length - 1];
+    if (latestCandle.close < latestCandle.open && 
+        (latestCandle.close / latestCandle.open) < 0.99) {
+        return 'downtrend'; // Latest day is strongly bearish
+    }
+    if (latestCandle.close > latestCandle.open && 
+        (latestCandle.close / latestCandle.open) > 1.01) {
+        return 'uptrend'; // Latest day is strongly bullish
+    }
+    
+    // Fall back to the full period analysis
+    if (lastClose > firstClose * 1.02) return 'uptrend'; // 2% threshold
+    if (lastClose < firstClose * 0.98) return 'downtrend'; // 2% threshold
+    
+    return 'sideways';
+}
+
+// Detect bullish engulfing pattern
+function detectBullishEngulfing(candles) {
+    if (!hasEnoughCandles(candles, 2)) return false;
+    
+    const current = candles[candles.length - 1];
+    const previous = candles[candles.length - 2];
+    
+    // Previous day should be bearish (close < open)
+    const isPreviousBearish = previous.close < previous.open;
+    
+    // Current day should be bullish (close > open)
+    const isCurrentBullish = current.close > current.open;
+    
+    // Current day's body should engulf previous day's body
+    const currentEngulfsPrevious = current.open < previous.close && current.close > previous.open;
+    
+    return isPreviousBearish && isCurrentBullish && currentEngulfsPrevious;
+}
+
+// Detect bearish engulfing pattern
+function detectBearishEngulfing(candles) {
+    if (!hasEnoughCandles(candles, 2)) return false;
+    
+    const current = candles[candles.length - 1];
+    const previous = candles[candles.length - 2];
+    
+    // Previous day should be bullish (close > open)
+    const isPreviousBullish = previous.close > previous.open;
+    
+    // Current day should be bearish (close < open)
+    const isCurrentBearish = current.close < current.open;
+    
+    // Current day's body should engulf previous day's body
+    const currentEngulfsPrevious = current.open > previous.close && current.close < previous.open;
+    
+    return isPreviousBullish && isCurrentBearish && currentEngulfsPrevious;
+}
+
+// Detect morning star pattern (bullish reversal)
+function detectMorningStar(candles) {
+    if (!hasEnoughCandles(candles, 3)) return false;
+    
+    const first = candles[candles.length - 3];
+    const middle = candles[candles.length - 2];
+    const last = candles[candles.length - 1];
+    
+    // First day: large bearish candle
+    const isFirstBearish = first.close < first.open;
+    const isFirstLarge = Math.abs(first.close - first.open) > (first.high - first.low) * 0.6;
+    
+    // Second day: small candle (could be bullish or bearish) with gap down
+    const isMiddleSmall = Math.abs(middle.close - middle.open) < (middle.high - middle.low) * 0.3;
+    const hasGapDown = middle.high < first.close;
+    
+    // Third day: large bullish candle that closes above the midpoint of the first day
+    const isLastBullish = last.close > last.open;
+    const isLastLarge = Math.abs(last.close - last.open) > (last.high - last.low) * 0.6;
+    const closesAboveMidpoint = last.close > (first.open + first.close) / 2;
+    
+    return isFirstBearish && isFirstLarge && isMiddleSmall && isLastBullish && isLastLarge && (hasGapDown || closesAboveMidpoint);
+}
+
+// Detect evening star pattern (bearish reversal)
+function detectEveningStar(candles) {
+    if (!hasEnoughCandles(candles, 3)) return false;
+    
+    const first = candles[candles.length - 3];
+    const middle = candles[candles.length - 2];
+    const last = candles[candles.length - 1];
+    
+    // First day: large bullish candle
+    const isFirstBullish = first.close > first.open;
+    const isFirstLarge = Math.abs(first.close - first.open) > (first.high - first.low) * 0.6;
+    
+    // Second day: small candle (could be bullish or bearish) with gap up
+    const isMiddleSmall = Math.abs(middle.close - middle.open) < (middle.high - middle.low) * 0.3;
+    const hasGapUp = middle.low > first.close;
+    
+    // Third day: large bearish candle that closes below the midpoint of the first day
+    const isLastBearish = last.close < last.open;
+    const isLastLarge = Math.abs(last.close - last.open) > (last.high - last.low) * 0.6;
+    const closesBelowMidpoint = last.close < (first.open + first.close) / 2;
+    
+    return isFirstBullish && isFirstLarge && isMiddleSmall && isLastBearish && isLastLarge && (hasGapUp || closesBelowMidpoint);
+}
+
+// Detect three white soldiers (bullish continuation)
+function detectThreeWhiteSoldiers(candles) {
+    if (!hasEnoughCandles(candles, 3)) return false;
+    
+    const first = candles[candles.length - 3];
+    const middle = candles[candles.length - 2];
+    const last = candles[candles.length - 1];
+    
+    // All three days should be bullish
+    const allBullish = first.close > first.open && middle.close > middle.open && last.close > last.open;
+    
+    // Each day should open within previous day's body and close higher than previous day
+    const properOpensAndCloses = middle.open > first.open && 
+                                middle.open < first.close && 
+                                middle.close > first.close &&
+                                last.open > middle.open && 
+                                last.open < middle.close && 
+                                last.close > middle.close;
+    
+    // Each day should have similar size
+    const similarSize = 
+        Math.abs((middle.high - middle.low) / (first.high - first.low) - 1) < 0.5 &&
+        Math.abs((last.high - last.low) / (middle.high - middle.low) - 1) < 0.5;
+    
+    return allBullish && properOpensAndCloses && similarSize;
+}
+
+// Detect three black crows (bearish continuation)
+function detectThreeBlackCrows(candles) {
+    if (!hasEnoughCandles(candles, 3)) return false;
+    
+    const first = candles[candles.length - 3];
+    const middle = candles[candles.length - 2];
+    const last = candles[candles.length - 1];
+    
+    // All three days should be bearish
+    const allBearish = first.close < first.open && middle.close < middle.open && last.close < last.open;
+    
+    // Each day should open within previous day's body and close lower than previous day
+    const properOpensAndCloses = middle.open < first.open && 
+                                middle.open > first.close && 
+                                middle.close < first.close &&
+                                last.open < middle.open && 
+                                last.open > middle.close && 
+                                last.close < middle.close;
+    
+    // Each day should have similar size
+    const similarSize = 
+        Math.abs((middle.high - middle.low) / (first.high - first.low) - 1) < 0.5 &&
+        Math.abs((last.high - last.low) / (middle.high - middle.low) - 1) < 0.5;
+    
+    return allBearish && properOpensAndCloses && similarSize;
+}
+
+// Detect dark cloud cover (bearish reversal)
+function detectDarkCloudCover(candles) {
+    if (!hasEnoughCandles(candles, 2)) return false;
+    
+    const previous = candles[candles.length - 2];
+    const current = candles[candles.length - 1];
+    
+    // Previous day should be bullish
+    const isPreviousBullish = previous.close > previous.open;
+    
+    // Current day should be bearish 
+    const isCurrentBearish = current.close < current.open;
+    
+    // Current day should open above previous day's high
+    const gapUp = current.open > previous.high;
+    
+    // Current day should close below the midpoint of previous day's body
+    const closesBelowMidpoint = current.close < (previous.open + previous.close) / 2;
+    
+    return isPreviousBullish && isCurrentBearish && gapUp && closesBelowMidpoint;
+}
+
+// Detect piercing line (bullish reversal)
+function detectPiercingLine(candles) {
+    if (!hasEnoughCandles(candles, 2)) return false;
+    
+    const previous = candles[candles.length - 2];
+    const current = candles[candles.length - 1];
+    
+    // Previous day should be bearish
+    const isPreviousBearish = previous.close < previous.open;
+    
+    // Current day should be bullish
+    const isCurrentBullish = current.close > current.open;
+    
+    // Current day should open below previous day's low
+    const gapDown = current.open < previous.low;
+    
+    // Current day should close above the midpoint of previous day's body
+    const closesAboveMidpoint = current.close > (previous.open + previous.close) / 2;
+    
+    return isPreviousBearish && isCurrentBullish && gapDown && closesAboveMidpoint;
+}
+
+// Detect harami pattern (reversal indicator)
+function detectHarami(candles) {
+    if (!hasEnoughCandles(candles, 2)) return false;
+    
+    const previous = candles[candles.length - 2];
+    const current = candles[candles.length - 1];
+    
+    // Previous day should have a larger body
+    const previousBodySize = Math.abs(previous.close - previous.open);
+    const currentBodySize = Math.abs(current.close - current.open);
+    
+    // Current day's body should be completely contained within previous day's body
+    const isContained = (current.open > Math.min(previous.open, previous.close) &&
+                         current.open < Math.max(previous.open, previous.close) &&
+                         current.close > Math.min(previous.open, previous.close) &&
+                         current.close < Math.max(previous.open, previous.close));
+    
+    return previousBodySize > currentBodySize * 2 && isContained;
+}
+
+// Main function to detect multi-day patterns
+function detectMultiDayPatterns(symbol) {
+    const candles = stockHistoricalData[symbol];
+    if (!hasEnoughCandles(candles, 5)) {
+        return { 
+            pattern: 'Unknown', 
+            description: 'Insufficient historical data',
+            bullish: null,
+            details: null
+        };
+    }
+    
+    // Get recent candles for analysis
+    const recentCandles = candles.slice(-10); // Last 10 days
+    
+    // Determine the current trend
+    const trend = determineTrend(recentCandles);
+    
+    // Check for various patterns in order of priority
+    if (detectThreeWhiteSoldiers(recentCandles)) {
+        return {
+            pattern: 'Three White Soldiers',
+            description: 'Strong bullish continuation pattern with three consecutive bullish candles',
+            bullish: true,
+            details: 'Indicates strengthening buyer momentum and likely further upward movement',
+            trend: trend
+        };
+    }
+    
+    if (detectThreeBlackCrows(recentCandles)) {
+        return {
+            pattern: 'Three Black Crows',
+            description: 'Strong bearish continuation pattern with three consecutive bearish candles',
+            bullish: false,
+            details: 'Indicates strengthening seller momentum and likely further downward movement',
+            trend: trend
+        };
+    }
+    
+    if (detectMorningStar(recentCandles)) {
+        return {
+            pattern: 'Morning Star',
+            description: 'Bullish reversal pattern indicating a potential bottom',
+            bullish: true,
+            details: 'Shows rejection of lower prices and potential trend reversal upward',
+            trend: trend
+        };
+    }
+    
+    if (detectEveningStar(recentCandles)) {
+        return {
+            pattern: 'Evening Star',
+            description: 'Bearish reversal pattern indicating a potential top',
+            bullish: false,
+            details: 'Shows rejection of higher prices and potential trend reversal downward',
+            trend: trend
+        };
+    }
+    
+    if (detectBullishEngulfing(recentCandles)) {
+        return {
+            pattern: 'Bullish Engulfing',
+            description: 'A larger bullish candle engulfs the previous bearish candle',
+            bullish: true,
+            details: 'Shows strong buying pressure overcoming previous selling pressure',
+            trend: trend
+        };
+    }
+    
+    if (detectBearishEngulfing(recentCandles)) {
+        return {
+            pattern: 'Bearish Engulfing',
+            description: 'A larger bearish candle engulfs the previous bullish candle',
+            bullish: false,
+            details: 'Shows strong selling pressure overcoming previous buying pressure',
+            trend: trend
+        };
+    }
+    
+    if (detectDarkCloudCover(recentCandles)) {
+        return {
+            pattern: 'Dark Cloud Cover',
+            description: 'Bearish reversal pattern with a strong down day after an up day',
+            bullish: false,
+            details: 'Current bearish candle opens higher but closes well into the previous bullish candle',
+            trend: trend
+        };
+    }
+    
+    if (detectPiercingLine(recentCandles)) {
+        return {
+            pattern: 'Piercing Line',
+            description: 'Bullish reversal pattern with a strong up day after a down day',
+            bullish: true,
+            details: 'Current bullish candle opens lower but closes well into the previous bearish candle',
+            trend: trend
+        };
+    }
+    
+    if (detectHarami(recentCandles)) {
+        const isCurrentBullish = recentCandles[recentCandles.length - 1].close > recentCandles[recentCandles.length - 1].open;
+        return {
+            pattern: isCurrentBullish ? 'Bullish Harami' : 'Bearish Harami',
+            description: `${isCurrentBullish ? 'Bullish' : 'Bearish'} reversal pattern with a small inside day`,
+            bullish: isCurrentBullish,
+            details: 'A small candle contained within the body of the previous larger candle, indicating potential reversal',
+            trend: trend
+        };
+    }
+    
+    // If no multi-day patterns found, just return the single candle pattern with trend information
+    const latestCandle = candles[candles.length - 1];
+    const singlePattern = detectCandlestickPattern(latestCandle);
+    
+    return {
+        ...singlePattern,
+        trend: trend
+    };
+}
+
+// Combine single day and multi-day pattern analysis
+function analyzeCandlePatterns(symbol) {
+    if (!stockHistoricalData[symbol] || stockHistoricalData[symbol].length === 0) {
+        return {
+            single: { pattern: 'Unknown', description: 'No data available', bullish: null },
+            multi: { pattern: 'Unknown', description: 'No data available', bullish: null },
+            trend: null,
+            direction: null
+        };
+    }
+    
+    // Get the latest single candle pattern
+    const latestCandle = getLatestCandle(symbol);
+    const singlePattern = detectCandlestickPattern(latestCandle);
+    
+    // Get multi-day patterns
+    const multiPattern = detectMultiDayPatterns(symbol);
+    
+    // Determine the final predicted direction based on both patterns
+    let direction = null;
+    
+    if (multiPattern.bullish === true) {
+        direction = 'up';
+    } else if (multiPattern.bullish === false) {
+        direction = 'down';
+    } else if (singlePattern.bullish === true) {
+        direction = 'up';
+    } else if (singlePattern.bullish === false) {
+        direction = 'down';
+    }
+    
+    return {
+        single: singlePattern,
+        multi: multiPattern,
+        trend: multiPattern.trend || null,
+        direction: direction
+    };
+}
+
 // Get the latest candle from historical data
 function getLatestCandle(symbol) {
     if (!stockHistoricalData[symbol] || stockHistoricalData[symbol].length === 0) {
@@ -232,9 +642,22 @@ function createChartPopup() {
     // Add styles for candle pattern tooltip in the popup
     const styleElement = document.createElement('style');
     styleElement.textContent = `
+        .pattern-details {
+            display: inline-flex;
+            gap: 10px;
+            margin-left: 15px;
+            align-items: center;
+        }
+        
+        .pattern-container {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-top: 5px;
+        }
+        
         .chart-popup-header .candle-pattern {
             display: inline-block;
-            margin-left: 10px;
             padding: 3px 6px;
             border-radius: 3px;
             font-size: 12px;
@@ -242,6 +665,7 @@ function createChartPopup() {
             background-color: #f5f5f5;
             border: 1px solid #ddd;
             position: relative;
+            cursor: help;
         }
         
         .chart-popup-header .candle-pattern.bullish {
@@ -264,19 +688,22 @@ function createChartPopup() {
         
         .chart-popup-header .candle-pattern .tooltip-text {
             visibility: hidden;
-            width: 180px;
+            width: 220px;
             background-color: #333;
             color: #fff;
             text-align: center;
             border-radius: 4px;
-            padding: 5px;
+            padding: 8px;
             position: absolute;
             z-index: 10;
             bottom: 125%;
             left: 50%;
-            margin-left: -90px;
+            margin-left: -110px;
             opacity: 0;
             transition: opacity 0.3s;
+            font-weight: normal;
+            white-space: normal;
+            line-height: 1.4;
         }
         
         .chart-popup-header .candle-pattern:hover .tooltip-text {
@@ -980,22 +1407,28 @@ function displayStoplossStocks() {
         const buyDate = new Date(stock.buyDate);
         const formattedDate = isNaN(buyDate) ? 'Unknown' : buyDate.toLocaleDateString();
         
-        // Get the latest candle pattern
-        const latestCandle = getLatestCandle(stock.symbol);
-        let candlePatternInfo = { pattern: 'Unknown', description: 'No data available', bullish: null };
-        
-        if (latestCandle) {
-            candlePatternInfo = detectCandlestickPattern(latestCandle);
-            console.log(`${stock.symbol} candle pattern: ${candlePatternInfo.pattern}`);
-        }
+        // Get the candle pattern analysis (both single day and multi-day patterns)
+        const patternAnalysis = analyzeCandlePatterns(stock.symbol);
         
         // Determine CSS class for the candle pattern
-        let patternClass = 'neutral';
-        if (candlePatternInfo.bullish === true) {
-            patternClass = 'bullish';
-        } else if (candlePatternInfo.bullish === false) {
-            patternClass = 'bearish';
+        let singlePatternClass = 'neutral';
+        if (patternAnalysis.single.bullish === true) {
+            singlePatternClass = 'bullish';
+        } else if (patternAnalysis.single.bullish === false) {
+            singlePatternClass = 'bearish';
         }
+        
+        let multiPatternClass = 'neutral';
+        if (patternAnalysis.multi.bullish === true) {
+            multiPatternClass = 'bullish';
+        } else if (patternAnalysis.multi.bullish === false) {
+            multiPatternClass = 'bearish';
+        }
+        
+        // Direction indicator
+        const directionIndicator = patternAnalysis.direction === 'up' ? '↑' : 
+                                  patternAnalysis.direction === 'down' ? '↓' : 
+                                  '→';
         
         // Create the row HTML content (without the watchlist button)
         row.innerHTML = `
@@ -1015,9 +1448,25 @@ function displayStoplossStocks() {
             <td class="actions-cell">
                 <button class="remove-stock-btn" data-symbol="${stock.symbol}">Remove</button>
                 <button class="chart-btn" onclick="showFullScreenChart('${stock.symbol}')">Chart</button>
-                <div class="candle-pattern-tooltip">
-                    <span class="candle-pattern ${patternClass}">${candlePatternInfo.pattern}</span>
-                    <span class="tooltip-text">${candlePatternInfo.description}</span>
+                <div class="pattern-container">
+                    <div class="candle-pattern-tooltip">
+                        <span class="candle-pattern ${singlePatternClass}">${patternAnalysis.single.pattern}</span>
+                        <span class="tooltip-text">${patternAnalysis.single.description}</span>
+                    </div>
+                    <div class="candle-pattern-tooltip">
+                        <span class="candle-pattern ${multiPatternClass}">${patternAnalysis.multi.pattern} ${directionIndicator}</span>
+                        <span class="tooltip-text">
+                            ${patternAnalysis.multi.description}
+                            ${patternAnalysis.multi.details ? `<br>${patternAnalysis.multi.details}` : ''}
+                            ${patternAnalysis.trend ? `<br>Current trend: ${patternAnalysis.trend}` : ''}
+                            ${patternAnalysis.direction ? 
+                              `<br>Predicted direction: ${patternAnalysis.direction === 'up' ? 'Upward ↑' : 
+                                patternAnalysis.direction === 'down' ? 'Downward ↓' : 'Sideways →'}
+                               ${(patternAnalysis.trend === 'uptrend' && patternAnalysis.direction === 'down') || 
+                                 (patternAnalysis.trend === 'downtrend' && patternAnalysis.direction === 'up') ? 
+                                '<br><strong>Note:</strong> Possible trend reversal signal' : ''}` : ''}
+                        </span>
+                    </div>
                 </div>
             </td>
             <td class="chart-cell">
@@ -1294,30 +1743,53 @@ function showFullScreenChart(symbol, stoplossPrice, buyPrice) {
     stoplossPrice = stoplossPrice || stockData.stoplossPrice;
     buyPrice = buyPrice || stockData.buyPrice;
     
-    // Get candle pattern information
-    const latestCandle = getLatestCandle(symbol);
-    let candlePatternInfo = { pattern: 'Unknown', description: 'No data available', bullish: null };
+    // Get the detailed candle pattern analysis
+    const patternAnalysis = analyzeCandlePatterns(symbol);
     
-    if (latestCandle) {
-        candlePatternInfo = detectCandlestickPattern(latestCandle);
+    // Set pattern classes
+    let singlePatternClass = 'neutral';
+    if (patternAnalysis.single.bullish === true) {
+        singlePatternClass = 'bullish';
+    } else if (patternAnalysis.single.bullish === false) {
+        singlePatternClass = 'bearish';
     }
     
-    // Determine pattern class
-    let patternClass = 'neutral';
-    if (candlePatternInfo.bullish === true) {
-        patternClass = 'bullish';
-    } else if (candlePatternInfo.bullish === false) {
-        patternClass = 'bearish';
+    let multiPatternClass = 'neutral';
+    if (patternAnalysis.multi.bullish === true) {
+        multiPatternClass = 'bullish';
+    } else if (patternAnalysis.multi.bullish === false) {
+        multiPatternClass = 'bearish';
     }
     
-    // Set popup title with candle pattern
+    // Direction indicator
+    const directionIndicator = patternAnalysis.direction === 'up' ? '↑' : 
+                              patternAnalysis.direction === 'down' ? '↓' : 
+                              '→';
+    
+    // Set popup title with comprehensive pattern information
     if (popupTitle) {
         popupTitle.innerHTML = `
-            ${symbol} Stock Chart 
-            <span class="candle-pattern ${patternClass}" style="margin-left: 10px; font-size: 14px;">
-                ${candlePatternInfo.pattern}
-                <span class="tooltip-text" style="font-size: 12px;">${candlePatternInfo.description}</span>
-            </span>
+            ${symbol} Chart 
+            <div class="pattern-details">
+                <span class="candle-pattern ${singlePatternClass}">
+                    ${patternAnalysis.single.pattern}
+                    <span class="tooltip-text">${patternAnalysis.single.description}</span>
+                </span>
+                <span class="candle-pattern ${multiPatternClass}">
+                    ${patternAnalysis.multi.pattern} ${directionIndicator}
+                    <span class="tooltip-text">
+                        ${patternAnalysis.multi.description}
+                        ${patternAnalysis.multi.details ? `<br>${patternAnalysis.multi.details}` : ''}
+                        ${patternAnalysis.trend ? `<br>Current trend: ${patternAnalysis.trend}` : ''}
+                        ${patternAnalysis.direction ? 
+                          `<br>Predicted direction: ${patternAnalysis.direction === 'up' ? 'Upward ↑' : 
+                            patternAnalysis.direction === 'down' ? 'Downward ↓' : 'Sideways →'}
+                           ${(patternAnalysis.trend === 'uptrend' && patternAnalysis.direction === 'down') || 
+                             (patternAnalysis.trend === 'downtrend' && patternAnalysis.direction === 'up') ? 
+                            '<br><strong>Note:</strong> Possible trend reversal signal' : ''}` : ''}
+                    </span>
+                </span>
+            </div>
         `;
     }
     
@@ -1470,6 +1942,38 @@ function showFullScreenChart(symbol, stoplossPrice, buyPrice) {
             .attr("text-anchor", "start")
             .text(`Buy: ${buyPrice.toFixed(2)}`);
         
+        // Add trend direction indication
+        if (patternAnalysis.direction) {
+            const directionColor = patternAnalysis.direction === 'up' ? '#4caf50' : 
+                                    patternAnalysis.direction === 'down' ? '#f44336' : 
+                                    '#ff9800';
+            
+            const directionText = patternAnalysis.direction === 'up' ? '↑ Bullish' : 
+                                    patternAnalysis.direction === 'down' ? '↓ Bearish' : 
+                                    '→ Neutral';
+            
+            // Check for potential conflict between trend and current pattern
+            const hasTrendConflict = 
+                (patternAnalysis.trend === 'uptrend' && patternAnalysis.direction === 'down') || 
+                (patternAnalysis.trend === 'downtrend' && patternAnalysis.direction === 'up');
+            
+            let displayText = directionText;
+            if (hasTrendConflict) {
+                displayText += ` (Potential Reversal from ${patternAnalysis.trend})`;
+            } else if (patternAnalysis.trend) {
+                displayText += ` (Confirming ${patternAnalysis.trend})`;
+            }
+            
+            svg.append("text")
+                .attr("x", width - margin.right + 5)
+                .attr("y", margin.top + 20)
+                .attr("fill", directionColor)
+                .attr("font-size", "14px")
+                .attr("font-weight", "bold")
+                .attr("text-anchor", "start")
+                .text(displayText);
+        }
+        
         // Store reference to destroy on close
         popupContainer.chart = svg.node();
     }, 100);
@@ -1550,10 +2054,14 @@ function processHistoricalData(data) {
     // Display candle patterns for stocks in the stoploss list
     if (stoplossStocks && stoplossStocks.length > 0) {
         stoplossStocks.forEach(stock => {
-            const latestCandle = getLatestCandle(stock.symbol);
-            if (latestCandle) {
-                const pattern = detectCandlestickPattern(latestCandle);
-                console.log(`${stock.symbol} latest candle pattern: ${pattern.pattern} (${pattern.description})`);
+            const patternAnalysis = analyzeCandlePatterns(stock.symbol);
+            if (patternAnalysis && patternAnalysis.multi) {
+                console.log(`${stock.symbol} pattern analysis:`, 
+                    `Single day: ${patternAnalysis.single.pattern} (${patternAnalysis.single.bullish ? 'Bullish' : patternAnalysis.single.bullish === false ? 'Bearish' : 'Neutral'})`,
+                    `Multi-day: ${patternAnalysis.multi.pattern} (${patternAnalysis.multi.bullish ? 'Bullish' : patternAnalysis.multi.bullish === false ? 'Bearish' : 'Neutral'})`,
+                    `Trend: ${patternAnalysis.trend || 'Unknown'}`,
+                    `Direction: ${patternAnalysis.direction || 'Unknown'}`
+                );
             }
         });
     }
