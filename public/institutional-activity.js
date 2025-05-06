@@ -91,6 +91,15 @@ function setupEventListeners() {
         });
     }
     
+    // Stock search functionality
+    const searchInput = document.getElementById('stockSearchInput');
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase().trim();
+            filterActivityTable(searchTerm);
+        });
+    }
+    
     // Auto-refresh toggle
     const autoRefreshBtn = document.getElementById('autoRefreshBtn');
     if (autoRefreshBtn) {
@@ -200,6 +209,50 @@ function setupEventListeners() {
     });
     
     console.log('Event listeners set up');
+}
+
+// Filter the activity table based on search term
+function filterActivityTable(searchTerm) {
+    const table = document.getElementById('activityTable');
+    if (!table) return;
+    
+    const rows = table.querySelectorAll('tbody tr');
+    
+    rows.forEach(row => {
+        const symbol = row.cells[0].textContent.toLowerCase();
+        const patterns = row.querySelector('.indicator-list')?.textContent.toLowerCase() || '';
+        
+        if (searchTerm === '' || symbol.includes(searchTerm) || patterns.includes(searchTerm)) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+    
+    // If no visible rows after filtering, show a message
+    const visibleRows = Array.from(rows).filter(row => row.style.display !== 'none');
+    const noResultsRow = table.querySelector('.no-results-row');
+    
+    if (visibleRows.length === 0 && searchTerm !== '') {
+        // If no results message doesn't exist, create it
+        if (!noResultsRow) {
+            const tbody = table.querySelector('tbody');
+            const tr = document.createElement('tr');
+            tr.className = 'no-results-row';
+            tr.innerHTML = `
+                <td colspan="8" class="no-data-message">
+                    No stocks matching "${searchTerm}" found. Try a different search term.
+                </td>
+            `;
+            tbody.appendChild(tr);
+        } else {
+            noResultsRow.style.display = '';
+            noResultsRow.querySelector('td').textContent = `No stocks matching "${searchTerm}" found. Try a different search term.`;
+        }
+    } else if (noResultsRow) {
+        // Hide no results message if we have results
+        noResultsRow.style.display = 'none';
+    }
 }
 
 function setupTabNavigation() {
@@ -318,7 +371,7 @@ async function fetchCurrentPricesFromAPI() {
 
 async function fetchHistoricalData() {
     try {
-        showLoading(true);
+        showLoading(true, 'Fetching historical data...');
         console.log('Fetching historical data...');
         
         // Attempt to fetch from organized_nepse_data.json in the public folder
@@ -329,6 +382,7 @@ async function fetchHistoricalData() {
         }
         
         console.log('Historical data fetched, parsing JSON...');
+        showLoading(true, 'Parsing data...');
         const data = await response.json();
         console.log('Data parsed, processing...');
         
@@ -337,10 +391,12 @@ async function fetchHistoricalData() {
         }
         
         // Process the data
+        showLoading(true, 'Processing stock data...');
         processHistoricalData(data);
         
         // After processing, detect institutional activity
         console.log('Detecting institutional activity...');
+        showLoading(true, 'Analyzing for institutional activity...');
         detectInstitutionalActivity();
         
         showLoading(false);
@@ -352,6 +408,7 @@ async function fetchHistoricalData() {
         
         // Try using mock data for testing
         console.log('Falling back to mock data for testing...');
+        showLoading(true, 'Using test data for demonstration...');
         useMockDataForTesting();
         
         // Suggest to the user what might be wrong
@@ -1077,7 +1134,7 @@ function initializeStockChart(symbol) {
     const stockAnalysis = institutionalActivityData.find(s => s.symbol === symbol);
     
     // Set up dimensions
-    const width = chartContainer.clientWidth;
+    const width = chartContainer.clientWidth || 100; // Ensure minimum width
     const height = chartContainer.clientHeight || 100;
     const margin = {top: 5, right: 5, bottom: 15, left: 40};
     
@@ -1142,19 +1199,27 @@ function initializeStockChart(symbol) {
         
         if (patterns.includes('Wyckoff Accumulation') || patterns.includes('Spring Pattern')) {
             // Highlight accumulation region in green
+            const startX = x(Math.max(0, displayData.length - 20));
+            const endX = x(displayData.length - 1);
+            const rectWidth = Math.max(1, endX - startX); // Ensure positive width
+            
             svg.append("rect")
-                .attr("x", x(displayData.length - 20))
+                .attr("x", startX)
                 .attr("y", margin.top)
-                .attr("width", x(displayData.length - 1) - x(displayData.length - 20))
+                .attr("width", rectWidth)
                 .attr("height", height - margin.top - margin.bottom)
                 .attr("fill", "#4CAF50")
                 .attr("opacity", 0.1);
         } else if (patterns.includes('Wyckoff Distribution') || patterns.includes('Upthrust Pattern')) {
             // Highlight distribution region in red
+            const startX = x(Math.max(0, displayData.length - 20));
+            const endX = x(displayData.length - 1);
+            const rectWidth = Math.max(1, endX - startX); // Ensure positive width
+            
             svg.append("rect")
-                .attr("x", x(displayData.length - 20))
+                .attr("x", startX)
                 .attr("y", margin.top)
-                .attr("width", x(displayData.length - 1) - x(displayData.length - 20))
+                .attr("width", rectWidth)
                 .attr("height", height - margin.top - margin.bottom)
                 .attr("fill", "#F44336")
                 .attr("opacity", 0.1);
@@ -1162,10 +1227,14 @@ function initializeStockChart(symbol) {
         
         // Highlight circular trading if detected
         if (patterns.includes('Circular Trading Pattern')) {
+            const startX = x(Math.max(0, displayData.length - 10));
+            const endX = x(displayData.length - 1);
+            const rectWidth = Math.max(1, endX - startX); // Ensure positive width
+            
             svg.append("rect")
-                .attr("x", x(displayData.length - 10))
+                .attr("x", startX)
                 .attr("y", margin.top)
-                .attr("width", x(displayData.length - 1) - x(displayData.length - 10))
+                .attr("width", rectWidth)
                 .attr("height", height - margin.top - margin.bottom)
                 .attr("fill", "#FF9800")
                 .attr("opacity", 0.1)
@@ -1845,7 +1914,14 @@ function createRelativeVolumeChart(container, stocks) {
     // Add Y axis
     svg.append("g")
         .attr("transform", `translate(${margin.left},0)`)
-        .call(d3.axisLeft(y).tickFormat(d => d.toFixed(1) + 'x'));
+        .call(d3.axisLeft(y).tickFormat(d => {
+            // Use more descriptive labels instead of technical "2x" format
+            if (d === 0) return "Normal";
+            if (d <= 1) return "Low";
+            if (d <= 2) return "Above Avg";
+            if (d <= 3) return "High";
+            return "Very High";
+        }));
     
     // Add Y axis label
     svg.append("text")
@@ -1853,7 +1929,7 @@ function createRelativeVolumeChart(container, stocks) {
         .attr("y", margin.left / 3)
         .attr("x", -(height / 2))
         .attr("text-anchor", "middle")
-        .text("Relative Volume (x Average)");
+        .text("Volume Strength");
     
     // Add bars
     svg.selectAll("rect.volume-bar")
@@ -1880,7 +1956,13 @@ function createRelativeVolumeChart(container, stocks) {
         .attr("y", d => y(d.maxRelativeVolume) - 5)
         .attr("text-anchor", "middle")
         .attr("font-size", "10px")
-        .text(d => d.maxRelativeVolume.toFixed(1) + 'x');
+        .text(d => {
+            // Convert technical volume ratio to user-friendly descriptive terms
+            if (d.maxRelativeVolume >= 3) return "Very High";
+            if (d.maxRelativeVolume >= 2) return "High";
+            if (d.maxRelativeVolume >= 1.5) return "Above Avg";
+            return "Normal";
+        });
     
     // Chart title
     svg.append("text")
@@ -1889,7 +1971,7 @@ function createRelativeVolumeChart(container, stocks) {
         .attr("text-anchor", "middle")
         .attr("font-size", "16px")
         .attr("font-weight", "bold")
-        .text("Stocks with Highest Relative Volume");
+        .text("Stocks with Unusual Volume Activity");
 }
 
 function createVolumeProfileChart(container, stocks) {
@@ -2167,9 +2249,15 @@ function showSuccess(message) {
     }, 3000);
 }
 
-function showLoading(show) {
+function showLoading(show, message = 'Loading...') {
     const loadingIndicator = document.getElementById('loadingIndicator');
+    const statusMessage = document.getElementById('loadingStatusMessage');
+    
     if (loadingIndicator) {
         loadingIndicator.style.display = show ? 'flex' : 'none';
+        
+        if (statusMessage) {
+            statusMessage.textContent = message;
+        }
     }
 } 
