@@ -1,10 +1,13 @@
 name: Add Protection Script
 
 on:
-  push:
-    branches: [ main ]
-    paths:
-      - 'public/**/*.html'
+  # Only trigger on manual workflow dispatch
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Reason for manual run'
+        required: false
+        default: 'Manual protection update'
 
 jobs:
   add-protection:
