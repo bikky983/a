@@ -34,9 +34,6 @@
             // Ctrl+U (View Source)
             (e.ctrlKey && (e.key === 'U' || e.key === 'u')) ||
             
-            // F5/Ctrl+R (Refresh) - Can be removed if impacting user experience
-            (e.key === 'F5' || (e.ctrlKey && (e.key === 'R' || e.key === 'r'))) ||
-            
             // Ctrl+S (Save)
             (e.ctrlKey && (e.key === 'S' || e.key === 's')) ||
             
@@ -115,9 +112,10 @@
         return false;
     }, false);
 
-    // DevTools detection with multiple methods
+    // DevTools detection with multiple methods - LESS AGGRESSIVE VERSION
     const devToolsDetector = {
         isOpen: false,
+        detectCounter: 0,
         
         // Method 1: Check window size difference
         checkWindowSizeDifference: function() {
@@ -131,51 +129,23 @@
             return false;
         },
         
-        // Method 2: Check for DevTools object
-        checkDevToolsObject: function() {
-            const devtoolsKeys = /./;
-            devtoolsKeys.toString = function() {
-                this.isOpen = true;
-                return '';
-            };
-            
-            console.debug(devtoolsKeys);
-            return this.isOpen;
-        },
-        
-        // Method 3: Check if debugger was triggered
-        checkDebugger: function() {
-            let triggered = false;
-            const start = new Date().getTime();
-            
-            function debuggerChecker() {
-                debugger;
-                const debugTime = new Date().getTime() - start;
-                if (debugTime > 100) {
-                    triggered = true;
-                }
-            }
-            
-            debuggerChecker();
-            return triggered;
-        },
-        
-        // Main check method combining all techniques
+        // Main check method - SIMPLIFIED
         checkDevTools: function() {
-            const methodsTriggered = [
-                this.checkWindowSizeDifference(),
-                this.checkDevToolsObject()
-                // this.checkDebugger() // Disabled for better performance
-            ];
-            
-            const isDevToolsOpen = methodsTriggered.some(result => result === true);
+            // Only check size difference, which is more reliable
+            const isDevToolsOpen = this.checkWindowSizeDifference();
             
             if (isDevToolsOpen) {
-                if (!this.isOpen) {
-                    this.isOpen = true;
-                    this.handleDevToolsChange(true);
+                this.detectCounter++;
+                
+                // Only trigger after detecting devtools multiple times to avoid false positives
+                if (this.detectCounter > 3) {
+                    if (!this.isOpen) {
+                        this.isOpen = true;
+                        this.handleDevToolsChange(true);
+                    }
                 }
             } else {
+                this.detectCounter = 0;
                 if (this.isOpen) {
                     this.isOpen = false;
                     this.handleDevToolsChange(false);
@@ -193,15 +163,14 @@
         
         // Initialize detector
         init: function() {
-            setInterval(this.checkDevTools.bind(this), 500);
-            this.checkDevTools();
+            setInterval(this.checkDevTools.bind(this), 1000);
         }
     };
 
     // Start DevTools detector
     devToolsDetector.init();
 
-    // Console protection
+    // Console protection - LESS AGGRESSIVE VERSION
     const consoleOverrides = {
         // Store original console methods
         log: console.log,
@@ -212,9 +181,20 @@
         
         // Override console methods
         overrideConsole: function() {
+            // Create a flag to track intentional console usage
+            let consoleUsageCounter = 0;
+            
+            // Replace console methods with custom versions
             console.log = console.info = console.warn = console.error = console.debug = function() {
-                // Display message when console is used
-                document.body.innerHTML = '<div style="position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;z-index:9999;text-align:center;padding-top:20%;font-size:24px;">Console access is not allowed</div>';
+                consoleUsageCounter++;
+                
+                // Only trigger protection after multiple console uses to avoid false positives
+                if (consoleUsageCounter > 5) {
+                    document.body.innerHTML = '<div style="position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;z-index:9999;text-align:center;padding-top:20%;font-size:24px;">Console access is not allowed</div>';
+                }
+                
+                // Call original method with empty arguments to avoid errors
+                consoleOverrides.log.apply(console, []);
             };
         },
         
@@ -227,10 +207,10 @@
     // Override console methods
     consoleOverrides.init();
 
-    // Anti-debugging
-    setInterval(function() {
-        debugger;
-    }, 100);
+    // Anti-debugging - REMOVED FOR BETTER PERFORMANCE
+    // setInterval(function() {
+    //     debugger;
+    // }, 100);
     
     //-------------------------------------------------------------------------
     // Download Protection
@@ -248,10 +228,9 @@
     window.addEventListener('beforeunload', function(e) {
         // Only block if Ctrl+S was pressed
         if (window.ctrlSPressed) {
+            window.ctrlSPressed = false; // Reset flag
             e.preventDefault();
             e.returnValue = '';
-            window.ctrlSPressed = false;
-            return '';
         }
     });
     
@@ -418,90 +397,6 @@
     if (window.performance && window.performance.memory) {
         window.performance.memory = undefined;
     }
-    
-    //-------------------------------------------------------------------------
-    // DOM Mutation Observer (Detect page tampering)
-    //-------------------------------------------------------------------------
-    
-    const domMutationDetector = {
-        observer: null,
-        
-        // Initialize mutation observer
-        init: function() {
-            this.observer = new MutationObserver(this.handleMutations.bind(this));
-            
-            // Start observing when DOM is ready
-            window.addEventListener('DOMContentLoaded', () => {
-                // Start observing the entire document for all changes
-                this.observer.observe(document.documentElement, {
-                    childList: true,
-                    attributes: true,
-                    characterData: true,
-                    subtree: true,
-                    attributeOldValue: true,
-                    characterDataOldValue: true
-                });
-            });
-        },
-        
-        // Handle detected mutations
-        handleMutations: function(mutations) {
-            for (let mutation of mutations) {
-                // Ignore our own style changes for anti-inspection
-                if (mutation.target === style) continue;
-                
-                // Ignore changes to our own overlay
-                if (mutation.target.id === 'anti-inspection-overlay') continue;
-                
-                // Check for DevTools-related modifications
-                if (this.isDevToolsModification(mutation)) {
-                    this.handleTampering();
-                    break;
-                }
-            }
-        },
-        
-        // Identify if the mutation is related to DevTools activity
-        isDevToolsModification: function(mutation) {
-            // Look for DevTools-specific elements or attributes
-            const devToolsClasses = ['__devtools', 'devtools', 'dev-tools', 'console-panel'];
-            const devToolsAttributes = ['devtoolsid', 'data-devtools'];
-            
-            // Check for typical DevTools-like insertions
-            if (mutation.type === 'childList' && mutation.addedNodes.length) {
-                for (let node of mutation.addedNodes) {
-                    if (node.nodeType === Node.ELEMENT_NODE) {
-                        // Check node classes
-                        if (node.classList) {
-                            for (let cls of devToolsClasses) {
-                                if (node.classList.contains(cls)) {
-                                    return true;
-                                }
-                            }
-                        }
-                        
-                        // Check attributes
-                        for (let attr of devToolsAttributes) {
-                            if (node.hasAttribute(attr)) {
-                                return true;
-                            }
-                        }
-                    }
-                }
-            }
-            
-            return false;
-        },
-        
-        // Handle tampering detection
-        handleTampering: function() {
-            // Clear page content
-            document.body.innerHTML = '<div id="anti-inspection-overlay" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;z-index:9999;text-align:center;padding-top:20%;font-size:24px;">Page tampering detected</div>';
-        }
-    };
-    
-    // Initialize DOM mutation detector
-    domMutationDetector.init();
     
     // Disable drag and drop of page elements
     document.addEventListener('dragstart', function(e) {
