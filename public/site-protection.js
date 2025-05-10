@@ -116,9 +116,4 @@ document.addEventListener('keydown', function(e) {
     };
     
     disableConsole();
-})();
-
-// Alert when attempting to leave the page
-window.onbeforeunload = function() {
-    return "Are you sure you want to leave this page?";
-}; 
+})(); 
