@@ -1,0 +1,45 @@
+name: Add Protection Script
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'public/**/*.html'
+
+jobs:
+  add-protection:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          
+      - name: Add protection script to HTML files
+        run: |
+          # Check if site-protection.js exists
+          if [ ! -f "public/site-protection.js" ]; then
+            echo "Warning: site-protection.js not found. Protection script references will still be added."
+          fi
+          
+          # Find all HTML files in the public directory
+          find public -name "*.html" | while read file; do
+            # Check if the protection script is already included
+            if ! grep -q "site-protection.js" "$file"; then
+              # Add the script reference before </head>
+              sed -i 's#</head>#    <script src="site-protection.js"></script>\n</head>#g' "$file"
+              echo "Added protection to $file"
+            else
+              echo "Protection already added to $file"
+            fi
+          done
+          
+      - name: Commit changes
+        run: |
+          git config --global user.name 'GitHub Action'
+          git config --global user.email 'action@github.com'
+          git add public/
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Add protection script to HTML files" && git push) 
