@@ -17,7 +17,8 @@ document.addEventListener('DOMContentLoaded', function() {
             { name: 'Enhanced Trendline Scanner', url: 'enhanced-trendline-scanner.html' },
             { name: 'Institutional Activity', url: 'institutional-activity.html' },
             { name: 'Big Player Accumulation', url: 'big-player-accumulation.html' },
-            { name: 'Weekly Heatmap', url: 'heatmap.html' }
+            { name: 'Weekly Heatmap', url: 'heatmap.html' },
+            { name: 'IPO & Rights', url: 'ipo-rights.html' }
             // New pages should be added here
         ];
         

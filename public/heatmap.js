@@ -8,6 +8,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const percentViewBtn = document.getElementById('percentViewBtn');
     const getStocksBtn = document.getElementById('getStocksBtn');
     const dashboardStocksOnlyCheckbox = document.getElementById('dashboardStocksOnlyCheckbox');
+    const minThresholdSlider = document.getElementById('minThreshold');
+    const maxThresholdSlider = document.getElementById('maxThreshold');
+    const minThresholdValueDisplay = document.getElementById('minThresholdValue');
+    const maxThresholdValueDisplay = document.getElementById('maxThresholdValue');
     
     // State variables
     let stockData = [];
@@ -20,17 +24,42 @@ document.addEventListener('DOMContentLoaded', function() {
     let dashboardStocksOnly = false;
     let dashboardStocks = [];
     let stockSectors = {};
+    let stockHistoricalData = {}; // Store historical data for charts
+    let minSupportThreshold = -3; // Default min threshold percentage
+    let maxSupportThreshold = 4; // Default max threshold percentage
+    let analysisDays = 7; // Default number of days for analysis
     
     // Initialize event listeners
     initEventListeners();
     
     // Set Dashboard Stocks Only checkbox to checked by default
-    dashboardStocksOnlyCheckbox.checked = true;
-    dashboardStocksOnly = true;
+    if (localStorage.getItem('heatmapDashboardStocksOnly') === 'false') {
+        dashboardStocksOnlyCheckbox.checked = false;
+        dashboardStocksOnly = false;
+    } else {
+        // Default is true or if setting doesn't exist
+        dashboardStocksOnlyCheckbox.checked = true;
+        dashboardStocksOnly = true;
+        localStorage.setItem('heatmapDashboardStocksOnly', 'true');
+    }
+    
+    // Load saved analysis days setting
+    const savedDays = localStorage.getItem('analysisDays');
+    if (savedDays) {
+        analysisDays = parseInt(savedDays);
+        const daysSelector = document.getElementById('daysSelector');
+        if (daysSelector) {
+            daysSelector.value = analysisDays;
+        }
+    }
     
     // Load data on page load
     loadDashboardData();
-    loadData();
+    
+    // First load historical data, then load and process the main data
+    fetchHistoricalData().then(() => {
+        loadData();
+    });
     
     // Get Stocks button functionality
     if (getStocksBtn) {
@@ -62,6 +91,28 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         
+        // Apply days button functionality
+        const applyDaysBtn = document.getElementById('applyDaysBtn');
+        if (applyDaysBtn) {
+            applyDaysBtn.addEventListener('click', function() {
+                const daysSelector = document.getElementById('daysSelector');
+                if (daysSelector) {
+                    const newDays = parseInt(daysSelector.value);
+                    if (newDays >= 1) {
+                        analysisDays = newDays;
+                        // Save to localStorage
+                        localStorage.setItem('analysisDays', String(analysisDays));
+                        // Update the date range and refresh data
+                        setLastCustomDays();
+                        processWeeklyData();
+                        updateVisualizations();
+                        updateDateRangeDisplay();
+                        console.log(`Analysis days updated to ${analysisDays}`);
+                    }
+                }
+            });
+        }
+        
         volumeViewBtn.addEventListener('click', function() {
             setActiveView('volume');
         });
@@ -76,9 +127,35 @@ document.addEventListener('DOMContentLoaded', function() {
         
         dashboardStocksOnlyCheckbox.addEventListener('change', function() {
             dashboardStocksOnly = this.checked;
+            localStorage.setItem('heatmapDashboardStocksOnly', String(dashboardStocksOnly));
             processWeeklyData();
             updateVisualizations();
         });
+        
+        // Add support threshold slider event listener
+        if (minThresholdSlider) {
+            minThresholdSlider.addEventListener('input', function() {
+                minSupportThreshold = parseFloat(this.value);
+                if (minThresholdValueDisplay) {
+                    minThresholdValueDisplay.textContent = minSupportThreshold;
+                }
+                // Re-process data to update support level highlighting
+                processWeeklyData();
+                updateVisualizations();
+            });
+        }
+        
+        if (maxThresholdSlider) {
+            maxThresholdSlider.addEventListener('input', function() {
+                maxSupportThreshold = parseFloat(this.value);
+                if (maxThresholdValueDisplay) {
+                    maxThresholdValueDisplay.textContent = maxSupportThreshold;
+                }
+                // Re-process data to update support level highlighting
+                processWeeklyData();
+                updateVisualizations();
+            });
+        }
     }
     
     function setActiveView(view) {
@@ -232,8 +309,8 @@ document.addEventListener('DOMContentLoaded', function() {
             
             stockData = await response.json();
             
-            // Set the date range to the last 9 days including today
-            setLastNineDays();
+            // Set the date range to the custom number of days
+            setLastCustomDays();
             
             // Initialize the week selector with the current week
             const today = new Date();
@@ -254,10 +331,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    function setLastNineDays() {
+    function setLastCustomDays() {
         const endDate = new Date(); // Today
         const startDate = new Date();
-        startDate.setDate(endDate.getDate() - 8); // 8 days ago (to make 9 days total including today)
+        startDate.setDate(endDate.getDate() - (analysisDays - 1)); // Days ago (to make total days including today)
         
         // Set start date to beginning of day
         startDate.setHours(0, 0, 0, 0);
@@ -267,7 +344,12 @@ document.addEventListener('DOMContentLoaded', function() {
         
         currentDateRange = { startDate, endDate };
         
-        console.log(`Date range set to: ${startDate.toDateString()} - ${endDate.toDateString()}`);
+        console.log(`Date range set to: ${startDate.toDateString()} - ${endDate.toDateString()} (${analysisDays} days)`);
+    }
+    
+    // For backward compatibility
+    function setLastSevenDays() {
+        setLastCustomDays();
     }
     
     function updateDateRangeDisplay() {
@@ -353,25 +435,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Calculate weekly high/low
                 let weeklyHigh = -Infinity;
                 let weeklyLow = Infinity;
-                let totalVolume = 0;
                 
                 records.forEach(record => {
                     weeklyHigh = Math.max(weeklyHigh, record.high);
                     weeklyLow = Math.min(weeklyLow, record.low);
-                    totalVolume += record.volume;
                 });
                 
                 // Calculate volatility (high-low range as percentage of open)
                 const volatility = ((weeklyHigh - weeklyLow) / weeklyOpen) * 100;
                 
+                // Get total volume using the same method as IPO rights page
+                const totalVolume = calculateTotalVolume(symbol);
+                
                 // Calculate average daily volume
-                const avgDailyVolume = totalVolume / records.length;
+                const avgDailyVolume = totalVolume / analysisDays; // Using custom days as the period
                 
                 // Count trading days in the period
                 const tradingDays = records.length;
                 
                 // Calculate missing days (holidays)
-                const totalDaysInPeriod = 9; // Last 9 days
+                const totalDaysInPeriod = analysisDays; // Last X days
                 const holidayDays = totalDaysInPeriod - tradingDays;
                 
                 // Calculate simple RSI based on weekly data
@@ -882,10 +965,26 @@ document.addEventListener('DOMContentLoaded', function() {
         cell.append('rect')
             .attr('width', d => Math.max(0, d.x1 - d.x0))
             .attr('height', d => Math.max(0, d.y1 - d.y0))
-            .attr('fill', d => colorScale(d.data.originalValue))
+            .attr('fill', d => {
+                // Check which support level the stock is near
+                const supportLevel = isNearSupportLevel(d.data.name, d.data.close);
+                if (supportLevel > 0) {
+                    // Different colors based on support level - using lighter variants
+                    switch (supportLevel) {
+                        case 1: return '#90CAF9'; // Even lighter blue for Support 1
+                        case 2: return '#FFCC80'; // Even lighter orange for Support 2
+                        case 3: return '#BCAAA4'; // Even lighter brown for Support 3
+                        default: return colorScale(d.data.originalValue); 
+                    }
+                } else {
+                    // Original color based on value
+                    return colorScale(d.data.originalValue);
+                }
+            })
             .attr('stroke', '#fff')
             .attr('stroke-width', 1)
             .attr('class', 'treemap-cell')
+            .style('cursor', 'pointer') // Show pointer cursor on hover
             .on('mouseover', function(event, d) {
                 // Add hover effect
                 d3.select(this)
@@ -963,6 +1062,16 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <span>${supportPrice1.toFixed(2)} (${diff1})</span>
                             </div>
                         `;
+                        
+                        // Add difference percentage with color coding
+                        const diff1Value = ((currentPrice - supportPrice1) / supportPrice1) * 100;
+                        const diff1Class = Math.abs(diff1Value) <= maxSupportThreshold ? 'near-support' : '';
+                        tooltipContent += `
+                            <div class="tooltip-row ${diff1Class}">
+                                <span class="tooltip-label">Proximity:</span>
+                                <span>${Math.abs(diff1Value).toFixed(2)}% ${Math.abs(diff1Value) <= maxSupportThreshold ? '(Near!)' : ''}</span>
+                            </div>
+                        `;
                     }
                     
                     if (supportPrice2) {
@@ -972,6 +1081,16 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <span>${supportPrice2.toFixed(2)} (${diff2})</span>
                             </div>
                         `;
+                        
+                        // Add difference percentage with color coding
+                        const diff2Value = ((currentPrice - supportPrice2) / supportPrice2) * 100;
+                        const diff2Class = Math.abs(diff2Value) <= maxSupportThreshold ? 'near-support' : '';
+                        tooltipContent += `
+                            <div class="tooltip-row ${diff2Class}">
+                                <span class="tooltip-label">Proximity:</span>
+                                <span>${Math.abs(diff2Value).toFixed(2)}% ${Math.abs(diff2Value) <= maxSupportThreshold ? '(Near!)' : ''}</span>
+                            </div>
+                        `;
                     }
                     
                     if (supportPrice3) {
@@ -979,6 +1098,16 @@ document.addEventListener('DOMContentLoaded', function() {
                             <div class="tooltip-row">
                                 <span class="tooltip-label">Support 3:</span>
                                 <span>${supportPrice3.toFixed(2)} (${diff3})</span>
+                            </div>
+                        `;
+                        
+                        // Add difference percentage with color coding
+                        const diff3Value = ((currentPrice - supportPrice3) / supportPrice3) * 100;
+                        const diff3Class = Math.abs(diff3Value) <= maxSupportThreshold ? 'near-support' : '';
+                        tooltipContent += `
+                            <div class="tooltip-row ${diff3Class}">
+                                <span class="tooltip-label">Proximity:</span>
+                                <span>${Math.abs(diff3Value).toFixed(2)}% ${Math.abs(diff3Value) <= maxSupportThreshold ? '(Near!)' : ''}</span>
                             </div>
                         `;
                     }
@@ -997,6 +1126,20 @@ document.addEventListener('DOMContentLoaded', function() {
                             <div class="tooltip-badge watchlist-badge">In Watchlist</div>
                         `;
                     }
+                }
+                
+                // Add near support badge if near support
+                const supportLevel = isNearSupportLevel(d.data.name, d.data.close);
+                if (supportLevel > 0) {
+                    // Color classes for different support levels
+                    const supportBadgeClass = 
+                        supportLevel === 1 ? 'support1-badge' : 
+                        supportLevel === 2 ? 'support2-badge' : 
+                        'support3-badge';
+                    
+                    tooltipContent += `
+                        <div class="tooltip-badge ${supportBadgeClass}">Near Support ${supportLevel}</div>
+                    `;
                 }
                 
                 // Show tooltip with all info
@@ -1018,6 +1161,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 tooltip.transition()
                     .duration(500)
                     .style('opacity', 0);
+            })
+            .on('click', function(event, d) {
+                // Open chart popup when clicked
+                showFullScreenChart(d.data.name);
+                
+                // Prevent event from bubbling up
+                event.stopPropagation();
             });
         
         // Add stock symbol labels with adaptive sizing
@@ -1158,5 +1308,336 @@ document.addEventListener('DOMContentLoaded', function() {
         const avgVolume = dataArray.reduce((sum, stock) => sum + stock.volume, 0) / dataArray.length;
         // Consider high volume if it's 2x the average
         return volume > avgVolume * 2;
+    }
+    
+    // Create chart popup if not exists
+    function createChartPopup() {
+        const popupExists = document.querySelector('.chart-popup');
+        if (popupExists) return;
+        
+        const popupHtml = `
+            <div class="chart-popup">
+                <div class="chart-popup-content">
+                    <div class="chart-popup-header">
+                        <h3 id="popupChartTitle">Stock Chart</h3>
+                        <button class="chart-popup-close">&times;</button>
+                    </div>
+                    <div class="chart-popup-body">
+                        <div id="popupChartContainer"></div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        document.body.insertAdjacentHTML('beforeend', popupHtml);
+        
+        // Add event listener to close button
+        const closeButton = document.querySelector('.chart-popup-close');
+        if (closeButton) {
+            closeButton.addEventListener('click', function() {
+                document.querySelector('.chart-popup').style.display = 'none';
+            });
+        }
+    }
+    
+    // Function to check if a stock is near support levels
+    // Returns 1, 2, or 3 for the respective support level, or 0 if not near any support
+    function isNearSupportLevel(symbol, currentPrice) {
+        try {
+            const userStocksData = localStorage.getItem('userStocks');
+            if (!userStocksData) return 0;
+            
+            const userStocks = JSON.parse(userStocksData);
+            if (!Array.isArray(userStocks)) return 0;
+            
+            const stockInfo = userStocks.find(s => s && s.symbol === symbol);
+            if (!stockInfo) return 0;
+            
+            // Use the adjustable threshold value
+            const minThreshold = minSupportThreshold;
+            const maxThreshold = maxSupportThreshold;
+            
+            const supportPrice1 = stockInfo.supportPrice1;
+            if (supportPrice1 && !isNaN(supportPrice1)) {
+                const diff = ((currentPrice - supportPrice1) / supportPrice1) * 100;
+                if (diff >= minThreshold && diff <= maxThreshold) return 1;
+            }
+            
+            const supportPrice2 = stockInfo.supportPrice2;
+            if (supportPrice2 && !isNaN(supportPrice2)) {
+                const diff = ((currentPrice - supportPrice2) / supportPrice2) * 100;
+                if (diff >= minThreshold && diff <= maxThreshold) return 2;
+            }
+            
+            const supportPrice3 = stockInfo.supportPrice3;
+            if (supportPrice3 && !isNaN(supportPrice3)) {
+                const diff = ((currentPrice - supportPrice3) / supportPrice3) * 100;
+                if (diff >= minThreshold && diff <= maxThreshold) return 3;
+            }
+            
+            return 0;
+        } catch (e) {
+            console.error(`Error checking support levels for ${symbol}:`, e);
+            return 0;
+        }
+    }
+    
+    // Function to show full screen chart for a stock
+    function showFullScreenChart(symbol) {
+        console.log(`Showing full screen chart for ${symbol}`);
+        
+        const popupContainer = document.querySelector('.chart-popup');
+        const popupChartContainer = document.getElementById('popupChartContainer');
+        const popupTitle = document.getElementById('popupChartTitle');
+        
+        if (!popupContainer || !popupChartContainer) {
+            createChartPopup();
+            return showFullScreenChart(symbol);
+        }
+        
+        // Clear existing chart
+        popupChartContainer.innerHTML = '';
+        
+        // Set popup title
+        if (popupTitle) {
+            popupTitle.textContent = `${symbol} Stock Chart`;
+        }
+        
+        // Show popup
+        popupContainer.style.display = 'flex';
+        
+        // Ensure close button works by reattaching the event listener
+        const closeButton = document.querySelector('.chart-popup-close');
+        if (closeButton) {
+            // Remove any existing event listeners by cloning and replacing
+            const newCloseButton = closeButton.cloneNode(true);
+            closeButton.parentNode.replaceChild(newCloseButton, closeButton);
+            
+            // Add event listener to the new button
+            newCloseButton.addEventListener('click', () => {
+                popupContainer.style.display = 'none';
+            });
+        }
+        
+        // Check if we have data for this symbol
+        if (!stockHistoricalData[symbol] || stockHistoricalData[symbol].length === 0) {
+            const noDataLabel = document.createElement('div');
+            noDataLabel.textContent = 'No data available';
+            noDataLabel.style.position = 'absolute';
+            noDataLabel.style.top = '50%';
+            noDataLabel.style.left = '50%';
+            noDataLabel.style.transform = 'translate(-50%, -50%)';
+            noDataLabel.style.color = '#999';
+            noDataLabel.style.fontSize = '16px';
+            popupChartContainer.appendChild(noDataLabel);
+            return;
+        }
+        
+        // Process data - use more data points for full screen
+        const data = stockHistoricalData[symbol];
+        
+        // Downsample for large datasets but keep more points for detailed view
+        const displayData = downsampleData(data, 1000); // Keep max 1000 points for full screen
+        
+        // Get support prices for this symbol
+        const userStocks = JSON.parse(localStorage.getItem('userStocks') || '[]');
+        const stockData = userStocks.find(s => s.symbol === symbol);
+        const supportPrices = stockData ? [
+            stockData.supportPrice1, 
+            stockData.supportPrice2, 
+            stockData.supportPrice3
+        ].filter(p => p && !isNaN(p)) : [];
+        
+        // Wait for the popup to be visible
+        setTimeout(() => {
+            // Set up dimensions
+            const width = popupChartContainer.clientWidth || 800;
+            const height = popupChartContainer.clientHeight || 400;
+            const margin = {top: 20, right: 80, bottom: 30, left: 50};
+            
+            // Create SVG
+            const svg = d3.select(popupChartContainer)
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height)
+                .attr("viewBox", [0, 0, width, height]);
+            
+            // X scale - use index for simplicity
+            const x = d3.scaleLinear()
+                .domain([0, displayData.length - 1])
+                .range([margin.left, width - margin.right]);
+            
+            // Y scale - ensure support prices are included in the domain if needed
+            const minY = Math.min(
+                d3.min(displayData, d => d.low) * 0.99,
+                ...supportPrices.map(p => p * 0.99)
+            );
+            const maxY = Math.max(
+                d3.max(displayData, d => d.high) * 1.01, 
+                ...supportPrices.map(p => p * 1.01)
+            );
+            
+            const y = d3.scaleLinear()
+                .domain([minY, maxY])
+                .range([height - margin.bottom, margin.top]);
+            
+            // Add x-axis
+            svg.append("g")
+                .attr("transform", `translate(0,${height - margin.bottom})`)
+                .call(d3.axisBottom(x).ticks(5).tickFormat(i => {
+                    const index = Math.floor(i);
+                    if (index >= 0 && index < displayData.length) {
+                        return index; // Or format as needed
+                    }
+                    return "";
+                }));
+            
+            // Add y-axis
+            svg.append("g")
+                .attr("transform", `translate(${margin.left},0)`)
+                .call(d3.axisLeft(y));
+            
+            // Add line
+            const line = d3.line()
+                .x((d, i) => x(i))
+                .y(d => y(d.close))
+                .curve(d3.curveMonotoneX);
+            
+            // Draw line
+            svg.append("path")
+                .datum(displayData)
+                .attr("fill", "none")
+                .attr("stroke", "#2196F3")
+                .attr("stroke-width", 2)
+                .attr("d", line);
+            
+            // Add candlestick (optional for detailed view)
+            svg.selectAll("rect.candle")
+                .data(displayData)
+                .enter()
+                .append("rect")
+                .attr("class", "candle")
+                .attr("x", (d, i) => x(i) - 2)
+                .attr("y", d => y(Math.max(d.open, d.close)))
+                .attr("width", 4)
+                .attr("height", d => Math.abs(y(d.open) - y(d.close)))
+                .attr("fill", d => d.open > d.close ? "#f44336" : "#4caf50");
+            
+            // Add support price lines
+            const supportColors = ["#42A5F5", "#FFA726", "#8D6E63"]; // Light blue, light orange, light brown
+            const supportNames = ["Support 1", "Support 2", "Support 3"];
+            
+            supportPrices.forEach((price, index) => {
+                if (price && !isNaN(price)) {
+                    // Add support price line
+                    svg.append("line")
+                        .attr("x1", margin.left)
+                        .attr("x2", width - margin.right)
+                        .attr("y1", y(price))
+                        .attr("y2", y(price))
+                        .attr("stroke", supportColors[index % supportColors.length])
+                        .attr("stroke-width", 2)
+                        .attr("stroke-dasharray", "5,5");
+                    
+                    // Add support price label
+                    svg.append("text")
+                        .attr("x", width - margin.right + 5)
+                        .attr("y", y(price) + 4)
+                        .attr("fill", supportColors[index % supportColors.length])
+                        .attr("font-size", "12px")
+                        .attr("text-anchor", "start")
+                        .text(`${supportNames[index]}: ${price}`);
+                }
+            });
+            
+            // Store reference to destroy on close
+            popupContainer.chart = svg.node();
+        }, 100);
+    }
+    
+    // Function to fetch historical data from JSON file
+    async function fetchHistoricalData() {
+        try {
+            showLoading(true);
+            const response = await fetch('/organized_nepse_data.json');
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            console.log("Fetched historical data successfully");
+            
+            // Process the data
+            processHistoricalData(data);
+            
+            showLoading(false);
+            return true; // Return success to allow proper promise chaining
+        } catch (error) {
+            console.error('Error fetching historical data:', error);
+            showLoading(false);
+            return false; // Return failure
+        }
+    }
+    
+    // Process historical data efficiently
+    function processHistoricalData(data) {
+        console.log("Processing historical data");
+        
+        // Reset the historical data object
+        stockHistoricalData = {};
+        
+        // Check if data is an array
+        if (!Array.isArray(data)) {
+            console.error("Data is not an array");
+            return;
+        }
+        
+        // Create a more efficient data structure
+        data.forEach(item => {
+            // Extract the symbol
+            const symbol = item.symbol;
+            
+            // Skip if missing data
+            if (!symbol || item.open === undefined || item.high === undefined || 
+                item.low === undefined || item.close === undefined) {
+                return;
+            }
+            
+            // Initialize array for this symbol if needed
+            if (!stockHistoricalData[symbol]) {
+                stockHistoricalData[symbol] = [];
+            }
+            
+            // Add the data point
+            stockHistoricalData[symbol].push({
+                time: item.time,
+                open: parseFloat(item.open),
+                high: parseFloat(item.high),
+                low: parseFloat(item.low),
+                close: parseFloat(item.close),
+                volume: parseFloat(item.volume || 0)
+            });
+        });
+        
+        console.log("Processed data for symbols:", Object.keys(stockHistoricalData));
+    }
+    
+    // Calculate total volume for a given stock
+    function calculateTotalVolume(symbol) {
+        if (!stockHistoricalData[symbol]) return 0;
+        
+        // Calculate the total volume over the custom number of days
+        return stockHistoricalData[symbol]
+            .slice(-analysisDays) // Get last X days
+            .reduce((sum, day) => sum + (day.volume || 0), 0);
+    }
+    
+    // Downsample data if too many points
+    function downsampleData(data, threshold = 500) {
+        if (!data || data.length <= threshold) return data;
+        
+        const factor = Math.ceil(data.length / threshold);
+        return data.filter((_, i) => i % factor === 0);
     }
 }); 

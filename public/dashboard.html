@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="dashboard.css">
     <!-- TradingView Lightweight Charts Library -->
     <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
-            <script src="site-protection.js"></script>
-</head>
+        </head>
 <body>
     <div class="dashboard-container">
         <header>
@@ -81,6 +80,11 @@
             <input type="file" id="uploadExcel" accept=".xlsx, .xls" />
             <button id="downloadExcel">Download Excel</button>
             <button id="filterSupportStocksBtn">Filter Support Stocks</button>
+            <div class="stock-actions">
+                <button id="addToIpoBtn" class="add-to-btn" disabled>Add to IPO</button>
+                <button id="addToRightsBtn" class="add-to-btn" disabled>Add to Rights</button>
+                <span id="selectedCount" class="selected-count">0 selected</span>
+            </div>
             <div class="view-toggles">
             </div>
         </div>
@@ -89,6 +93,7 @@
             <table id="stockTable">
                 <thead>
                     <tr>
+                        <th><input type="checkbox" id="selectAllStocks" title="Select/Deselect All"></th>
                         <th>Symbol</th>
                         <th>LTP</th>
                         <th>Support Price 1</th>

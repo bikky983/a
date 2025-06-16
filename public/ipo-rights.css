@@ -1,0 +1,249 @@
+/* IPO Rights specific styling */
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-left: auto;
+}
+
+.action-btn {
+    background-color: #1976D2;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.action-btn:hover {
+    background-color: #1565C0;
+}
+
+/* Stock Input Form */
+.stock-input-form {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 15px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.form-header h3 {
+    margin: 0;
+    color: #333;
+}
+
+.close-form-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #999;
+}
+
+.close-form-btn:hover {
+    color: #333;
+}
+
+.form-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.input-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #555;
+}
+
+.input-group input, .input-group select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.save-stock-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+    margin-top: 10px;
+}
+
+.save-stock-btn:hover {
+    background-color: #3d9140;
+}
+
+/* Color coding for IPO and Rights stocks */
+.color-box.ipo {
+    background-color: #90CAF9; /* Light blue for IPO */
+}
+
+.color-box.rights {
+    background-color: #CE93D8; /* Light purple for Rights */
+}
+
+/* Colors for price movement */
+.price-up {
+    background-color: #C8E6C9; /* Light green for price increase */
+}
+
+.price-down {
+    background-color: #FFCDD2; /* Light red for price decrease */
+}
+
+/* Support level colors (same as heatmap) */
+.support1-color {
+    background-color: #90CAF9; /* Light blue for Support 1 */
+}
+
+.support2-color {
+    background-color: #FFCC80; /* Light orange for Support 2 */
+}
+
+.support3-color {
+    background-color: #BCAAA4; /* Light brown for Support 3 */
+}
+
+/* Table styling */
+#ipoRightsTable th, #ipoRightsTable td {
+    text-align: left;
+    padding: 10px 15px;
+}
+
+#ipoRightsTable .ipo-row {
+    background-color: rgba(33, 150, 243, 0.1);
+}
+
+#ipoRightsTable .rights-row {
+    background-color: rgba(156, 39, 176, 0.1);
+}
+
+.actions-cell {
+    display: flex;
+    gap: 5px;
+}
+
+.action-icon {
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 3px;
+    transition: background-color 0.2s;
+}
+
+.action-icon:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.edit-icon {
+    color: #2196F3;
+}
+
+.delete-icon {
+    color: #F44336;
+}
+
+.chart-icon {
+    color: #4CAF50;
+}
+
+/* Positive and negative change indicators */
+.positive-change {
+    color: #4CAF50;
+    font-weight: 500;
+}
+
+.negative-change {
+    color: #F44336;
+    font-weight: 500;
+}
+
+/* Tooltip styles */
+.treemap-tooltip {
+    font-family: Arial, sans-serif;
+    padding: 10px;
+}
+
+.tooltip-header {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+}
+
+.tooltip-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+    font-size: 12px;
+}
+
+.tooltip-label {
+    font-weight: 500;
+    margin-right: 10px;
+}
+
+.tooltip-divider {
+    height: 1px;
+    background-color: #eee;
+    margin: 8px 0;
+}
+
+/* Excel actions styling */
+.excel-actions {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+}
+
+.excel-actions input[type="file"] {
+    display: none;
+}
+
+#uploadExcelBtn, #downloadExcelBtn {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    margin: 0 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s;
+}
+
+#uploadExcelBtn:hover, #downloadExcelBtn:hover {
+    background-color: #388e3c;
+}
+
+#downloadExcelBtn {
+    background-color: #2196f3;
+}
+
+#downloadExcelBtn:hover {
+    background-color: #1976d2;
+} 

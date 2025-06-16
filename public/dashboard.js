@@ -7,6 +7,7 @@ let chartInstances = {}; // To store chart instances by symbol
 let showOnlyWatchlist = false; // New variable for watchlist filter
 let DEFAULT_QUANTITY = 10; // Default order quantity
 let boughtStocks = JSON.parse(localStorage.getItem('boughtStocks') || '[]'); // Store bought stocks
+let selectedStocks = []; // To store selected stocks for IPO/Rights
 
 // Use this to import D3 - modern approach
 (function loadD3() {
@@ -125,6 +126,24 @@ function setupEventListeners() {
     document.getElementById('filterSupportStocksBtn').addEventListener('click', () => {
         window.location.href = 'support-stocks.html';
     });
+    
+    // Select all checkbox
+    const selectAllStocks = document.getElementById('selectAllStocks');
+    if (selectAllStocks) {
+        selectAllStocks.addEventListener('change', handleSelectAllStocks);
+    }
+    
+    // IPO & Rights buttons
+    const addToIpoBtn = document.getElementById('addToIpoBtn');
+    const addToRightsBtn = document.getElementById('addToRightsBtn');
+    
+    if (addToIpoBtn) {
+        addToIpoBtn.addEventListener('click', () => addStocksToIpoRights('ipo'));
+    }
+    
+    if (addToRightsBtn) {
+        addToRightsBtn.addEventListener('click', () => addStocksToIpoRights('rights'));
+    }
 
     // Add watchlist toggle button
     const excelButtonsDiv = document.querySelector('.excel-buttons');
@@ -453,86 +472,112 @@ async function addStock() {
 }
 
 async function displayUserStocks(stocks) {
-    try {
-        const prices = await fetchCurrentPrices();
-        const tbody = document.querySelector('#stockTable tbody');
-        tbody.innerHTML = '';
-
-        if (stocks.length === 0) {
-            tbody.innerHTML = `
-                <tr>
-                    <td colspan="12" class="no-stocks">
-                        ${showOnlyWatchlist ? 'No stocks in your watchlist. Add stocks to your watchlist first!' : 'No stocks in your portfolio. Add some stocks above!'}
-                    </td>
-                </tr>`;
+    // Clear loading and previous content
+    showLoading(false);
+    document.querySelector('#stockTable tbody').innerHTML = '';
+    
+    if (!stocks.length) {
+        document.querySelector('#stockTable tbody').innerHTML = '<tr><td colspan="13" class="no-stocks">No stocks added. Add a stock symbol and support price to get started.</td></tr>';
+        return;
+    }
+    
+    selectedStocks = []; // Clear selected stocks
+    
+    // Reset chart instances
+    chartInstances = {};
+    
+    // Filter stocks based on watchlist if needed
+    if (showOnlyWatchlist) {
+        stocks = stocks.filter(stock => isInWatchlist(stock.symbol));
+    }
+    
+    // Get the latest current prices
+    await fetchCurrentPrices();
+    
+    // Display each stock in the table
+    stocks.forEach(stock => {
+        const currentPrice = getCurrentPrice(stock.symbol);
+        
+        // Skip if we're showing only watchlist and this stock isn't in it
+        if (showOnlyWatchlist && !isInWatchlist(stock.symbol)) {
             return;
         }
+        
+        // Calculate differences
+        const difference1 = calculateDifference(currentPrice, stock.supportPrice1);
+        const difference2 = calculateDifference(currentPrice, stock.supportPrice2);
+        const difference3 = calculateDifference(currentPrice, stock.supportPrice3);
+        const upperLimitDiff = calculateUpperLimitDifference(currentPrice, stock.upperLimit);
+        
+        // Get difference styling classes
+        const diffClass1 = getDifferenceClass(difference1);
+        const diffClass2 = getDifferenceClass(difference2);
+        const diffClass3 = getDifferenceClass(difference3);
+        const ulDiffClass = upperLimitDiff > 0 ? 'upper-limit-exceeded' : '';
+        
+        // Create table row
+        const row = document.createElement('tr');
+        row.setAttribute('data-symbol', stock.symbol);
+        
+        // Check if the stock is in the watchlist
+        const isWatchlisted = isInWatchlist(stock.symbol);
+        if (isWatchlisted) {
+            row.classList.add('watchlist-item');
+        }
+        
+        // Check if the stock is bought
+        const isBought = isBoughtStock(stock.symbol);
+        if (isBought) {
+            row.classList.add('bought-item');
+        }
+        
+        // Format numbers to avoid excess decimals
+        const formatNumber = (num) => {
+            if (num === undefined || num === null) return '-';
+            return parseFloat(num).toFixed(2);
+        };
+        
+        row.innerHTML = `
+            <td class="select-cell">
+                <input type="checkbox" class="stock-checkbox" data-symbol="${stock.symbol}">
+            </td>
+            <td><span class="clickable-symbol">${stock.symbol}</span></td>
+            <td>${formatNumber(currentPrice)}</td>
+            <td>${formatNumber(stock.supportPrice1)}</td>
+            <td class="${diffClass1}">${difference1}%</td>
+            <td>${formatNumber(stock.supportPrice2)}</td>
+            <td class="${diffClass2}">${difference2}%</td>
+            <td>${formatNumber(stock.supportPrice3)}</td>
+            <td class="${diffClass3}">${difference3}%</td>
+            <td>${formatNumber(stock.upperLimit)}</td>
+            <td class="${ulDiffClass}">${upperLimitDiff}%</td>
+            <td>
+                <button data-watchlist="${stock.symbol}" onclick="toggleWatchlist('${stock.symbol}')" class="action-btn watchlist-btn ${isWatchlisted ? 'active' : ''}" title="${isWatchlisted ? 'Remove from Watchlist' : 'Add to Watchlist'}">${isWatchlisted ? '★' : '☆'}</button>
+                <button data-bought="${stock.symbol}" onclick="toggleBought('${stock.symbol}')" class="action-btn bought-btn ${isBought ? 'active' : ''}" title="${isBought ? 'Mark as Not Bought' : 'Mark as Bought'}">🛒</button>
+                <button onclick="editStock('${stock.symbol}')" class="action-btn edit-btn">Edit</button>
+                <button onclick="deleteStock('${stock.symbol}')" class="action-btn delete-btn">Delete</button>
+            </td>
+            <td class="chart-cell">
+                <div id="chart-container-${stock.symbol}" class="chart-container-small"></div>
+                <button onclick="showFullScreenChart('${stock.symbol}')" class="action-btn chart-btn">Chart</button>
+            </td>
+        `;
+        
+        document.querySelector('#stockTable tbody').appendChild(row);
+        
+        // Add event listener to checkbox
+        const checkbox = row.querySelector('.stock-checkbox');
+        if (checkbox) {
+            checkbox.addEventListener('change', handleStockSelection);
+        }
+    });
 
-        // Clean up old chart instances
-        Object.keys(chartInstances).forEach(symbol => {
-            if (chartInstances[symbol] && chartInstances[symbol].chart) {
-                chartInstances[symbol].chart.remove();
-                delete chartInstances[symbol];
-            }
-        });
-
+    // After all rows are created, initialize charts
+    setTimeout(() => {
         stocks.forEach(stock => {
-            const currentPrice = prices[stock.symbol] || 0;
-            const difference1 = calculateDifference(currentPrice, stock.supportPrice1);
-            const difference2 = calculateDifference(currentPrice, stock.supportPrice2);
-            const difference3 = calculateDifference(currentPrice, stock.supportPrice3);
-            const upperLimitDiff = calculateUpperLimitDifference(currentPrice, stock.upperLimit);
-            
-            // Create the main row
-            const row = document.createElement('tr');
-            row.dataset.symbol = stock.symbol;
-            
-            // Add watchlist class if in watchlist
-            if (stock.watchlist) {
-                row.classList.add('watchlist-item');
-            }
-            
-            // Format numbers to avoid excess decimals
-            const formatNumber = (num) => {
-                if (num === null || num === undefined) return '';
-                return parseFloat(num).toFixed(2);
-            };
-            
-            row.innerHTML = `
-                <td>${stock.symbol}</td>
-                <td>${formatNumber(currentPrice)}</td>
-                <td>${formatNumber(stock.supportPrice1)}</td>
-                <td class="${getDifferenceClass(difference1)}">${difference1}%</td>
-                <td>${formatNumber(stock.supportPrice2)}</td>
-                <td class="${getDifferenceClass(difference2)}">${difference2}%</td>
-                <td>${formatNumber(stock.supportPrice3)}</td>
-                <td class="${getDifferenceClass(difference3)}">${difference3}%</td>
-                <td>${formatNumber(stock.upperLimit)}</td>
-                <td class="${currentPrice > stock.upperLimit ? 'upper-limit-exceeded' : ''}">${upperLimitDiff}%</td>
-                <td>
-                    <button data-watchlist="${stock.symbol}" onclick="toggleWatchlist('${stock.symbol}')" class="action-btn watchlist-btn ${stock.watchlist ? 'active' : ''}" title="${stock.watchlist ? 'Remove from Watchlist' : 'Add to Watchlist'}">${stock.watchlist ? '★' : '☆'}</button>
-                    <button data-bought="${stock.symbol}" onclick="toggleBought('${stock.symbol}')" class="action-btn bought-btn ${isBoughtStock(stock.symbol) ? 'active' : ''}" title="${isBoughtStock(stock.symbol) ? 'Mark as Not Bought' : 'Mark as Bought'}">🛒</button>
-                    <button onclick="editStock('${stock.symbol}')" class="action-btn edit-btn">Edit</button>
-                    <button onclick="deleteStock('${stock.symbol}')" class="action-btn delete-btn">Delete</button>
-                    <button onclick="showFullScreenChart('${stock.symbol}')" class="action-btn chart-btn">Chart</button>
-                </td>
-                <td class="chart-cell">
-                    <div id="chart-container-${stock.symbol}" class="chart-container-small"></div>
-                </td>
-            `;
-            tbody.appendChild(row);
+            initializeStockChart(stock.symbol);
         });
-
-        // After all rows are created, initialize charts
-        setTimeout(() => {
-            stocks.forEach(stock => {
-                initializeStockChart(stock.symbol);
-            });
-        }, 100);
-    } catch (error) {
-        showError('Error displaying stocks');
-        console.error('Display error:', error);
-    }
+    }, 100);
 }
 
 // Function to downsample data points - keeps visual accuracy while reducing points
@@ -1237,12 +1282,21 @@ function migrateWatchlistData() {
 
 // Stock search functionality
 function handleStockSearch() {
-    const searchValue = document.getElementById('stockSearchInput').value.toUpperCase();
+    const searchValue = document.getElementById('stockSearchInput').value.toUpperCase().trim();
     const rows = document.querySelectorAll('#stockTable tbody tr');
     
+    if (!searchValue) {
+        // If search is empty, show all rows
+        rows.forEach(row => {
+            row.style.display = '';
+        });
+        return;
+    }
+    
     rows.forEach(row => {
+        // Get the symbol from the row's data-symbol attribute
         const symbol = row.getAttribute('data-symbol');
-        if (symbol && symbol.includes(searchValue)) {
+        if (symbol && symbol.toUpperCase().includes(searchValue)) {
             row.style.display = '';
         } else {
             row.style.display = 'none';
@@ -1717,4 +1771,160 @@ function addWatchlistStyles() {
     
     // Add to document head
     document.head.appendChild(style);
+}
+
+// Handle stock selection for IPO/Rights
+function handleSelectAllStocks() {
+    const selectAllCheckbox = document.getElementById('selectAllStocks');
+    const isChecked = selectAllCheckbox.checked;
+    const checkboxes = document.querySelectorAll('.stock-checkbox');
+    
+    // Update all checkboxes to match the selectAll state
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = isChecked;
+        const symbol = checkbox.getAttribute('data-symbol');
+        
+        if (isChecked) {
+            // Add to selected stocks if not already there
+            if (!selectedStocks.includes(symbol)) {
+                selectedStocks.push(symbol);
+            }
+        } else {
+            // Remove from selected stocks
+            selectedStocks = selectedStocks.filter(s => s !== symbol);
+        }
+    });
+    
+    // Update UI to show selected count
+    updateSelectedStocksCount();
+}
+
+// Handle individual stock checkbox selection
+function handleStockSelection(event) {
+    const checkbox = event.target;
+    const symbol = checkbox.getAttribute('data-symbol');
+    
+    if (checkbox.checked) {
+        // Add to selected stocks if not already there
+        if (!selectedStocks.includes(symbol)) {
+            selectedStocks.push(symbol);
+        }
+    } else {
+        // Remove from selected stocks
+        selectedStocks = selectedStocks.filter(s => s !== symbol);
+        
+        // Uncheck the selectAll checkbox
+        const selectAllCheckbox = document.getElementById('selectAllStocks');
+        if (selectAllCheckbox && selectAllCheckbox.checked) {
+            selectAllCheckbox.checked = false;
+        }
+    }
+    
+    // Update UI to show selected count
+    updateSelectedStocksCount();
+}
+
+// Update the selected stocks count and buttons state
+function updateSelectedStocksCount() {
+    const selectedCount = document.getElementById('selectedCount');
+    if (selectedCount) {
+        selectedCount.textContent = `${selectedStocks.length} selected`;
+    }
+    
+    // Update button states
+    const addToIpoBtn = document.getElementById('addToIpoBtn');
+    const addToRightsBtn = document.getElementById('addToRightsBtn');
+    
+    const hasSelectedStocks = selectedStocks.length > 0;
+    
+    if (addToIpoBtn) {
+        addToIpoBtn.disabled = !hasSelectedStocks;
+    }
+    
+    if (addToRightsBtn) {
+        addToRightsBtn.disabled = !hasSelectedStocks;
+    }
+}
+
+// Add selected stocks to IPO/Rights page
+function addStocksToIpoRights(type) {
+    if (!selectedStocks || selectedStocks.length === 0) {
+        showError('No stocks selected');
+        return;
+    }
+    
+    // For rights, we need to prompt for rights percentage
+    let successCount = 0;
+    let errorCount = 0;
+    
+    // Get rights percentage if needed
+    let rightsPercentage = null;
+    if (type === 'rights') {
+        rightsPercentage = prompt('Enter rights percentage:');
+        if (!rightsPercentage || isNaN(parseFloat(rightsPercentage)) || parseFloat(rightsPercentage) <= 0) {
+            showError('Valid rights percentage is required');
+            return;
+        }
+        
+        rightsPercentage = parseFloat(rightsPercentage);
+    }
+    
+    // Load existing IPO/Rights stocks
+    let ipoRightsStocks = [];
+    try {
+        const savedStocks = localStorage.getItem('ipoRightsStocks');
+        if (savedStocks) {
+            ipoRightsStocks = JSON.parse(savedStocks);
+        }
+    } catch (e) {
+        console.error('Error loading IPO/Rights stocks:', e);
+    }
+    
+    // Add each selected stock
+    selectedStocks.forEach(symbol => {
+        // Check if stock already exists
+        const existingStock = ipoRightsStocks.find(s => s.symbol === symbol);
+        if (existingStock) {
+            console.warn(`Stock ${symbol} already exists in IPO/Rights list`);
+            errorCount++;
+            return;
+        }
+        
+        // Add new stock
+        ipoRightsStocks.push({
+            symbol,
+            type,
+            rightsPercentage: type === 'rights' ? rightsPercentage : null
+        });
+        
+        successCount++;
+    });
+    
+    // Save to localStorage
+    try {
+        localStorage.setItem('ipoRightsStocks', JSON.stringify(ipoRightsStocks));
+        showSuccess(`Added ${successCount} stocks to ${type.toUpperCase()} list`);
+        
+        // Clear selection
+        clearSelectedStocks();
+    } catch (e) {
+        console.error('Error saving IPO/Rights stocks:', e);
+        showError('Failed to save IPO/Rights stocks');
+    }
+}
+
+// Clear all selected stocks
+function clearSelectedStocks() {
+    selectedStocks = [];
+    const checkboxes = document.querySelectorAll('.stock-checkbox');
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = false;
+    });
+    
+    const selectAllCheckbox = document.getElementById('selectAllStocks');
+    if (selectAllCheckbox) {
+        selectAllCheckbox.checked = false;
+    }
+    
+    updateSelectedStocksCount();
 }
