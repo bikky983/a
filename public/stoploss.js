@@ -598,9 +598,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    initializePage();
-    setupEventListeners();
-    
     // Create chart popup element if not exists
     if (!document.querySelector('.chart-popup')) {
         createChartPopup();
@@ -612,14 +609,25 @@ document.addEventListener('DOMContentLoaded', function() {
         initWatchlist();
     }
     
-    // Fetch historical data
-    fetchHistoricalData();
-    
-    // Start auto-refresh if enabled
-    setupAutoRefresh();
-    
-    // Setup Excel upload and download event listeners
-    setupExcelHandlers();
+    // Fetch historical data first, then initialize the page
+    fetchHistoricalData().then(() => {
+        // Now that we have historical data, initialize the page
+        initializePage();
+        setupEventListeners();
+        
+        // Start auto-refresh if enabled
+        setupAutoRefresh();
+        
+        // Setup Excel upload and download event listeners
+        setupExcelHandlers();
+    }).catch(error => {
+        console.error('Error fetching historical data:', error);
+        // Still initialize the page even if historical data fails
+        initializePage();
+        setupEventListeners();
+        setupAutoRefresh();
+        setupExcelHandlers();
+    });
 });
 
 // Create chart popup element
@@ -1373,22 +1381,41 @@ async function fetchCurrentPrices() {
             }
         }
         
-        // Fallback to API if localStorage prices are not available
-        console.warn('No stored prices found in localStorage. Using API fallback.');
-        const response = await fetch('/api/prices');
-        if (!response.ok) {
-            throw new Error('Failed to fetch prices');
+        // FALLBACK: Use close prices from historical data JSON if available
+        // Skip API request entirely as requested
+        if (stockHistoricalData && Object.keys(stockHistoricalData).length > 0) {
+            console.log('Using close prices from historical data as fallback');
+            const fallbackPrices = {};
+            
+            // For each symbol in historical data, use the latest close price
+            Object.keys(stockHistoricalData).forEach(symbol => {
+                const data = stockHistoricalData[symbol];
+                if (data && data.length > 0) {
+                    // Get the latest candle (most recent data point)
+                    const latestCandle = data[data.length - 1];
+                    if (latestCandle && latestCandle.close) {
+                        fallbackPrices[symbol] = parseFloat(latestCandle.close);
+                    }
+                }
+            });
+            
+            if (Object.keys(fallbackPrices).length > 0) {
+                console.log(`Using ${Object.keys(fallbackPrices).length} close prices from historical data`);
+                currentPrices = fallbackPrices;
+                
+                // Store in localStorage for other components
+                localStorage.setItem('currentPrices', JSON.stringify(fallbackPrices));
+                
+                showLoading(false);
+                return fallbackPrices;
+            }
         }
-        const prices = await response.json();
         
-        // Update current prices
-        currentPrices = prices;
-        
-        // Store in localStorage for other pages
-        localStorage.setItem('currentPrices', JSON.stringify(prices));
-        
+        // If we got here, we couldn't find any prices
+        console.error('Could not find any price data from any source');
+        showError('Failed to fetch current prices from any source');
         showLoading(false);
-        return prices;
+        return {};
     } catch (error) {
         console.error('Error fetching current prices:', error);
         showError('Failed to fetch current prices');
@@ -1410,6 +1437,7 @@ function processStoplossStocks() {
     // Debug counter for monitoring
     let brokenCount = 0;
     let manuallyUpdatedCount = 0;
+    let fallbackPriceCount = 0;
     
     // First, update any stocks that should use automatic stoploss calculation
     // This includes Excel-imported stocks and stocks from dashboard without manual stoploss
@@ -1474,11 +1502,26 @@ function processStoplossStocks() {
     console.log('boughtStocks after processing:', JSON.stringify(boughtStocks));
     
     boughtStocks.forEach(stock => {
-        const currentPrice = currentPrices[stock.symbol] || 0;
-        console.log(`Processing ${stock.symbol} with current price: ${currentPrice}`);
+        // Try to get current price from currentPrices object
+        let currentPrice = currentPrices[stock.symbol] || 0;
+        
+        // If current price is not available, try to get it from historical data
+        if (currentPrice <= 0 && stockHistoricalData && stockHistoricalData[stock.symbol]) {
+            const histData = stockHistoricalData[stock.symbol];
+            if (histData && histData.length > 0) {
+                const latestCandle = histData[histData.length - 1];
+                if (latestCandle && latestCandle.close) {
+                    currentPrice = parseFloat(latestCandle.close);
+                    fallbackPriceCount++;
+                    console.log(`Using historical close price for ${stock.symbol}: ${currentPrice}`);
+                }
+            }
+        }
+        
+        console.log(`Processing ${stock.symbol} with price: ${currentPrice} (${currentPrice <= 0 ? 'MISSING' : 'OK'})`);
         
         if (currentPrice <= 0) {
-            console.warn(`No current price found for ${stock.symbol}`);
+            console.warn(`No price found for ${stock.symbol} from any source`);
             return;
         }
         
@@ -1529,11 +1572,15 @@ function processStoplossStocks() {
             isBroken: isBroken,
             importedViaExcel: stock.importedViaExcel || false,
             manuallyUpdated: stock.manuallyUpdated || false,
-            autoUpdateStoploss: stock.autoUpdateStoploss || false
+            autoUpdateStoploss: stock.autoUpdateStoploss || false,
+            usedFallbackPrice: currentPrice !== currentPrices[stock.symbol] // Flag to indicate we used historical data
         });
     });
     
     console.log(`Total stocks with broken stoploss: ${brokenCount}/${boughtStocks.length}`);
+    if (fallbackPriceCount > 0) {
+        console.log(`Used historical data fallback prices for ${fallbackPriceCount} stocks`);
+    }
     
     // Sort by broken stoploss first, then by stoploss difference
     stoplossStocks.sort((a, b) => {
@@ -1665,11 +1712,15 @@ function displayStoplossStocks() {
         // Check if this stock has manuallyUpdated flag to show in the UI
         const manuallyUpdatedBadge = stock.manuallyUpdated ? 
             `<span style="background-color: #673ab7; color: white; padding: 2px 5px; border-radius: 3px; font-size: 10px; margin-left: 5px;">Manual SL</span>` : '';
+            
+        // Add badge for fallback price
+        const fallbackPriceBadge = stock.usedFallbackPrice ? 
+            `<span style="background-color: #ff9800; color: white; padding: 2px 5px; border-radius: 3px; font-size: 10px; margin-left: 5px;" title="Using historical close price">Hist. Price</span>` : '';
         
         // Create row HTML - FIXED: Use stock.ltp instead of stock.currentPrice
         row.innerHTML = `
             <td><span class="clickable-symbol">${stock.symbol}</span></td>
-            <td>${formatNumber(stock.ltp)}</td>
+            <td>${formatNumber(stock.ltp)} ${fallbackPriceBadge}</td>
             <td>
                 <input type="number" class="buyprice-input" value="${formatNumber(stock.buyPrice)}" 
                        data-symbol="${stock.symbol}" data-original="${formatNumber(stock.buyPrice)}">
