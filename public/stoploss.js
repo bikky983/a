@@ -1300,9 +1300,77 @@ async function fetchCurrentPrices() {
         const storedPrices = localStorage.getItem('currentPrices');
         
         if (storedPrices) {
-            currentPrices = JSON.parse(storedPrices);
-            showLoading(false);
-            return currentPrices;
+            try {
+                const parsedPrices = JSON.parse(storedPrices);
+                
+                // Check if we have valid data
+                if (parsedPrices && typeof parsedPrices === 'object' && Object.keys(parsedPrices).length > 0) {
+                    console.log(`Loaded ${Object.keys(parsedPrices).length} prices from localStorage`);
+                    currentPrices = parsedPrices;
+                    showLoading(false);
+                    return currentPrices;
+                } else {
+                    console.warn('Stored prices found in localStorage but data is empty or invalid');
+                }
+            } catch (e) {
+                console.error('Error parsing stored prices:', e);
+            }
+        }
+        
+        // Check if there's another source of prices in localStorage (from dashboard)
+        const dashboardPrices = localStorage.getItem('dashboardPrices');
+        if (dashboardPrices) {
+            try {
+                const parsedPrices = JSON.parse(dashboardPrices);
+                
+                // Check if we have valid data
+                if (parsedPrices && typeof parsedPrices === 'object' && Object.keys(parsedPrices).length > 0) {
+                    console.log(`Loaded ${Object.keys(parsedPrices).length} prices from dashboardPrices`);
+                    currentPrices = parsedPrices;
+                    
+                    // Also store in standard location
+                    localStorage.setItem('currentPrices', JSON.stringify(parsedPrices));
+                    
+                    showLoading(false);
+                    return currentPrices;
+                }
+            } catch (e) {
+                console.error('Error parsing dashboard prices:', e);
+            }
+        }
+        
+        // Try to get userStocks data which might contain current prices
+        const userStocks = localStorage.getItem('userStocks');
+        if (userStocks) {
+            try {
+                const parsedStocks = JSON.parse(userStocks);
+                
+                // Check if we have valid data with ltp property
+                if (Array.isArray(parsedStocks) && parsedStocks.length > 0 && parsedStocks[0].ltp) {
+                    console.log(`Extracting prices from userStocks (${parsedStocks.length} stocks)`);
+                    
+                    // Convert array to price object
+                    const extractedPrices = {};
+                    parsedStocks.forEach(stock => {
+                        if (stock.symbol && stock.ltp) {
+                            extractedPrices[stock.symbol] = parseFloat(stock.ltp);
+                        }
+                    });
+                    
+                    if (Object.keys(extractedPrices).length > 0) {
+                        console.log(`Extracted ${Object.keys(extractedPrices).length} prices from userStocks`);
+                        currentPrices = extractedPrices;
+                        
+                        // Also store in standard location
+                        localStorage.setItem('currentPrices', JSON.stringify(extractedPrices));
+                        
+                        showLoading(false);
+                        return currentPrices;
+                    }
+                }
+            } catch (e) {
+                console.error('Error parsing userStocks:', e);
+            }
         }
         
         // Fallback to API if localStorage prices are not available
@@ -1335,6 +1403,7 @@ function processStoplossStocks() {
     
     // Debug log to see the boughtStocks before processing
     console.log('boughtStocks before processing:', JSON.stringify(boughtStocks));
+    console.log('currentPrices available:', Object.keys(currentPrices).length);
     
     stoplossStocks = [];
     
@@ -1406,7 +1475,12 @@ function processStoplossStocks() {
     
     boughtStocks.forEach(stock => {
         const currentPrice = currentPrices[stock.symbol] || 0;
-        if (currentPrice <= 0) return;
+        console.log(`Processing ${stock.symbol} with current price: ${currentPrice}`);
+        
+        if (currentPrice <= 0) {
+            console.warn(`No current price found for ${stock.symbol}`);
+            return;
+        }
         
         // Calculate return percentage
         const returnPercent = ((currentPrice - stock.buyPrice) / stock.buyPrice) * 100;
@@ -1488,15 +1562,15 @@ function displayStoplossStocks() {
     // Sort stoploss stocks - broken stoploss first, then by symbol
     stoplossStocks.sort((a, b) => {
         // First sort by broken stoploss
-        if (a.brokenStoploss && !b.brokenStoploss) return -1;
-        if (!a.brokenStoploss && b.brokenStoploss) return 1;
+        if (a.isBroken && !b.isBroken) return -1;
+        if (!a.isBroken && b.isBroken) return 1;
         
         // Then sort by symbol
         return a.symbol.localeCompare(b.symbol);
     });
     
     // Count broken stoploss stocks
-    const brokenStoplossCount = stoplossStocks.filter(stock => stock.brokenStoploss).length;
+    const brokenStoplossCount = stoplossStocks.filter(stock => stock.isBroken).length;
     
     // Update stoploss counter
     const stoplossCounter = document.getElementById('stoplossCounter');
@@ -1518,7 +1592,7 @@ function displayStoplossStocks() {
         row.setAttribute('data-symbol', stock.symbol);
         
         // Add broken-stoploss class if needed
-        if (stock.brokenStoploss) {
+        if (stock.isBroken) {
             if (showBrokenStoploss) {
                 row.classList.add('broken-stoploss');
             } else {
@@ -1548,7 +1622,7 @@ function displayStoplossStocks() {
         const returnClass = stock.returnPercent >= 0 ? 'positive-return' : 'negative-return';
         
         // Calculate stoploss difference percentage class
-        const slDiffClass = stock.stoplossPercent >= 0 ? 'positive-return' : 'negative-return';
+        const slDiffClass = stock.stoplossDiff >= 0 ? 'positive-return' : 'negative-return';
         
         // Get candle patterns for this stock
         const patternAnalysis = analyzeCandlePatterns(stock.symbol);
@@ -1592,10 +1666,10 @@ function displayStoplossStocks() {
         const manuallyUpdatedBadge = stock.manuallyUpdated ? 
             `<span style="background-color: #673ab7; color: white; padding: 2px 5px; border-radius: 3px; font-size: 10px; margin-left: 5px;">Manual SL</span>` : '';
         
-        // Create row HTML
+        // Create row HTML - FIXED: Use stock.ltp instead of stock.currentPrice
         row.innerHTML = `
             <td><span class="clickable-symbol">${stock.symbol}</span></td>
-            <td>${formatNumber(stock.currentPrice)}</td>
+            <td>${formatNumber(stock.ltp)}</td>
             <td>
                 <input type="number" class="buyprice-input" value="${formatNumber(stock.buyPrice)}" 
                        data-symbol="${stock.symbol}" data-original="${formatNumber(stock.buyPrice)}">
@@ -1606,7 +1680,7 @@ function displayStoplossStocks() {
                        data-symbol="${stock.symbol}" data-original="${formatNumber(stock.stoplossPrice)}">
                 ${manuallyUpdatedBadge}
             </td>
-            <td class="${slDiffClass}">${formatNumber(stock.stoplossPercent)}%</td>
+            <td class="${slDiffClass}">${formatNumber(stock.stoplossDiff)}%</td>
             <td>${formattedDate}</td>
             <td>
                 <button onclick="removeStockFromBought('${stock.symbol}')" class="action-btn delete-btn">Remove</button>
@@ -2297,31 +2371,69 @@ function loadStoplossData() {
         localStorage.setItem('boughtStocks', JSON.stringify(boughtStocks));
     }
     
-    // Fetch current prices and then process stoploss stocks
-    fetchCurrentPrices().then(() => {
-        processStoplossStocks();
+    // First, try to load current prices from localStorage
+    console.log("Loading current prices...");
+    let currentPricesLoaded = false;
+    
+    // Check if userStocks has current prices
+    const userStocks = JSON.parse(localStorage.getItem('userStocks') || '[]');
+    if (userStocks && Array.isArray(userStocks) && userStocks.length > 0 && userStocks[0].ltp) {
+        console.log(`Found ${userStocks.length} stocks with prices in userStocks`);
         
-        // Show success message if stocks are found
-        if (stoplossStocks.length > 0) {
-            const watchlistParameter = new URLSearchParams(window.location.search).get('from_watchlist');
-            if (watchlistParameter === 'true') {
-                showSuccess(`Displaying ${stoplossStocks.length} stocks from your watchlist`);
+        // Extract prices from userStocks
+        const extractedPrices = {};
+        userStocks.forEach(stock => {
+            if (stock.symbol && stock.ltp) {
+                extractedPrices[stock.symbol] = parseFloat(stock.ltp);
             }
-        } else if (boughtStocks.length === 0) {
-            showError('No stocks found in Stoploss Tracker. Add stocks from Dashboard → Watchlist → Generate Order Code');
-        }
+        });
         
-        // Ensure watchlist is initialized after processing stocks
-        if (typeof window.initWatchlist === 'function') {
-            setTimeout(() => window.initWatchlist(), 100);
+        if (Object.keys(extractedPrices).length > 0) {
+            console.log(`Extracted ${Object.keys(extractedPrices).length} current prices from userStocks`);
+            currentPrices = extractedPrices;
+            currentPricesLoaded = true;
+            
+            // Also store in standard location
+            localStorage.setItem('currentPrices', JSON.stringify(extractedPrices));
         }
-        
-        showLoading(false);
-    }).catch(error => {
-        console.error('Error loading stoploss data:', error);
-        showError('Failed to load stoploss data');
-        showLoading(false);
-    });
+    }
+    
+    // If we couldn't get prices from userStocks, try other sources
+    if (!currentPricesLoaded) {
+        // Fetch current prices and then process stoploss stocks
+        fetchCurrentPrices().then(() => {
+            processStoplossData();
+        }).catch(error => {
+            console.error('Error loading stoploss data:', error);
+            showError('Failed to load stoploss data');
+            showLoading(false);
+        });
+    } else {
+        // We already have prices, process immediately
+        processStoplossData();
+    }
+}
+
+// Helper function to process stoploss data after prices are loaded
+function processStoplossData() {
+    processStoplossStocks();
+    
+    // Show success message if stocks are found
+    if (stoplossStocks.length > 0) {
+        const watchlistParameter = new URLSearchParams(window.location.search).get('from_watchlist');
+        if (watchlistParameter === 'true') {
+            showSuccess(`Displaying ${stoplossStocks.length} stocks from your watchlist`);
+        }
+    } else if (boughtStocks.length === 0) {
+        showError('No stocks found in Stoploss Tracker. Add stocks from Dashboard → Watchlist → Generate Order Code');
+    }
+    
+    // Ensure watchlist is initialized after processing stocks
+    if (typeof window.initWatchlist === 'function') {
+        setTimeout(() => window.initWatchlist(), 100);
+    }
+    
+    showLoading(false);
 }
 
 function loadCurrentPrices() {
