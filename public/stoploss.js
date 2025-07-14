@@ -1321,6 +1321,13 @@ function processStoplossStocks() {
         // 1. Excel-imported stocks that haven't been manually modified
         // 2. Dashboard-added stocks that don't have the manuallyUpdated flag
         // 3. Any stock with autoUpdateStoploss flag set to true
+        
+        // IMPORTANT: Don't update stoploss for stocks marked as manuallyUpdated
+        if (stock.manuallyUpdated) {
+            console.log(`Skipping stoploss update for ${stock.symbol} because it's marked as manually updated`);
+            return stock;
+        }
+        
         const shouldAutoUpdate = 
             (stock.importedViaExcel && !stock.manuallyUpdated) || 
             (!stock.importedViaExcel && !stock.manuallyUpdated) ||
@@ -2237,6 +2244,12 @@ function loadStoplossData() {
     let fixedCount = 0;
     const updatedStocks = boughtStocks.map(stock => {
         let updatedStock = {...stock};
+        
+        // Skip stocks marked as manually updated
+        if (updatedStock.manuallyUpdated) {
+            console.log(`Skipping validation for ${updatedStock.symbol} because it's marked as manually updated`);
+            return updatedStock;
+        }
         
         // Add tracking properties if they're missing
         if (!('stoplossPercentUsed' in updatedStock)) {
