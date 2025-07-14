@@ -1177,28 +1177,29 @@ function toggleAutoRefresh() {
 function loadBoughtStocks() {
     boughtStocks = JSON.parse(localStorage.getItem('boughtStocks') || '[]');
     
-    // Check if there are user stocks with stoploss data in localStorage
-    const userStocks = JSON.parse(localStorage.getItem('userStocks') || '[]');
+    // Check if there's an uploaded Excel file from dashboard with stoploss data
+    const dashboardUploadedData = JSON.parse(localStorage.getItem('dashboardUploadedExcel') || 'null');
     
-    if (userStocks && Array.isArray(userStocks) && userStocks.length > 0) {
-        console.log('Checking user stocks for stoploss values');
+    if (dashboardUploadedData && Array.isArray(dashboardUploadedData)) {
+        console.log('Found Excel data uploaded from dashboard, checking for stoploss values');
         
-        // Create a map of symbols to their stoploss prices from user stocks
+        // Create a map of symbols to their stoploss prices from the uploaded Excel
         const stoplossMap = {};
         
-        userStocks.forEach(stock => {
-            // Check if this stock has stoploss data
-            if (stock.symbol && stock.stoplossPrice) {
-                const stoplossPrice = parseFloat(stock.stoplossPrice);
+        dashboardUploadedData.forEach(row => {
+            // Check if this row has symbol and stoploss data
+            if (row.SYMBOL && (row.STOPLOSS !== undefined || row.SL !== undefined)) {
+                const symbol = row.SYMBOL;
+                const stoplossPrice = parseFloat(row.STOPLOSS || row.SL);
                 
                 if (!isNaN(stoplossPrice) && stoplossPrice > 0) {
-                    stoplossMap[stock.symbol] = stoplossPrice;
-                    console.log(`Found stoploss for ${stock.symbol}: ${stoplossPrice}`);
+                    stoplossMap[symbol] = stoplossPrice;
+                    console.log(`Found stoploss for ${symbol}: ${stoplossPrice}`);
                 }
             }
         });
         
-        // Update boughtStocks with stoploss prices from user stocks
+        // Update boughtStocks with stoploss prices from Excel
         if (Object.keys(stoplossMap).length > 0) {
             let updatedCount = 0;
             
@@ -1217,8 +1218,52 @@ function loadBoughtStocks() {
             // Save updated boughtStocks
             if (updatedCount > 0) {
                 localStorage.setItem('boughtStocks', JSON.stringify(boughtStocks));
-                console.log(`Updated stoploss prices for ${updatedCount} stocks from user stocks data`);
+                console.log(`Updated stoploss prices for ${updatedCount} stocks from dashboard Excel`);
                 showSuccess(`Updated stoploss prices for ${updatedCount} stocks from uploaded Excel`);
+            }
+        }
+    }
+    
+    // Prioritize stoploss values from localStorage's userStocks if available
+    const userStocks = JSON.parse(localStorage.getItem('userStocks') || '[]');
+    
+    if (userStocks && Array.isArray(userStocks) && userStocks.length > 0) {
+        console.log('Checking userStocks for stoploss values');
+        
+        // Create a map of symbols to their stoploss prices from userStocks
+        const stoplossMap = {};
+        
+        userStocks.forEach(stock => {
+            if (stock.symbol && stock.stoplossPrice) {
+                const stoplossPrice = parseFloat(stock.stoplossPrice);
+                
+                if (!isNaN(stoplossPrice) && stoplossPrice > 0) {
+                    stoplossMap[stock.symbol] = stoplossPrice;
+                    console.log(`Found stoploss for ${stock.symbol}: ${stoplossPrice} in userStocks`);
+                }
+            }
+        });
+        
+        // Update boughtStocks with stoploss prices from userStocks
+        if (Object.keys(stoplossMap).length > 0) {
+            let updatedCount = 0;
+            
+            boughtStocks = boughtStocks.map(stock => {
+                if (stoplossMap[stock.symbol]) {
+                    updatedCount++;
+                    return {
+                        ...stock,
+                        stoplossPrice: stoplossMap[stock.symbol],
+                        manuallyUpdated: true // Mark as manually updated so it won't be overridden
+                    };
+                }
+                return stock;
+            });
+            
+            // Save updated boughtStocks
+            if (updatedCount > 0) {
+                localStorage.setItem('boughtStocks', JSON.stringify(boughtStocks));
+                console.log(`Updated stoploss prices for ${updatedCount} stocks from userStocks data`);
             }
         }
     }
