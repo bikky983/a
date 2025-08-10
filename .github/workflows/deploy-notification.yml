@@ -1,0 +1,809 @@
+name: Stock Notification Service
+
+on:
+  schedule:
+    # Run daily at 5:00 PM Nepal time (11:15 AM UTC)
+    - cron: '15 11 * * *'
+  workflow_dispatch:
+    inputs:
+      run_now:
+        description: 'Run notifications immediately'
+        required: false
+        default: true
+        type: boolean
+      rsi_period:
+        description: 'RSI Period'
+        required: false
+        default: '14'
+        type: string
+      max_rsi_value:
+        description: 'Maximum RSI Value'
+        required: false
+        default: '35'
+        type: string
+      trend_lookback_period:
+        description: 'Trendline Lookback Period (days)'
+        required: false
+        default: '60'
+        type: string
+      min_trend_touches:
+        description: 'Minimum Trendline Touches'
+        required: false
+        default: '3'
+        type: string
+      analysis_days:
+        description: 'Heatmap Analysis Days'
+        required: false
+        default: '7'
+        type: string
+      custom_settings:
+        description: 'Use custom settings from config file'
+        required: false
+        default: true
+        type: boolean
+
+# Give the workflow permission to push to the repository
+permissions:
+  contents: write
+
+jobs:
+  send-notifications:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        
+    - name: Install dependencies
+      run: |
+        npm install
+        npm install puppeteer@19.7.0 --save
+      
+    - name: Create required directories
+      run: |
+        mkdir -p server/notifications/data
+        mkdir -p server/notifications/templates
+        mkdir -p config
+      
+    - name: Create initial state file if not exists
+      run: |
+        if [ ! -f server/notifications/data/previous-alerts.json ]; then
+          echo '{ "lastUpdated": null, "institutionalStocks": {}, "trendlineStocks": {}, "rsiSupportStocks": {}, "heatmapStocks": {} }' > server/notifications/data/previous-alerts.json
+        fi
+      
+    - name: Setup environment variables and configurations
+      run: |
+        # Set up basic environment variables
+        echo "EMAIL_USER=${{ secrets.EMAIL_USER }}" >> .env
+        echo "EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }}" >> .env
+        echo "EMAIL_FROM=${{ secrets.EMAIL_FROM }}" >> .env
+        echo "EMAIL_RECIPIENTS=${{ secrets.EMAIL_RECIPIENTS }}" >> .env
+        echo "NOTIFICATION_CRON=15 11 * * *" >> .env
+        
+        # Create page settings configuration file
+        cat > config/page-settings.json << 'EOL'
+        {
+          "rsiSupport": {
+            "rsiPeriod": ${{ github.event.inputs.rsi_period || 14 }},
+            "maxRsiValue": ${{ github.event.inputs.max_rsi_value || 35 }},
+            "filterSupport1": true,
+            "filterSupport2": true,
+            "filterSupport3": true,
+            "filterMinPercentage": -2,
+            "filterMaxPercentage": 5
+          },
+          "trendlineScanner": {
+            "lookbackPeriod": ${{ github.event.inputs.trend_lookback_period || 60 }},
+            "minTouches": ${{ github.event.inputs.min_trend_touches || 3 }},
+            "proximityThreshold": 2,
+            "atrMultiplier": 0.5,
+            "minTrendDuration": 14,
+            "minTrendQuality": "medium",
+            "requireVolumeConfirmation": true,
+            "trendDirection": "uptrend"
+          },
+          "institutionalActivity": {
+            "minScoreThreshold": 0.5,
+            "volumeThreshold": 2,
+            "obvThreshold": 15,
+            "manipulationThreshold": 3
+          },
+          "heatmap": {
+            "analysisDays": ${{ github.event.inputs.analysis_days || 7 }},
+            "minThreshold": -3,
+            "maxThreshold": 4,
+            "dashboardStocksOnly": true,
+            "viewMode": "volume"
+          }
+        }
+        EOL
+        
+        # Export settings usage flag
+        echo "USE_CUSTOM_SETTINGS=${{ github.event.inputs.custom_settings || 'true' }}" >> .env
+        
+    - name: Start local server
+      run: |
+        echo "Starting local server in background..."
+        nohup node server.js > server.log 2>&1 &
+        echo "Waiting for server to start..."
+        sleep 20
+        echo "Local server started"
+        # Check if server is running
+        ps aux | grep server.js
+        
+    - name: Create enhanced browser automation script
+      run: |
+        cat > automate-browser.js << 'EOL'
+        const puppeteer = require('puppeteer');
+        const path = require('path');
+        const fs = require('fs');
+        
+        // Load custom settings if available
+        const useCustomSettings = process.env.USE_CUSTOM_SETTINGS !== 'false';
+        let pageSettings = {};
+        
+        try {
+          const settingsPath = path.join(process.cwd(), 'config/page-settings.json');
+          if (fs.existsSync(settingsPath)) {
+            pageSettings = JSON.parse(fs.readFileSync(settingsPath, 'utf-8'));
+            console.log('Loaded custom page settings:', JSON.stringify(pageSettings, null, 2));
+          }
+        } catch (error) {
+          console.error('Error loading settings:', error.message);
+        }
+        
+        // Function to wait for timeout (replacement for page.waitForTimeout)
+        function wait(ms) {
+          return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        // Function to capture screenshots for debugging
+        async function captureScreenshot(page, name) {
+          await page.screenshot({ path: `${name}.png` });
+          console.log(`Screenshot saved as ${name}.png`);
+        }
+        
+        async function automateWebsite() {
+          console.log('Starting browser automation...');
+          
+          const collectedData = {
+            rsiSupport: [],
+            trendlineScanner: [],
+            institutionalActivity: [],
+            heatmap: []
+          };
+          
+          try {
+            const browser = await puppeteer.launch({
+              headless: true,
+              args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-dev-shm-usage',
+                '--disable-accelerated-2d-canvas',
+                '--window-size=1920,1080'
+              ]
+            });
+            
+            const page = await browser.newPage();
+            await page.setViewport({ width: 1920, height: 1080 });
+            
+            // First visit dashboard to initialize local storage
+            console.log('Loading dashboard...');
+            await page.goto('http://localhost:3000/dashboard.html', { 
+              waitUntil: 'networkidle0',
+              timeout: 60000 
+            });
+            
+            await captureScreenshot(page, 'dashboard-loaded');
+            
+            // Upload Excel file
+            try {
+              console.log('Uploading Excel file...');
+              
+              // Look for the file input element
+              const uploadButton = await page.$('#uploadExcel');
+              
+              if (uploadButton) {
+                // Set the file to upload
+                const excelFilePath = path.join(process.cwd(), 'public/stocks.xlsx');
+                
+                console.log(`Uploading file from: ${excelFilePath}`);
+                
+                // Upload the file
+                await uploadButton.uploadFile(excelFilePath);
+                
+                // Wait for the file to be processed
+                await wait(5000);
+                
+                await captureScreenshot(page, 'excel-uploaded');
+                
+                console.log('Excel file uploaded successfully');
+              } else {
+                console.log('Upload button not found');
+                await captureScreenshot(page, 'upload-button-missing');
+              }
+            } catch (uploadError) {
+              console.error('Error uploading Excel file:', uploadError);
+              await captureScreenshot(page, 'upload-error');
+            }
+            
+            // Wait for local storage to be populated
+            await wait(3000);
+            
+            // Visit each page and collect data
+            const pagesToVisit = [
+              { 
+                name: 'RSI Support', 
+                url: 'rsi-support.html',
+                key: 'rsiSupport',
+                tableSelector: '#rsiSupportTable',
+                extractFunction: async (page, tableSelector) => {
+                  await page.waitForSelector(tableSelector);
+                  await captureScreenshot(page, 'rsi-page-loaded');
+                  
+                  return await page.evaluate((selector) => {
+                    const tableData = [];
+                    const table = document.querySelector(selector);
+                    
+                    if (table) {
+                      const rows = table.querySelectorAll('tbody tr');
+                      
+                      for (const row of rows) {
+                        const symbol = row.querySelector('td:nth-child(2)')?.textContent?.trim();
+                        const ltp = row.querySelector('td:nth-child(3)')?.textContent?.trim();
+                        const rsi = row.querySelector('td:nth-child(4)')?.textContent?.trim();
+                        
+                        // Get support prices
+                        const supportPrice1 = row.querySelector('td:nth-child(5)')?.textContent?.trim();
+                        const diff1 = row.querySelector('td:nth-child(6)')?.textContent?.trim();
+                        const supportPrice2 = row.querySelector('td:nth-child(7)')?.textContent?.trim();
+                        const diff2 = row.querySelector('td:nth-child(8)')?.textContent?.trim();
+                        const supportPrice3 = row.querySelector('td:nth-child(9)')?.textContent?.trim();
+                        const diff3 = row.querySelector('td:nth-child(10)')?.textContent?.trim();
+                        
+                        // Check if this is a new stock (has "New" badge)
+                        const badges = row.querySelectorAll('.badge');
+                        let isNew = false;
+                        badges.forEach(badge => {
+                          if (badge.textContent.includes('New')) isNew = true;
+                        });
+                        
+                        tableData.push({
+                          symbol,
+                          ltp,
+                          rsi,
+                          supportPrice1,
+                          diff1,
+                          supportPrice2,
+                          diff2,
+                          supportPrice3,
+                          diff3,
+                          isNew
+                        });
+                      }
+                    }
+                    
+                    return tableData;
+                  }, tableSelector);
+                }
+              },
+              { 
+                name: 'Enhanced Trendline Scanner', 
+                url: 'enhanced-trendline-scanner.html',
+                key: 'trendlineScanner', 
+                tableSelector: '#trendlineTable',
+                extractFunction: async (page, tableSelector) => {
+                  // Make sure to click Refresh button if available
+                  try {
+                    await page.waitForSelector('#refreshListBtn', { timeout: 5000 });
+                    await page.click('#refreshListBtn');
+                    await wait(3000);
+                  } catch (error) {
+                    console.log('No refresh button found or could not click it');
+                  }
+                  
+                  await captureScreenshot(page, 'trendline-page-loaded');
+                  
+                  return await page.evaluate((selector) => {
+                    const tableData = [];
+                    const table = document.querySelector(selector);
+                    
+                    if (table) {
+                      const rows = table.querySelectorAll('tbody tr');
+                      
+                      for (const row of rows) {
+                        const symbol = row.querySelector('td:nth-child(2)')?.textContent?.trim();
+                        const quality = row.querySelector('.trend-quality')?.textContent?.trim() || '';
+                        const direction = row.querySelector('td:nth-child(3)')?.textContent?.trim();
+                        const currentPrice = row.querySelector('td:nth-child(4)')?.textContent?.trim();
+                        const trendlinePrice = row.querySelector('td:nth-child(5)')?.textContent?.trim();
+                        const distancePercent = row.querySelector('td:nth-child(6)')?.textContent?.trim();
+                        const touches = row.querySelector('td:nth-child(7)')?.textContent?.trim();
+                        const duration = row.querySelector('td:nth-child(8)')?.textContent?.trim();
+                        
+                        // Check for new badge
+                        const badge = row.querySelector('.badge');
+                        let isNew = badge && badge.textContent.includes('New');
+                        
+                        tableData.push({
+                          symbol,
+                          quality,
+                          direction,
+                          currentPrice,
+                          trendlinePrice,
+                          distancePercent,
+                          touches,
+                          duration,
+                          isNew
+                        });
+                      }
+                    }
+                    
+                    return tableData;
+                  }, tableSelector);
+                }
+              },
+              { 
+                name: 'Institutional Activity', 
+                url: 'institutional-activity.html',
+                key: 'institutionalActivity', 
+                tableSelector: '#activityTable',
+                extractFunction: async (page, tableSelector) => {
+                  try {
+                    await page.waitForSelector('#refreshBtn', { timeout: 5000 });
+                    await page.click('#refreshBtn');
+                    await wait(3000);
+                  } catch (error) {
+                    console.log('No refresh button found or could not click it');
+                  }
+                  
+                  await captureScreenshot(page, 'institutional-page-loaded');
+                  
+                  return await page.evaluate((selector) => {
+                    const tableData = [];
+                    const table = document.querySelector(selector);
+                    
+                    if (table) {
+                      const rows = table.querySelectorAll('tbody tr');
+                      
+                      for (const row of rows) {
+                        const symbol = row.querySelector('td:nth-child(2)')?.textContent?.trim();
+                        const score = row.querySelector('td:nth-child(3) .score-indicator')?.textContent?.trim();
+                        const currentPrice = row.querySelector('td:nth-child(4)')?.textContent?.trim();
+                        const patterns = Array.from(row.querySelectorAll('.pattern-tag')).map(el => el.textContent.trim());
+                        
+                        tableData.push({
+                          symbol,
+                          score,
+                          currentPrice,
+                          patterns: patterns.join(', ')
+                        });
+                      }
+                    }
+                    
+                    return tableData;
+                  }, tableSelector);
+                }
+              },
+              { 
+                name: 'Heatmap', 
+                url: 'heatmap.html',
+                key: 'heatmap',
+                tableSelector: '#stockPerformanceTable',
+                extractFunction: async (page, tableSelector) => {
+                  // Apply days setting if needed
+                  try {
+                    const daysInput = await page.$('#daysSelector');
+                    if (daysInput) {
+                      await daysInput.type('7'); // Use 7 days by default
+                      const applyButton = await page.$('#applyDaysBtn');
+                      if (applyButton) {
+                        await applyButton.click();
+                        await page.waitForTimeout(2000);
+                      }
+                    }
+                  } catch (error) {
+                    console.log('Could not set days:', error.message);
+                  }
+                  
+                  await captureScreenshot(page, 'heatmap-page-loaded');
+                  
+                  return await page.evaluate((selector) => {
+                    const tableData = [];
+                    const table = document.querySelector(selector);
+                    
+                    if (table) {
+                      const rows = table.querySelectorAll('tbody tr');
+                      
+                      for (const row of rows) {
+                        const symbol = row.querySelector('td:nth-child(1)')?.textContent?.trim();
+                        const openPrice = row.querySelector('td:nth-child(2)')?.textContent?.trim();
+                        const closePrice = row.querySelector('td:nth-child(3)')?.textContent?.trim();
+                        const changePercent = row.querySelector('td:nth-child(4)')?.textContent?.trim();
+                        const volume = row.querySelector('td:nth-child(5)')?.textContent?.trim();
+                        const high = row.querySelector('td:nth-child(6)')?.textContent?.trim();
+                        const low = row.querySelector('td:nth-child(7)')?.textContent?.trim();
+                        const volatility = row.querySelector('td:nth-child(8)')?.textContent?.trim();
+                        const rsi = row.querySelector('td:nth-child(9)')?.textContent?.trim();
+                        
+                        tableData.push({
+                          symbol,
+                          openPrice,
+                          closePrice,
+                          changePercent,
+                          volume,
+                          high,
+                          low,
+                          volatility,
+                          rsi
+                        });
+                      }
+                    }
+                    
+                    return tableData;
+                  }, tableSelector);
+                }
+              }
+            ];
+            
+            // Visit each page and extract data
+            for (const pageInfo of pagesToVisit) {
+              console.log(`Loading ${pageInfo.name} page...`);
+              await page.goto(`http://localhost:3000/${pageInfo.url}`, { 
+                waitUntil: 'networkidle0', 
+                timeout: 60000 
+              });
+              
+              // Allow time for page to process data
+              await wait(5000);
+              
+              // Apply custom settings if this is the RSI support page
+              if (useCustomSettings && pageInfo.key === 'rsiSupport' && pageSettings.rsiSupport) {
+                try {
+                  console.log('Applying custom settings to RSI Support page');
+                  const settings = pageSettings.rsiSupport;
+                  
+                  // Set RSI period
+                  if (settings.rsiPeriod) {
+                    await page.$eval('#rsiPeriod', (el, value) => { 
+                      el.value = value; 
+                      el.dispatchEvent(new Event('change')); 
+                    }, settings.rsiPeriod.toString());
+                  }
+                  
+                  // Set max RSI value
+                  if (settings.maxRsiValue) {
+                    await page.$eval('#maxRsiValue', (el, value) => { 
+                      el.value = value; 
+                      el.dispatchEvent(new Event('change')); 
+                    }, settings.maxRsiValue.toString());
+                  }
+                  
+                  // Set support checkboxes
+                  if (settings.filterSupport1 !== undefined) {
+                    await page.$eval('#filterSupport1', (el, value) => { 
+                      el.checked = value; 
+                      el.dispatchEvent(new Event('change')); 
+                    }, settings.filterSupport1);
+                  }
+                  
+                  if (settings.filterSupport2 !== undefined) {
+                    await page.$eval('#filterSupport2', (el, value) => { 
+                      el.checked = value; 
+                      el.dispatchEvent(new Event('change')); 
+                    }, settings.filterSupport2);
+                  }
+                  
+                  if (settings.filterSupport3 !== undefined) {
+                    await page.$eval('#filterSupport3', (el, value) => { 
+                      el.checked = value; 
+                      el.dispatchEvent(new Event('change')); 
+                    }, settings.filterSupport3);
+                  }
+                  
+                  // Set min/max percentage
+                  if (settings.filterMinPercentage !== undefined) {
+                    await page.$eval('#filterMinPercentage', (el, value) => { 
+                      el.value = value; 
+                      el.dispatchEvent(new Event('change')); 
+                    }, settings.filterMinPercentage.toString());
+                  }
+                  
+                  if (settings.filterMaxPercentage !== undefined) {
+                    await page.$eval('#filterMaxPercentage', (el, value) => { 
+                      el.value = value; 
+                      el.dispatchEvent(new Event('change')); 
+                    }, settings.filterMaxPercentage.toString());
+                  }
+                  
+                  // Refresh the list to apply settings
+                  const refreshButton = await page.$('#refreshListBtn');
+                  if (refreshButton) {
+                    await refreshButton.click();
+                    await wait(3000);
+                  }
+                  
+                  console.log('RSI Support settings applied');
+                  await captureScreenshot(page, 'rsi-settings-applied');
+                } catch (error) {
+                  console.error('Error applying RSI Support settings:', error);
+                }
+              }
+              
+              // Apply custom settings if this is the Trendline scanner page
+              if (useCustomSettings && pageInfo.key === 'trendlineScanner' && pageSettings.trendlineScanner) {
+                try {
+                  console.log('Applying custom settings to Trendline Scanner page');
+                  const settings = pageSettings.trendlineScanner;
+                  
+                  // Set lookback period
+                  if (settings.lookbackPeriod) {
+                    await page.$eval('#lookbackPeriod', (el, value) => { 
+                      el.value = value; 
+                      el.dispatchEvent(new Event('change')); 
+                    }, settings.lookbackPeriod.toString());
+                  }
+                  
+                  // Set min touches
+                  if (settings.minTouches) {
+                    await page.$eval('#minTouches', (el, value) => { 
+                      el.value = value; 
+                      el.dispatchEvent(new Event('change')); 
+                    }, settings.minTouches.toString());
+                  }
+                  
+                  // Set other trendline parameters
+                  if (settings.proximityThreshold) {
+                    await page.$eval('#proximityThreshold', (el, value) => { 
+                      el.value = value; 
+                      el.dispatchEvent(new Event('change')); 
+                    }, settings.proximityThreshold.toString());
+                  }
+                  
+                                     if (settings.minTrendQuality) {
+                     await page.$eval('#minTrendQuality', (el, value) => { 
+                       el.value = value; 
+                       el.dispatchEvent(new Event('change')); 
+                     }, settings.minTrendQuality);
+                   }
+                   
+                   // Set dashboard stocks only checkbox
+                   if (settings.showDashboardStocksOnly !== undefined) {
+                     await page.$eval('#showWatchlistOnly', (el, value) => { 
+                       el.checked = value; 
+                       el.dispatchEvent(new Event('change')); 
+                     }, settings.showDashboardStocksOnly);
+                   }
+                  
+                  // Click refresh button to apply settings
+                  const refreshButton = await page.$('#refreshListBtn');
+                  if (refreshButton) {
+                    await refreshButton.click();
+                    await wait(5000);
+                  }
+                  
+                  console.log('Trendline Scanner settings applied');
+                  await captureScreenshot(page, 'trendline-settings-applied');
+                } catch (error) {
+                  console.error('Error applying Trendline Scanner settings:', error);
+                }
+              }
+              
+              // Apply custom settings if this is the Heatmap page
+              if (useCustomSettings && pageInfo.key === 'heatmap' && pageSettings.heatmap) {
+                try {
+                  console.log('Applying custom settings to Heatmap page');
+                  const settings = pageSettings.heatmap;
+                  
+                  // Set days selector
+                  if (settings.analysisDays) {
+                    await page.$eval('#daysSelector', (el, value) => { 
+                      el.value = value; 
+                    }, settings.analysisDays.toString());
+                    
+                    // Click apply button
+                    const applyButton = await page.$('#applyDaysBtn');
+                    if (applyButton) {
+                      await applyButton.click();
+                      await wait(2000);
+                    }
+                  }
+                  
+                  // Set min/max threshold sliders
+                  if (settings.minThreshold !== undefined) {
+                    await page.$eval('#minThreshold', (el, value) => { 
+                      el.value = value; 
+                      el.dispatchEvent(new Event('input')); 
+                      el.dispatchEvent(new Event('change')); 
+                    }, settings.minThreshold.toString());
+                  }
+                  
+                  if (settings.maxThreshold !== undefined) {
+                    await page.$eval('#maxThreshold', (el, value) => { 
+                      el.value = value; 
+                      el.dispatchEvent(new Event('input')); 
+                      el.dispatchEvent(new Event('change')); 
+                    }, settings.maxThreshold.toString());
+                  }
+                  
+                  // Set dashboard stocks only checkbox
+                  if (settings.dashboardStocksOnly !== undefined) {
+                    await page.$eval('#dashboardStocksOnlyCheckbox', (el, value) => { 
+                      el.checked = value; 
+                      el.dispatchEvent(new Event('change')); 
+                    }, settings.dashboardStocksOnly);
+                  }
+                  
+                  // Set view mode
+                  if (settings.viewMode) {
+                    const viewButton = await page.$(`#${settings.viewMode}ViewBtn`);
+                    if (viewButton) {
+                      await viewButton.click();
+                      await wait(1000);
+                    }
+                  }
+                  
+                  console.log('Heatmap settings applied');
+                  await captureScreenshot(page, 'heatmap-settings-applied');
+                } catch (error) {
+                  console.error('Error applying Heatmap settings:', error);
+                }
+              }
+              
+              // Apply custom settings if this is the Institutional Activity page
+              if (useCustomSettings && pageInfo.key === 'institutionalActivity' && pageSettings.institutionalActivity) {
+                try {
+                  console.log('Applying custom settings to Institutional Activity page');
+                  const settings = pageSettings.institutionalActivity;
+                  
+                  // Set min score threshold
+                  if (settings.minScoreThreshold) {
+                    await page.$eval('#minScoreThreshold', (el, value) => { 
+                      el.value = value; 
+                      el.dispatchEvent(new Event('change')); 
+                    }, settings.minScoreThreshold.toString());
+                  }
+                  
+                  // Set volume threshold
+                                     if (settings.volumeThreshold) {
+                     await page.$eval('#volumeThreshold', (el, value) => { 
+                       el.value = value; 
+                       el.dispatchEvent(new Event('change')); 
+                     }, settings.volumeThreshold.toString());
+                   }
+                   
+                   // Apply detection settings for specific methods
+                   const detectionTypes = [
+                     'Volume', 'OBV', 'VSA', 'Wyckoff', 'Manipulation',
+                     'PriceAction', 'StatisticalAnomalies', 'VwapDeviation'
+                   ];
+                   
+                   for (const type of detectionTypes) {
+                     const settingKey = `detect${type}`;
+                     if (settings[settingKey] !== undefined) {
+                       try {
+                         const checkboxId = `detect${type}Checkbox`;
+                         await page.$eval(`#${checkboxId}`, (el, value) => {
+                           if (el.checked !== value) {
+                             el.checked = value;
+                             el.dispatchEvent(new Event('change'));
+                           }
+                         }, settings[settingKey]);
+                       } catch (err) {
+                         console.log(`Could not find checkbox for ${type}, trying alternative ID`);
+                         try {
+                           // Try alternative ID formats
+                           await page.$eval(`input[name="detect${type}"]`, (el, value) => {
+                             if (el.checked !== value) {
+                               el.checked = value;
+                               el.dispatchEvent(new Event('change'));
+                             }
+                           }, settings[settingKey]);
+                         } catch (altErr) {
+                           console.error(`Could not set ${type} detection setting:`, altErr.message);
+                         }
+                       }
+                     }
+                   }
+                  
+                  // Refresh the page to apply settings
+                  const refreshButton = await page.$('#refreshBtn');
+                  if (refreshButton) {
+                    await refreshButton.click();
+                    await wait(3000);
+                  }
+                  
+                  console.log('Institutional Activity settings applied');
+                  await captureScreenshot(page, 'institutional-settings-applied');
+                } catch (error) {
+                  console.error('Error applying Institutional Activity settings:', error);
+                }
+              }
+              
+              // Extract data using the page-specific function
+              try {
+                const data = await pageInfo.extractFunction(page, pageInfo.tableSelector);
+                collectedData[pageInfo.key] = data;
+                console.log(`Retrieved ${data.length} rows from ${pageInfo.key}`);
+                
+                // Save individual data file
+                fs.writeFileSync(`${pageInfo.key}-stocks.json`, JSON.stringify(data, null, 2));
+              } catch (error) {
+                console.error(`Error extracting data from ${pageInfo.name}:`, error);
+                await captureScreenshot(page, `${pageInfo.key}-extraction-error`);
+              }
+            }
+            
+            // Save all collected data
+            fs.writeFileSync('all-stocks-data.json', JSON.stringify(collectedData, null, 2));
+            
+            await browser.close();
+            console.log('Browser automation complete');
+            
+            return collectedData;
+          } catch (error) {
+            console.error('Error in browser automation:', error);
+            return null;
+          }
+        }
+        
+        // Run the automation and handle the result
+        automateWebsite().then(results => {
+          const totalStocks = Object.values(results).reduce((sum, arr) => sum + arr.length, 0);
+          console.log(`Automation completed with ${totalStocks} total stocks found`);
+          process.exit(0);
+        }).catch(err => {
+          console.error('Automation failed:', err);
+          process.exit(1);
+        });
+        EOL
+        
+    - name: Run browser automation with more debugging
+      run: |
+        # Install useful diagnostic tools
+        npm list puppeteer
+        # Run browser automation with debugging
+        NODE_DEBUG=puppeteer node automate-browser.js || {
+          echo "Browser automation failed, listing available files:"
+          ls -la
+          echo "Checking server log:"
+          cat server.log
+          exit 1
+        }
+      
+    - name: Run stock notifications with enhanced data
+      run: node server/notifications/sendNotifications.js --now
+      
+    - name: Check for changes in state file
+      id: check_changes
+      run: |
+        git diff --quiet server/notifications/data/previous-alerts.json || echo "changes=true" >> $GITHUB_OUTPUT
+        
+    - name: Commit and push changes if state file was updated
+      if: steps.check_changes.outputs.changes == 'true'
+      run: |
+        git config --global user.name "GitHub Actions Bot"
+        git config --global user.email "actions@github.com"
+        git add server/notifications/data/previous-alerts.json
+        git commit -m "Update stock notification state [skip ci]"
+        git push
+      
+    # Upload screenshots and logs for debugging
+    - name: Upload logs and screenshots
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: automation-artifacts
+        path: |
+          *.png
+          server.log
+          *-stocks.json
+          all-stocks-data.json
+          server/notifications/data/previous-alerts.json
+          config/page-settings.json
