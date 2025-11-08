@@ -1,71 +1,35 @@
 {
-  "lastUpdated": "2025-11-07T11:30:45.266Z",
+  "lastUpdated": "2025-11-08T12:26:48.008Z",
   "institutionalStocks": {
-    "611.00": {
-      "score": 60,
-      "price": 0,
-      "patterns": "Volume Spike (Bullish), OBV Bullish Divergence, Stopping Volume (Bullish), Statistical Anomaly (Bullish)",
-      "lastUpdated": "2025-11-07T11:30:45.264Z"
-    },
-    "589.30": {
-      "score": 0,
+    "971.00": {
+      "score": 15,
       "price": 55,
-      "patterns": "Volume Spike (Bearish), Below VWAP, Upthrust Pattern, Statistical Anomaly (Bearish)",
-      "lastUpdated": "2025-11-07T11:30:45.264Z"
-    },
-    "215.00": {
-      "score": 0,
-      "price": 55,
-      "patterns": "Volume Spike (Bearish), Narrow Range, High Volume (Bearish), Below VWAP, Stopping Volume (Bearish), Upthrust Pattern",
-      "lastUpdated": "2025-11-07T11:30:45.264Z"
+      "patterns": "Volume Spike (Bearish), Narrow Range, High Volume (Bearish), Below VWAP, Upthrust Pattern, Statistical Anomaly (Bullish)",
+      "lastUpdated": "2025-11-08T12:26:48.005Z"
     }
   },
   "trendlineStocks": {},
   "rsiSupportStocks": {
-    "MNBBL\n                NewBought": {
-      "ltp": 357,
-      "rsi": 25.1,
-      "supportPrice1": 353.46,
+    "EBL\n                New": {
+      "ltp": 623,
+      "rsi": 30.53,
+      "supportPrice1": 607.02,
       "diff1": "",
-      "lastUpdated": "2025-11-07T11:30:45.266Z"
-    },
-    "HDL\n                New": {
-      "ltp": 1186,
-      "rsi": 28.64,
-      "supportPrice1": 1177.38,
-      "diff1": "",
-      "lastUpdated": "2025-11-07T11:30:45.266Z"
-    },
-    "GBBL\n                New": {
-      "ltp": 386.5,
-      "rsi": 33.47,
-      "supportPrice1": 380,
-      "diff1": "",
-      "lastUpdated": "2025-11-07T11:30:45.266Z"
+      "lastUpdated": "2025-11-08T12:26:48.008Z"
     },
     "SMH\n                New": {
       "ltp": 760,
-      "rsi": 34.2,
+      "rsi": 33.85,
       "supportPrice1": 750,
       "diff1": "",
-      "lastUpdated": "2025-11-07T11:30:45.266Z"
+      "lastUpdated": "2025-11-08T12:26:48.008Z"
     }
   },
   "heatmapStocks": {
-    "611.00": {
+    "971.00": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2025-11-07T11:30:45.266Z"
-    },
-    "589.30": {
-      "price": 0,
-      "volume": 0,
-      "lastUpdated": "2025-11-07T11:30:45.266Z"
-    },
-    "215.00": {
-      "price": 0,
-      "volume": 0,
-      "lastUpdated": "2025-11-07T11:30:45.266Z"
+      "lastUpdated": "2025-11-08T12:26:48.007Z"
     }
   }
 }
