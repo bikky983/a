@@ -1,0 +1,44 @@
+{
+  "rsiSupport": {
+    "rsiPeriod": 14,
+    "maxRsiValue": 35,
+    "filterSupport1": true,
+    "filterSupport2": true,
+    "filterSupport3": true,
+    "filterMinPercentage": -2,
+    "filterMaxPercentage": 5
+  },
+  "trendlineScanner": {
+    "lookbackPeriod": 180,
+    "minTouches": 3,
+    "proximityThreshold": 2,
+    "atrMultiplier": 0.5,
+    "minTrendDuration": 14,
+    "minTrendQuality": "medium",
+    "requireVolumeConfirmation": true,
+    "trendDirection": "uptrend",
+    "showDashboardStocksOnly": true
+  },
+  "institutionalActivity": {
+    "minScoreThreshold": 0.5,
+    "volumeThreshold": 2,
+    "obvThreshold": 15,
+    "manipulationThreshold": 3,
+    "detectVolume": true,
+    "detectOBV": true,
+    "detectVSA": true,
+    "detectWyckoff": true,
+    "detectManipulation": true,
+    "detectPriceAction": true,
+    "detectStatisticalAnomalies": true,
+    "detectVwapDeviation": true,
+    "thresholdLevels": [0.5, 0.65, 0.8]
+  },
+  "heatmap": {
+    "analysisDays": 7,
+    "minThreshold": -3,
+    "maxThreshold": 4,
+    "dashboardStocksOnly": true,
+    "viewMode": "volume"
+  }
+} 
