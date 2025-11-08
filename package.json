@@ -9,7 +9,9 @@
     "schedule": "node data-scripts/scheduler.js",
     "run-now": "node data-scripts/scheduler.js --now",
     "download-only": "node data-scripts/scheduler.js --download-only",
-    "process-only": "node data-scripts/scheduler.js --process-only"
+    "process-only": "node data-scripts/scheduler.js --process-only",
+    "analyze-signals": "node data-scripts/signal-analyzer.js",
+    "signals": "node data-scripts/signal-analyzer.js"
   },
   "dependencies": {
     "axios": "^1.6.7",

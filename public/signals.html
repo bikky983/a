@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Signals - RSI Pivot Trendline Strategy</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #718096;
+            font-size: 1.1em;
+        }
+
+        .update-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f7fafc;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .update-time {
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #2d3748;
+        }
+
+        .stat-label {
+            color: #718096;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .signals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .signal-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .section-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+        }
+
+        .buy-icon {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+        }
+
+        .sell-icon {
+            background: linear-gradient(135deg, #f56565, #e53e3e);
+            color: white;
+        }
+
+        .section-title {
+            flex: 1;
+        }
+
+        .section-title h2 {
+            color: #2d3748;
+            font-size: 1.8em;
+            margin-bottom: 5px;
+        }
+
+        .section-title .count {
+            color: #718096;
+            font-size: 0.95em;
+        }
+
+        .signals-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-height: 600px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .signals-list::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .signals-list::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .signals-list::-webkit-scrollbar-thumb {
+            background: #cbd5e0;
+            border-radius: 10px;
+        }
+
+        .signals-list::-webkit-scrollbar-thumb:hover {
+            background: #a0aec0;
+        }
+
+        .signal-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .signal-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .signal-card.buy {
+            border-left-color: #48bb78;
+        }
+
+        .signal-card.sell {
+            border-left-color: #f56565;
+        }
+
+        .signal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .symbol {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #2d3748;
+        }
+
+        .price {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .signal-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .detail-label {
+            font-size: 0.85em;
+            color: #718096;
+            margin-bottom: 3px;
+        }
+
+        .detail-value {
+            font-size: 1em;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .date-badge {
+            display: inline-block;
+            background: #edf2f7;
+            color: #4a5568;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+
+        .no-signals {
+            text-align: center;
+            padding: 40px;
+            color: #718096;
+            font-size: 1.1em;
+        }
+
+        .no-signals-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 60px;
+            color: #4a5568;
+            font-size: 1.2em;
+        }
+
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .history-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .history-chart {
+            margin-top: 20px;
+            overflow-x: auto;
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .history-table th,
+        .history-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .history-table th {
+            background: #f7fafc;
+            color: #4a5568;
+            font-weight: 600;
+        }
+
+        .history-table tr:hover {
+            background: #f7fafc;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .badge-buy {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .badge-sell {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+
+        @media (max-width: 768px) {
+            .signals-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .update-info {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .signal-details {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div style="background: white; padding: 15px 20px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <div style="max-width: 1400px; margin: 0 auto;">
+            <div class="nav-links" id="navigation-links">
+                <!-- Navigation links will be populated by common-nav.js -->
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>📊 Trading Signals Dashboard</h1>
+            <p>RSI Pivot Trendline Strategy - Automated Daily Analysis</p>
+            
+            <div class="update-info">
+                <div class="update-time">
+                    <strong>Last Updated:</strong> <span id="lastUpdate">Loading...</span>
+                </div>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-value" id="buyCount">-</div>
+                        <div class="stat-label">Buy Signals</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="sellCount">-</div>
+                        <div class="stat-label">Sell Signals</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="signals-grid">
+            <!-- Buy Signals Section -->
+            <div class="signal-section">
+                <div class="section-header">
+                    <div class="section-icon buy-icon">📈</div>
+                    <div class="section-title">
+                        <h2>Buy Signals</h2>
+                        <div class="count">Stocks breaking above downtrend</div>
+                    </div>
+                </div>
+                <div id="buySignals" class="signals-list">
+                    <div class="loading">
+                        <div class="loading-spinner"></div>
+                        Loading signals...
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sell Signals Section -->
+            <div class="signal-section">
+                <div class="section-header">
+                    <div class="section-icon sell-icon">📉</div>
+                    <div class="section-title">
+                        <h2>Sell Signals</h2>
+                        <div class="count">Stocks breaking below uptrend</div>
+                    </div>
+                </div>
+                <div id="sellSignals" class="signals-list">
+                    <div class="loading">
+                        <div class="loading-spinner"></div>
+                        Loading signals...
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Signal History Section -->
+        <div class="history-section">
+            <h2>📅 Signal History (Last 30 Days)</h2>
+            <div class="history-chart">
+                <table class="history-table" id="historyTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Buy Signals</th>
+                            <th>Sell Signals</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyBody">
+                        <tr>
+                            <td colspan="4" style="text-align: center; padding: 30px;">
+                                <div class="loading-spinner" style="margin: 0 auto 10px;"></div>
+                                Loading history...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="common-nav.js"></script>
+    <script src="signals.js"></script>
+</body>
+</html>

@@ -18,7 +18,8 @@ document.addEventListener('DOMContentLoaded', function() {
             { name: 'Institutional Activity', url: 'institutional-activity.html' },
             { name: 'Big Player Accumulation', url: 'big-player-accumulation.html' },
             { name: 'Weekly Heatmap', url: 'heatmap.html' },
-            { name: 'IPO & Rights', url: 'ipo-rights.html' }
+            { name: 'IPO & Rights', url: 'ipo-rights.html' },
+            { name: 'Trading Signals', url: 'signals.html' }
             // New pages should be added here
         ];
         

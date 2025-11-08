@@ -1,0 +1,342 @@
+//@version=6
+indicator("RSI Pivot Trendline Strategy", overlay=true, max_lines_count=100)
+
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// USER INPUTS
+// ═══════════════════════════════════════════════════════════════════════════════
+
+
+// RSI Settings
+rsi_fast_period = input.int(21, "RSI Fast Period", minval=1, group="RSI Settings")
+rsi_slow_period = input.int(55, "RSI Slow Period", minval=1, group="RSI Settings")
+
+
+// Pivot Detection Settings
+pivot_lookback = input.int(5, "Pivot Lookback (bars left/right)", minval=2, group="Pivot Settings")
+min_pivot_distance = input.int(10, "Min Bars Between Pivots", minval=1, group="Pivot Settings")
+
+
+// Trendline Settings
+trendline_color_down = input.color(color.new(color.red, 30), "Downtrend Line Color", group="Trendline Settings")
+trendline_color_up = input.color(color.new(color.green, 30), "Uptrend Line Color", group="Trendline Settings")
+trendline_width = input.int(2, "Trendline Width", minval=1, maxval=5, group="Trendline Settings")
+show_pivots = input.bool(true, "Show Pivot Points", group="Display Settings")
+
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// CALCULATE RSI
+// ═══════════════════════════════════════════════════════════════════════════════
+
+
+rsi_fast = ta.rsi(close, rsi_fast_period)
+rsi_slow = ta.rsi(close, rsi_slow_period)
+
+
+// Detect RSI crossovers
+rsi_cross_up = ta.crossover(rsi_fast, rsi_slow)
+rsi_cross_down = ta.crossunder(rsi_fast, rsi_slow)
+
+
+// Track if we're in a bullish or bearish RSI state
+var bool rsi_bullish = false  // RSI Fast > RSI Slow
+var bool rsi_bearish = false  // RSI Fast < RSI Slow
+var int last_rsi_cross_up_time = na
+var int last_rsi_cross_down_time = na
+
+
+// Update RSI state
+if rsi_cross_up
+    rsi_bullish := true
+    rsi_bearish := false
+    last_rsi_cross_up_time := time
+    
+if rsi_cross_down
+    rsi_bearish := true
+    rsi_bullish := false
+    last_rsi_cross_down_time := time
+
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// PIVOT DETECTION
+// ═══════════════════════════════════════════════════════════════════════════════
+
+
+// Detect pivot highs (lower highs in downtrend)
+pivot_high = ta.pivothigh(high, pivot_lookback, pivot_lookback)
+
+
+// Detect pivot lows (higher lows in uptrend)
+pivot_low = ta.pivotlow(low, pivot_lookback, pivot_lookback)
+
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// STORE PIVOT POINTS
+// ═══════════════════════════════════════════════════════════════════════════════
+
+
+// Arrays to store recent pivot highs (for downtrend line)
+var array<int> pivot_high_times = array.new<int>()
+var array<float> pivot_high_prices = array.new<float>()
+
+
+// Arrays to store recent pivot lows (for uptrend line)
+var array<int> pivot_low_times = array.new<int>()
+var array<float> pivot_low_prices = array.new<float>()
+
+
+// Track last pivot time to enforce minimum distance
+var int last_pivot_high_time = na
+var int last_pivot_low_time = na
+
+
+// When a new pivot high is detected
+if not na(pivot_high)
+    // Check minimum distance from last pivot
+    bars_since_last = na(last_pivot_high_time) ? 999 : (time - last_pivot_high_time) / (time - time[1])
+    
+    if bars_since_last >= min_pivot_distance
+        // Add to array (store time from pivot_lookback bars ago)
+        pivot_time = time[pivot_lookback]
+        array.push(pivot_high_times, pivot_time)
+        array.push(pivot_high_prices, pivot_high)
+        last_pivot_high_time := pivot_time
+        
+        // Keep only last 3 pivots
+        if array.size(pivot_high_times) > 3
+            array.shift(pivot_high_times)
+            array.shift(pivot_high_prices)
+
+
+// When a new pivot low is detected
+if not na(pivot_low)
+    // Check minimum distance from last pivot
+    bars_since_last = na(last_pivot_low_time) ? 999 : (time - last_pivot_low_time) / (time - time[1])
+    
+    if bars_since_last >= min_pivot_distance
+        // Add to array (store time from pivot_lookback bars ago)
+        pivot_time = time[pivot_lookback]
+        array.push(pivot_low_times, pivot_time)
+        array.push(pivot_low_prices, pivot_low)
+        last_pivot_low_time := pivot_time
+        
+        // Keep only last 3 pivots
+        if array.size(pivot_low_times) > 3
+            array.shift(pivot_low_times)
+            array.shift(pivot_low_prices)
+
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// TRENDLINE CONSTRUCTION
+// ═══════════════════════════════════════════════════════════════════════════════
+
+
+// Calculate trendline price at given time
+get_trendline_price(time1, price1, time2, price2, target_time) =>
+    if time1 == time2
+        price1
+    else
+        slope = (price2 - price1) / (time2 - time1)
+        price1 + slope * (target_time - time1)
+
+
+// Active trendlines
+var line downtrend_line = na
+var line uptrend_line = na
+
+
+// Build downtrend line from two most recent lower highs
+if array.size(pivot_high_times) >= 2
+    idx1 = array.size(pivot_high_times) - 2
+    idx2 = array.size(pivot_high_times) - 1
+    
+    time1 = array.get(pivot_high_times, idx1)
+    price1 = array.get(pivot_high_prices, idx1)
+    time2 = array.get(pivot_high_times, idx2)
+    price2 = array.get(pivot_high_prices, idx2)
+    
+    // Only draw if it's a descending line (lower high)
+    if price2 < price1
+        // Delete old line
+        if not na(downtrend_line)
+            line.delete(downtrend_line)
+        
+        // Create new downtrend line
+        downtrend_line := line.new(
+             x1=time1, y1=price1,
+             x2=time, y2=get_trendline_price(time1, price1, time2, price2, time),
+             xloc=xloc.bar_time,
+             color=trendline_color_down,
+             width=trendline_width,
+             extend=extend.right
+         )
+
+
+// Build uptrend line from two most recent higher lows
+if array.size(pivot_low_times) >= 2
+    idx1 = array.size(pivot_low_times) - 2
+    idx2 = array.size(pivot_low_times) - 1
+    
+    time1 = array.get(pivot_low_times, idx1)
+    price1 = array.get(pivot_low_prices, idx1)
+    time2 = array.get(pivot_low_times, idx2)
+    price2 = array.get(pivot_low_prices, idx2)
+    
+    // Only draw if it's an ascending line (higher low)
+    if price2 > price1
+        // Delete old line
+        if not na(uptrend_line)
+            line.delete(uptrend_line)
+        
+        // Create new uptrend line
+        uptrend_line := line.new(
+             x1=time1, y1=price1,
+             x2=time, y2=get_trendline_price(time1, price1, time2, price2, time),
+             xloc=xloc.bar_time,
+             color=trendline_color_up,
+             width=trendline_width,
+             extend=extend.right
+         )
+
+
+// Update trendline endpoints to current bar
+if not na(downtrend_line)
+    line_y1 = line.get_y1(downtrend_line)
+    line_y2 = line.get_y2(downtrend_line)
+    line_x1 = line.get_x1(downtrend_line)
+    line_x2 = line.get_x2(downtrend_line)
+    
+    new_y2 = get_trendline_price(line_x1, line_y1, line_x2, line_y2, time)
+    line.set_x2(downtrend_line, time)
+    line.set_y2(downtrend_line, new_y2)
+
+
+if not na(uptrend_line)
+    line_y1 = line.get_y1(uptrend_line)
+    line_y2 = line.get_y2(uptrend_line)
+    line_x1 = line.get_x1(uptrend_line)
+    line_x2 = line.get_x2(uptrend_line)
+    
+    new_y2 = get_trendline_price(line_x1, line_y1, line_x2, line_y2, time)
+    line.set_x2(uptrend_line, time)
+    line.set_y2(uptrend_line, new_y2)
+
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SIGNAL GENERATION
+// ═══════════════════════════════════════════════════════════════════════════════
+
+
+var bool buy_signal = false
+var bool sell_signal = false
+
+buy_signal := false
+sell_signal := false
+
+// Track if we've already fired a signal for current RSI state
+var bool buy_fired = false
+var bool sell_fired = false
+
+
+// BUY SIGNAL: RSI is bullish AND price breaks above downtrend line
+if rsi_bullish and not na(downtrend_line)
+    // Get downtrend line price at current bar
+    line_y1 = line.get_y1(downtrend_line)
+    line_y2 = line.get_y2(downtrend_line)
+    line_x1 = line.get_x1(downtrend_line)
+    line_x2 = line.get_x2(downtrend_line)
+    
+    downtrend_price = get_trendline_price(line_x1, line_y1, line_x2, line_y2, time)
+    
+    // Check if price closed above downtrend line and we haven't fired yet
+    if close > downtrend_price and close[1] <= downtrend_price and not buy_fired
+        buy_signal := true
+        buy_fired := true
+
+// Reset buy_fired flag when RSI becomes bearish
+if rsi_bearish
+    buy_fired := false
+
+
+// SELL SIGNAL: RSI is bearish AND price breaks below uptrend line
+if rsi_bearish and not na(uptrend_line)
+    // Get uptrend line price at current bar
+    line_y1 = line.get_y1(uptrend_line)
+    line_y2 = line.get_y2(uptrend_line)
+    line_x1 = line.get_x1(uptrend_line)
+    line_x2 = line.get_x2(uptrend_line)
+    
+    uptrend_price = get_trendline_price(line_x1, line_y1, line_x2, line_y2, time)
+    
+    // Check if price closed below uptrend line and we haven't fired yet
+    if close < uptrend_price and close[1] >= uptrend_price and not sell_fired
+        sell_signal := true
+        sell_fired := true
+
+// Reset sell_fired flag when RSI becomes bullish
+if rsi_bullish
+    sell_fired := false
+
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// VISUALIZATION
+// ═══════════════════════════════════════════════════════════════════════════════
+
+
+// Plot pivot points
+plotshape(
+     show_pivots and not na(pivot_high),
+     title="Pivot High",
+     style=shape.triangledown,
+     location=location.abovebar,
+     color=color.new(color.red, 50),
+     size=size.tiny,
+     offset=-pivot_lookback
+ )
+
+
+plotshape(
+     show_pivots and not na(pivot_low),
+     title="Pivot Low",
+     style=shape.triangleup,
+     location=location.belowbar,
+     color=color.new(color.green, 50),
+     size=size.tiny,
+     offset=-pivot_lookback
+ )
+
+
+// Plot buy signals
+plotshape(
+     buy_signal,
+     title="BUY Signal",
+     style=shape.triangleup,
+     location=location.belowbar,
+     color=color.new(color.green, 0),
+     size=size.normal,
+     text="BUY"
+ )
+
+
+// Plot sell signals
+plotshape(
+     sell_signal,
+     title="SELL Signal",
+     style=shape.triangledown,
+     location=location.abovebar,
+     color=color.new(color.red, 0),
+     size=size.normal,
+     text="SELL"
+ )
+
+
+// RSI calculations run in background (no visual output)
+
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ALERTS
+// ═══════════════════════════════════════════════════════════════════════════════
+
+
+alertcondition(buy_signal, title="BUY Signal", message="BUY: Price & RSI broke above downtrend line!")
+alertcondition(sell_signal, title="SELL Signal", message="SELL: Price & RSI broke below uptrend line!")
