@@ -3,7 +3,7 @@ name: Stock Notification Service
 on:
   schedule:
     # Run daily at 5:00 PM Nepal time (11:15 AM UTC)
-    - cron: '15 11 * * *'
+    - cron: '30 11 * * *'
   workflow_dispatch:
     inputs:
       run_now:
@@ -807,3 +807,4 @@ jobs:
           all-stocks-data.json
           server/notifications/data/previous-alerts.json
           config/page-settings.json
+
