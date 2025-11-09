@@ -1,0 +1,91 @@
+name: Daily Signal Analysis
+
+on:
+  schedule:
+    # Run daily at 7:00 PM Nepal Time (NPT is UTC+5:45)
+    # 7:00 PM NPT = 1:15 PM UTC (13:15 UTC)
+    - cron: '15 13 * * *'
+  
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  analyze-signals:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run signal analysis
+        run: node data-scripts/signal-analyzer.js
+        env:
+          TZ: 'Asia/Kathmandu'
+
+      - name: Check for changes
+        id: git-check
+        run: |
+          git diff --exit-code public/signals-database.json || echo "changed=true" >> $GITHUB_OUTPUT
+
+      - name: Commit and push changes
+        if: steps.git-check.outputs.changed == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add public/signals-database.json
+          git commit -m "🤖 Auto-update: Daily signal analysis - $(date +'%Y-%m-%d %H:%M NPT')"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create summary
+        if: always()
+        run: |
+          echo "## 📊 Signal Analysis Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Time:** $(date +'%Y-%m-%d %H:%M:%S NPT')" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ -f public/signals-database.json ]; then
+            BUY_COUNT=$(node -e "const data = require('./public/signals-database.json'); console.log(data.currentBuySignals?.length || 0);")
+            SELL_COUNT=$(node -e "const data = require('./public/signals-database.json'); console.log(data.currentSellSignals?.length || 0);")
+            
+            echo "### Results" >> $GITHUB_STEP_SUMMARY
+            echo "- 📈 **Buy Signals:** $BUY_COUNT" >> $GITHUB_STEP_SUMMARY
+            echo "- 📉 **Sell Signals:** $SELL_COUNT" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            
+            if [ "$BUY_COUNT" -gt 0 ]; then
+              echo "#### Buy Signals" >> $GITHUB_STEP_SUMMARY
+              node -e "const data = require('./public/signals-database.json'); data.currentBuySignals.forEach(s => console.log('- **' + s.symbol + '**: Rs. ' + s.price + ' (RSI: ' + s.details.rsiFast + '/' + s.details.rsiSlow + ')'));" >> $GITHUB_STEP_SUMMARY
+              echo "" >> $GITHUB_STEP_SUMMARY
+            fi
+            
+            if [ "$SELL_COUNT" -gt 0 ]; then
+              echo "#### Sell Signals" >> $GITHUB_STEP_SUMMARY
+              node -e "const data = require('./public/signals-database.json'); data.currentSellSignals.forEach(s => console.log('- **' + s.symbol + '**: Rs. ' + s.price + ' (RSI: ' + s.details.rsiFast + '/' + s.details.rsiSlow + ')'));" >> $GITHUB_STEP_SUMMARY
+              echo "" >> $GITHUB_STEP_SUMMARY
+            fi
+          fi
+          
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Analysis completed successfully" >> $GITHUB_STEP_SUMMARY
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "## ❌ Signal Analysis Failed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "The daily signal analysis encountered an error." >> $GITHUB_STEP_SUMMARY
+          echo "Please check the workflow logs for details." >> $GITHUB_STEP_SUMMARY
