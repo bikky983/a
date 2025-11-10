@@ -1,110 +1,58 @@
 {
-  "lastUpdated": "2025-11-09T13:47:11.181Z",
+  "lastUpdated": "2025-11-10T13:43:58.849Z",
   "currentBuySignals": [
     {
-      "symbol": "DLBS",
+      "symbol": "BEDC",
       "signal": "BUY",
-      "date": "2025_11_09",
-      "generatedOn": "2025-11-09",
-      "price": 1450,
+      "date": "2025_11_10",
+      "generatedOn": "2025-11-10",
+      "price": 605,
       "details": {
-        "rsiFast": "54.35",
-        "rsiSlow": "49.30",
-        "downtrendPrice": "1371.31",
-        "breakoutStrength": "5.74"
+        "rsiFast": "46.65",
+        "rsiSlow": "46.31",
+        "downtrendPrice": "563.79",
+        "breakoutStrength": "7.31"
       }
     },
     {
-      "symbol": "NICD83/84",
+      "symbol": "CITY",
       "signal": "BUY",
-      "date": "2025_10_30",
-      "generatedOn": "2025-11-09",
-      "price": 1122,
+      "date": "2025_11_10",
+      "generatedOn": "2025-11-10",
+      "price": 564,
       "details": {
-        "rsiFast": "55.84",
-        "rsiSlow": "55.01",
-        "downtrendPrice": "1113.89",
-        "breakoutStrength": "0.73"
+        "rsiFast": "44.14",
+        "rsiSlow": "40.43",
+        "downtrendPrice": "543.77",
+        "breakoutStrength": "3.72"
       }
     }
   ],
   "currentSellSignals": [
     {
-      "symbol": "CIT",
+      "symbol": "NLG",
       "signal": "SELL",
-      "date": "2025_11_09",
-      "generatedOn": "2025-11-09",
-      "price": 1840,
+      "date": "2025_11_10",
+      "generatedOn": "2025-11-10",
+      "price": 693,
       "details": {
-        "rsiFast": "42.64",
-        "rsiSlow": "44.36",
-        "uptrendPrice": "1843.42",
-        "breakdownStrength": "0.19"
+        "rsiFast": "38.53",
+        "rsiSlow": "41.74",
+        "uptrendPrice": "696.02",
+        "breakdownStrength": "0.43"
       }
     },
     {
-      "symbol": "NBL",
+      "symbol": "SKBBL",
       "signal": "SELL",
-      "date": "2025_11_09",
-      "generatedOn": "2025-11-09",
-      "price": 244,
+      "date": "2025_11_10",
+      "generatedOn": "2025-11-10",
+      "price": 852.3,
       "details": {
-        "rsiFast": "42.37",
-        "rsiSlow": "45.53",
-        "uptrendPrice": "246.02",
-        "breakdownStrength": "0.82"
-      }
-    },
-    {
-      "symbol": "NIMB",
-      "signal": "SELL",
-      "date": "2025_11_09",
-      "generatedOn": "2025-11-09",
-      "price": 198.2,
-      "details": {
-        "rsiFast": "42.33",
-        "rsiSlow": "44.99",
-        "uptrendPrice": "198.28",
-        "breakdownStrength": "0.04"
-      }
-    },
-    {
-      "symbol": "SAPDBL",
-      "signal": "SELL",
-      "date": "2025_11_09",
-      "generatedOn": "2025-11-09",
-      "price": 797.1,
-      "details": {
-        "rsiFast": "44.38",
-        "rsiSlow": "45.69",
-        "uptrendPrice": "801.69",
-        "breakdownStrength": "0.57"
-      }
-    },
-    {
-      "symbol": "SSHL",
-      "signal": "SELL",
-      "date": "2025_11_09",
-      "generatedOn": "2025-11-09",
-      "price": 165,
-      "details": {
-        "rsiFast": "37.75",
-        "rsiSlow": "40.42",
-        "uptrendPrice": "166.00",
-        "breakdownStrength": "0.60"
-      }
-    },
-    {
-      "symbol": "UPPER",
-      "signal": "SELL",
-      "date": "2025_11_09",
-      "generatedOn": "2025-11-09",
-      "price": 175.6,
-      "details": {
-        "rsiFast": "39.42",
-        "rsiSlow": "41.73",
-        "uptrendPrice": "177.67",
-        "breakdownStrength": "1.16"
+        "rsiFast": "45.43",
+        "rsiSlow": "48.99",
+        "uptrendPrice": "854.00",
+        "breakdownStrength": "0.20"
       }
     }
   ],
@@ -383,6 +331,31 @@
         {
           "symbol": "UPPER",
           "price": 175.6
+        }
+      ]
+    },
+    {
+      "date": "2025-11-10",
+      "buyCount": 2,
+      "sellCount": 2,
+      "buySignals": [
+        {
+          "symbol": "BEDC",
+          "price": 605
+        },
+        {
+          "symbol": "CITY",
+          "price": 564
+        }
+      ],
+      "sellSignals": [
+        {
+          "symbol": "NLG",
+          "price": 693
+        },
+        {
+          "symbol": "SKBBL",
+          "price": 852.3
         }
       ]
     }
