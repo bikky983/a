@@ -1,58 +1,97 @@
 {
-  "lastUpdated": "2025-11-10T13:43:58.849Z",
+  "lastUpdated": "2025-11-11T13:43:31.528Z",
   "currentBuySignals": [
     {
-      "symbol": "BEDC",
+      "symbol": "KDBY",
       "signal": "BUY",
-      "date": "2025_11_10",
-      "generatedOn": "2025-11-10",
-      "price": 605,
+      "date": "2025_11_11",
+      "generatedOn": "2025-11-11",
+      "price": 9.2,
       "details": {
-        "rsiFast": "46.65",
-        "rsiSlow": "46.31",
-        "downtrendPrice": "563.79",
-        "breakoutStrength": "7.31"
+        "rsiFast": "48.32",
+        "rsiSlow": "47.50",
+        "downtrendPrice": "9.08",
+        "breakoutStrength": "1.28"
       }
     },
     {
-      "symbol": "CITY",
+      "symbol": "MEHL",
       "signal": "BUY",
-      "date": "2025_11_10",
-      "generatedOn": "2025-11-10",
-      "price": 564,
+      "date": "2025_11_11",
+      "generatedOn": "2025-11-11",
+      "price": 402,
       "details": {
-        "rsiFast": "44.14",
-        "rsiSlow": "40.43",
-        "downtrendPrice": "543.77",
-        "breakoutStrength": "3.72"
+        "rsiFast": "45.43",
+        "rsiSlow": "45.08",
+        "downtrendPrice": "399.36",
+        "breakoutStrength": "0.66"
+      }
+    },
+    {
+      "symbol": "MPFL",
+      "signal": "BUY",
+      "date": "2025_11_11",
+      "generatedOn": "2025-11-11",
+      "price": 540.1,
+      "details": {
+        "rsiFast": "46.03",
+        "rsiSlow": "44.95",
+        "downtrendPrice": "538.86",
+        "breakoutStrength": "0.23"
+      }
+    },
+    {
+      "symbol": "NICGF2",
+      "signal": "BUY",
+      "date": "2025_11_11",
+      "generatedOn": "2025-11-11",
+      "price": 8.7,
+      "details": {
+        "rsiFast": "49.32",
+        "rsiSlow": "49.29",
+        "downtrendPrice": "8.55",
+        "breakoutStrength": "1.79"
+      }
+    },
+    {
+      "symbol": "RHPL",
+      "signal": "BUY",
+      "date": "2025_11_11",
+      "generatedOn": "2025-11-11",
+      "price": 273,
+      "details": {
+        "rsiFast": "43.16",
+        "rsiSlow": "41.10",
+        "downtrendPrice": "270.79",
+        "breakoutStrength": "0.82"
+      }
+    },
+    {
+      "symbol": "RSY",
+      "signal": "BUY",
+      "date": "2025_11_11",
+      "generatedOn": "2025-11-11",
+      "price": 9.18,
+      "details": {
+        "rsiFast": "51.69",
+        "rsiSlow": "50.17",
+        "downtrendPrice": "8.96",
+        "breakoutStrength": "2.43"
       }
     }
   ],
   "currentSellSignals": [
     {
-      "symbol": "NLG",
+      "symbol": "NMBHF2",
       "signal": "SELL",
-      "date": "2025_11_10",
-      "generatedOn": "2025-11-10",
-      "price": 693,
+      "date": "2025_11_11",
+      "generatedOn": "2025-11-11",
+      "price": 8.78,
       "details": {
-        "rsiFast": "38.53",
-        "rsiSlow": "41.74",
-        "uptrendPrice": "696.02",
-        "breakdownStrength": "0.43"
-      }
-    },
-    {
-      "symbol": "SKBBL",
-      "signal": "SELL",
-      "date": "2025_11_10",
-      "generatedOn": "2025-11-10",
-      "price": 852.3,
-      "details": {
-        "rsiFast": "45.43",
-        "rsiSlow": "48.99",
-        "uptrendPrice": "854.00",
-        "breakdownStrength": "0.20"
+        "rsiFast": "46.09",
+        "rsiSlow": "47.71",
+        "uptrendPrice": "8.79",
+        "breakdownStrength": "0.12"
       }
     }
   ],
@@ -356,6 +395,43 @@
         {
           "symbol": "SKBBL",
           "price": 852.3
+        }
+      ]
+    },
+    {
+      "date": "2025-11-11",
+      "buyCount": 6,
+      "sellCount": 1,
+      "buySignals": [
+        {
+          "symbol": "KDBY",
+          "price": 9.2
+        },
+        {
+          "symbol": "MEHL",
+          "price": 402
+        },
+        {
+          "symbol": "MPFL",
+          "price": 540.1
+        },
+        {
+          "symbol": "NICGF2",
+          "price": 8.7
+        },
+        {
+          "symbol": "RHPL",
+          "price": 273
+        },
+        {
+          "symbol": "RSY",
+          "price": 9.18
+        }
+      ],
+      "sellSignals": [
+        {
+          "symbol": "NMBHF2",
+          "price": 8.78
         }
       ]
     }
