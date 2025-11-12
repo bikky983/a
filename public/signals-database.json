@@ -1,97 +1,97 @@
 {
-  "lastUpdated": "2025-11-11T13:43:31.528Z",
+  "lastUpdated": "2025-11-12T13:45:17.247Z",
   "currentBuySignals": [
     {
-      "symbol": "KDBY",
+      "symbol": "SJCL",
       "signal": "BUY",
-      "date": "2025_11_11",
-      "generatedOn": "2025-11-11",
-      "price": 9.2,
+      "date": "2025_11_12",
+      "generatedOn": "2025-11-12",
+      "price": 293.7,
       "details": {
-        "rsiFast": "48.32",
-        "rsiSlow": "47.50",
-        "downtrendPrice": "9.08",
-        "breakoutStrength": "1.28"
+        "rsiFast": "51.82",
+        "rsiSlow": "46.92",
+        "downtrendPrice": "285.76",
+        "breakoutStrength": "2.78"
       }
     },
     {
-      "symbol": "MEHL",
+      "symbol": "USHEC",
       "signal": "BUY",
-      "date": "2025_11_11",
-      "generatedOn": "2025-11-11",
-      "price": 402,
+      "date": "2025_11_12",
+      "generatedOn": "2025-11-12",
+      "price": 485.5,
       "details": {
-        "rsiFast": "45.43",
-        "rsiSlow": "45.08",
-        "downtrendPrice": "399.36",
-        "breakoutStrength": "0.66"
-      }
-    },
-    {
-      "symbol": "MPFL",
-      "signal": "BUY",
-      "date": "2025_11_11",
-      "generatedOn": "2025-11-11",
-      "price": 540.1,
-      "details": {
-        "rsiFast": "46.03",
-        "rsiSlow": "44.95",
-        "downtrendPrice": "538.86",
-        "breakoutStrength": "0.23"
-      }
-    },
-    {
-      "symbol": "NICGF2",
-      "signal": "BUY",
-      "date": "2025_11_11",
-      "generatedOn": "2025-11-11",
-      "price": 8.7,
-      "details": {
-        "rsiFast": "49.32",
-        "rsiSlow": "49.29",
-        "downtrendPrice": "8.55",
-        "breakoutStrength": "1.79"
-      }
-    },
-    {
-      "symbol": "RHPL",
-      "signal": "BUY",
-      "date": "2025_11_11",
-      "generatedOn": "2025-11-11",
-      "price": 273,
-      "details": {
-        "rsiFast": "43.16",
-        "rsiSlow": "41.10",
-        "downtrendPrice": "270.79",
-        "breakoutStrength": "0.82"
-      }
-    },
-    {
-      "symbol": "RSY",
-      "signal": "BUY",
-      "date": "2025_11_11",
-      "generatedOn": "2025-11-11",
-      "price": 9.18,
-      "details": {
-        "rsiFast": "51.69",
-        "rsiSlow": "50.17",
-        "downtrendPrice": "8.96",
-        "breakoutStrength": "2.43"
+        "rsiFast": "55.28",
+        "rsiSlow": "49.44",
+        "downtrendPrice": "466.20",
+        "breakoutStrength": "4.14"
       }
     }
   ],
   "currentSellSignals": [
     {
-      "symbol": "NMBHF2",
+      "symbol": "MBLEF",
       "signal": "SELL",
-      "date": "2025_11_11",
-      "generatedOn": "2025-11-11",
-      "price": 8.78,
+      "date": "2025_11_12",
+      "generatedOn": "2025-11-12",
+      "price": 8.77,
       "details": {
-        "rsiFast": "46.09",
-        "rsiSlow": "47.71",
-        "uptrendPrice": "8.79",
-        "breakdownStrength": "0.12"
+        "rsiFast": "45.47",
+        "rsiSlow": "48.08",
+        "uptrendPrice": "8.86",
+        "breakdownStrength": "1.02"
+      }
+    },
+    {
+      "symbol": "MNMF1",
+      "signal": "SELL",
+      "date": "2025_11_12",
+      "generatedOn": "2025-11-12",
+      "price": 8.71,
+      "details": {
+        "rsiFast": "43.36",
+        "rsiSlow": "45.94",
+        "uptrendPrice": "8.73",
+        "breakdownStrength": "0.26"
+      }
+    },
+    {
+      "symbol": "NLG",
+      "signal": "SELL",
+      "date": "2025_11_12",
+      "generatedOn": "2025-11-12",
+      "price": 697,
+      "details": {
+        "rsiFast": "40.05",
+        "rsiSlow": "42.26",
+        "uptrendPrice": "699.45",
+        "breakdownStrength": "0.35"
+      }
+    },
+    {
+      "symbol": "RIDI",
+      "signal": "SELL",
+      "date": "2025_11_12",
+      "generatedOn": "2025-11-12",
+      "price": 221,
+      "details": {
+        "rsiFast": "42.39",
+        "rsiSlow": "45.32",
+        "uptrendPrice": "221.50",
+        "breakdownStrength": "0.23"
+      }
+    },
+    {
+      "symbol": "SSHL",
+      "signal": "SELL",
+      "date": "2025_11_12",
+      "generatedOn": "2025-11-12",
+      "price": 167,
+      "details": {
+        "rsiFast": "39.57",
+        "rsiSlow": "41.08",
+        "uptrendPrice": "167.50",
+        "breakdownStrength": "0.30"
       }
     }
   ],
@@ -432,6 +432,43 @@
         {
           "symbol": "NMBHF2",
           "price": 8.78
+        }
+      ]
+    },
+    {
+      "date": "2025-11-12",
+      "buyCount": 2,
+      "sellCount": 5,
+      "buySignals": [
+        {
+          "symbol": "SJCL",
+          "price": 293.7
+        },
+        {
+          "symbol": "USHEC",
+          "price": 485.5
+        }
+      ],
+      "sellSignals": [
+        {
+          "symbol": "MBLEF",
+          "price": 8.77
+        },
+        {
+          "symbol": "MNMF1",
+          "price": 8.71
+        },
+        {
+          "symbol": "NLG",
+          "price": 697
+        },
+        {
+          "symbol": "RIDI",
+          "price": 221
+        },
+        {
+          "symbol": "SSHL",
+          "price": 167
         }
       ]
     }
