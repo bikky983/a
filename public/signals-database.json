@@ -1,97 +1,84 @@
 {
-  "lastUpdated": "2025-11-12T13:45:17.247Z",
+  "lastUpdated": "2025-11-13T13:45:44.993Z",
   "currentBuySignals": [
     {
-      "symbol": "SJCL",
+      "symbol": "JOSHI",
       "signal": "BUY",
-      "date": "2025_11_12",
-      "generatedOn": "2025-11-12",
-      "price": 293.7,
+      "date": "2025_11_13",
+      "generatedOn": "2025-11-13",
+      "price": 316.9,
       "details": {
-        "rsiFast": "51.82",
-        "rsiSlow": "46.92",
-        "downtrendPrice": "285.76",
-        "breakoutStrength": "2.78"
+        "rsiFast": "52.70",
+        "rsiSlow": "47.70",
+        "downtrendPrice": "309.55",
+        "breakoutStrength": "2.37"
       }
     },
     {
-      "symbol": "USHEC",
+      "symbol": "MAKAR",
       "signal": "BUY",
-      "date": "2025_11_12",
-      "generatedOn": "2025-11-12",
-      "price": 485.5,
+      "date": "2025_11_13",
+      "generatedOn": "2025-11-13",
+      "price": 561,
       "details": {
-        "rsiFast": "55.28",
-        "rsiSlow": "49.44",
-        "downtrendPrice": "466.20",
-        "breakoutStrength": "4.14"
+        "rsiFast": "44.68",
+        "rsiSlow": "44.58",
+        "downtrendPrice": "558.87",
+        "breakoutStrength": "0.38"
+      }
+    },
+    {
+      "symbol": "SGHC",
+      "signal": "BUY",
+      "date": "2025_11_13",
+      "generatedOn": "2025-11-13",
+      "price": 366.3,
+      "details": {
+        "rsiFast": "55.73",
+        "rsiSlow": "46.98",
+        "downtrendPrice": "357.84",
+        "breakoutStrength": "2.36"
       }
     }
   ],
   "currentSellSignals": [
     {
-      "symbol": "MBLEF",
+      "symbol": "GLH",
       "signal": "SELL",
-      "date": "2025_11_12",
-      "generatedOn": "2025-11-12",
-      "price": 8.77,
+      "date": "2025_11_13",
+      "generatedOn": "2025-11-13",
+      "price": 252.8,
       "details": {
-        "rsiFast": "45.47",
-        "rsiSlow": "48.08",
-        "uptrendPrice": "8.86",
-        "breakdownStrength": "1.02"
+        "rsiFast": "46.07",
+        "rsiSlow": "48.06",
+        "uptrendPrice": "254.35",
+        "breakdownStrength": "0.61"
       }
     },
     {
-      "symbol": "MNMF1",
+      "symbol": "NMBHF2",
       "signal": "SELL",
-      "date": "2025_11_12",
-      "generatedOn": "2025-11-12",
-      "price": 8.71,
+      "date": "2025_11_13",
+      "generatedOn": "2025-11-13",
+      "price": 8.8,
       "details": {
-        "rsiFast": "43.36",
-        "rsiSlow": "45.94",
-        "uptrendPrice": "8.73",
-        "breakdownStrength": "0.26"
+        "rsiFast": "46.66",
+        "rsiSlow": "47.91",
+        "uptrendPrice": "8.81",
+        "breakdownStrength": "0.10"
       }
     },
     {
-      "symbol": "NLG",
+      "symbol": "NSIF2",
       "signal": "SELL",
-      "date": "2025_11_12",
-      "generatedOn": "2025-11-12",
-      "price": 697,
+      "date": "2025_11_13",
+      "generatedOn": "2025-11-13",
+      "price": 9.8,
       "details": {
-        "rsiFast": "40.05",
-        "rsiSlow": "42.26",
-        "uptrendPrice": "699.45",
-        "breakdownStrength": "0.35"
-      }
-    },
-    {
-      "symbol": "RIDI",
-      "signal": "SELL",
-      "date": "2025_11_12",
-      "generatedOn": "2025-11-12",
-      "price": 221,
-      "details": {
-        "rsiFast": "42.39",
-        "rsiSlow": "45.32",
-        "uptrendPrice": "221.50",
-        "breakdownStrength": "0.23"
-      }
-    },
-    {
-      "symbol": "SSHL",
-      "signal": "SELL",
-      "date": "2025_11_12",
-      "generatedOn": "2025-11-12",
-      "price": 167,
-      "details": {
-        "rsiFast": "39.57",
-        "rsiSlow": "41.08",
-        "uptrendPrice": "167.50",
-        "breakdownStrength": "0.30"
+        "rsiFast": "38.52",
+        "rsiSlow": "43.26",
+        "uptrendPrice": "9.84",
+        "breakdownStrength": "0.39"
       }
     }
   ],
@@ -469,6 +456,39 @@
         {
           "symbol": "SSHL",
           "price": 167
+        }
+      ]
+    },
+    {
+      "date": "2025-11-13",
+      "buyCount": 3,
+      "sellCount": 3,
+      "buySignals": [
+        {
+          "symbol": "JOSHI",
+          "price": 316.9
+        },
+        {
+          "symbol": "MAKAR",
+          "price": 561
+        },
+        {
+          "symbol": "SGHC",
+          "price": 366.3
+        }
+      ],
+      "sellSignals": [
+        {
+          "symbol": "GLH",
+          "price": 252.8
+        },
+        {
+          "symbol": "NMBHF2",
+          "price": 8.8
+        },
+        {
+          "symbol": "NSIF2",
+          "price": 9.8
         }
       ]
     }
