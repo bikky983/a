@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2025-11-13T13:45:44.993Z",
+  "lastUpdated": "2025-11-14T13:41:10.989Z",
   "currentBuySignals": [
     {
       "symbol": "JOSHI",
       "signal": "BUY",
       "date": "2025_11_13",
-      "generatedOn": "2025-11-13",
+      "generatedOn": "2025-11-14",
       "price": 316.9,
       "details": {
         "rsiFast": "52.70",
@@ -18,7 +18,7 @@
       "symbol": "MAKAR",
       "signal": "BUY",
       "date": "2025_11_13",
-      "generatedOn": "2025-11-13",
+      "generatedOn": "2025-11-14",
       "price": 561,
       "details": {
         "rsiFast": "44.68",
@@ -31,7 +31,7 @@
       "symbol": "SGHC",
       "signal": "BUY",
       "date": "2025_11_13",
-      "generatedOn": "2025-11-13",
+      "generatedOn": "2025-11-14",
       "price": 366.3,
       "details": {
         "rsiFast": "55.73",
@@ -46,7 +46,7 @@
       "symbol": "GLH",
       "signal": "SELL",
       "date": "2025_11_13",
-      "generatedOn": "2025-11-13",
+      "generatedOn": "2025-11-14",
       "price": 252.8,
       "details": {
         "rsiFast": "46.07",
@@ -59,7 +59,7 @@
       "symbol": "NMBHF2",
       "signal": "SELL",
       "date": "2025_11_13",
-      "generatedOn": "2025-11-13",
+      "generatedOn": "2025-11-14",
       "price": 8.8,
       "details": {
         "rsiFast": "46.66",
@@ -72,7 +72,7 @@
       "symbol": "NSIF2",
       "signal": "SELL",
       "date": "2025_11_13",
-      "generatedOn": "2025-11-13",
+      "generatedOn": "2025-11-14",
       "price": 9.8,
       "details": {
         "rsiFast": "38.52",
@@ -461,6 +461,39 @@
     },
     {
       "date": "2025-11-13",
+      "buyCount": 3,
+      "sellCount": 3,
+      "buySignals": [
+        {
+          "symbol": "JOSHI",
+          "price": 316.9
+        },
+        {
+          "symbol": "MAKAR",
+          "price": 561
+        },
+        {
+          "symbol": "SGHC",
+          "price": 366.3
+        }
+      ],
+      "sellSignals": [
+        {
+          "symbol": "GLH",
+          "price": 252.8
+        },
+        {
+          "symbol": "NMBHF2",
+          "price": 8.8
+        },
+        {
+          "symbol": "NSIF2",
+          "price": 9.8
+        }
+      ]
+    },
+    {
+      "date": "2025-11-14",
       "buyCount": 3,
       "sellCount": 3,
       "buySignals": [
