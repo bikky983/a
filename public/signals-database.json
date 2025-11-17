@@ -1,50 +1,50 @@
 {
-  "lastUpdated": "2025-11-16T13:33:34.953Z",
+  "lastUpdated": "2025-11-17T13:44:24.957Z",
   "currentBuySignals": [
     {
       "symbol": "BNL",
       "signal": "BUY",
       "date": "2025_11_16",
-      "generatedOn": "2025-11-16",
+      "generatedOn": "2025-11-17",
       "price": 16320,
       "details": {
         "rsiFast": "49.86",
-        "rsiSlow": "48.45",
+        "rsiSlow": "48.46",
         "downtrendPrice": "16066.80",
         "breakoutStrength": "1.58"
       }
     },
     {
-      "symbol": "CMF2",
+      "symbol": "GRDBL",
       "signal": "BUY",
-      "date": "2025_11_16",
-      "generatedOn": "2025-11-16",
-      "price": 9.28,
+      "date": "2025_11_17",
+      "generatedOn": "2025-11-17",
+      "price": 1090,
       "details": {
-        "rsiFast": "49.09",
-        "rsiSlow": "48.48",
-        "downtrendPrice": "9.22",
-        "breakoutStrength": "0.61"
+        "rsiFast": "50.23",
+        "rsiSlow": "47.84",
+        "downtrendPrice": "1008.00",
+        "breakoutStrength": "8.13"
       }
     },
     {
-      "symbol": "NMFBS",
+      "symbol": "GVL",
       "signal": "BUY",
-      "date": "2025_11_16",
-      "generatedOn": "2025-11-16",
-      "price": 1274,
+      "date": "2025_11_17",
+      "generatedOn": "2025-11-17",
+      "price": 535,
       "details": {
-        "rsiFast": "51.74",
-        "rsiSlow": "49.52",
-        "downtrendPrice": "1272.65",
-        "breakoutStrength": "0.11"
+        "rsiFast": "54.50",
+        "rsiSlow": "52.15",
+        "downtrendPrice": "530.44",
+        "breakoutStrength": "0.86"
       }
     },
     {
       "symbol": "PBD84",
       "signal": "BUY",
       "date": "2025_11_16",
-      "generatedOn": "2025-11-16",
+      "generatedOn": "2025-11-17",
       "price": 1134,
       "details": {
         "rsiFast": "57.35",
@@ -52,72 +52,72 @@
         "downtrendPrice": "1116.00",
         "breakoutStrength": "1.61"
       }
+    },
+    {
+      "symbol": "SAPDBL",
+      "signal": "BUY",
+      "date": "2025_11_17",
+      "generatedOn": "2025-11-17",
+      "price": 825,
+      "details": {
+        "rsiFast": "49.55",
+        "rsiSlow": "46.99",
+        "downtrendPrice": "809.31",
+        "breakoutStrength": "1.94"
+      }
+    },
+    {
+      "symbol": "STC",
+      "signal": "BUY",
+      "date": "2025_11_17",
+      "generatedOn": "2025-11-17",
+      "price": 5285,
+      "details": {
+        "rsiFast": "52.53",
+        "rsiSlow": "50.73",
+        "downtrendPrice": "5279.00",
+        "breakoutStrength": "0.11"
+      }
     }
   ],
   "currentSellSignals": [
     {
-      "symbol": "BHPL",
+      "symbol": "AHL",
       "signal": "SELL",
-      "date": "2025_11_16",
-      "generatedOn": "2025-11-16",
-      "price": 653,
+      "date": "2025_11_17",
+      "generatedOn": "2025-11-17",
+      "price": 600,
       "details": {
-        "rsiFast": "38.97",
-        "rsiSlow": "41.92",
-        "uptrendPrice": "663.95",
-        "breakdownStrength": "1.65"
+        "rsiFast": "44.99",
+        "rsiSlow": "46.29",
+        "uptrendPrice": "602.60",
+        "breakdownStrength": "0.43"
       }
     },
     {
-      "symbol": "GFCL",
+      "symbol": "SEF",
       "signal": "SELL",
-      "date": "2025_11_16",
-      "generatedOn": "2025-11-16",
-      "price": 570,
+      "date": "2025_11_17",
+      "generatedOn": "2025-11-17",
+      "price": 9.02,
       "details": {
-        "rsiFast": "41.82",
-        "rsiSlow": "43.69",
-        "uptrendPrice": "570.03",
-        "breakdownStrength": "0.01"
+        "rsiFast": "41.51",
+        "rsiSlow": "44.11",
+        "uptrendPrice": "9.05",
+        "breakdownStrength": "0.35"
       }
     },
     {
-      "symbol": "GRDBL",
+      "symbol": "SHLB",
       "signal": "SELL",
-      "date": "2025_11_16",
-      "generatedOn": "2025-11-16",
-      "price": 1001,
+      "date": "2025_11_17",
+      "generatedOn": "2025-11-17",
+      "price": 1735,
       "details": {
-        "rsiFast": "41.25",
-        "rsiSlow": "45.28",
-        "uptrendPrice": "1008.04",
-        "breakdownStrength": "0.70"
-      }
-    },
-    {
-      "symbol": "MMKJL",
-      "signal": "SELL",
-      "date": "2025_11_16",
-      "generatedOn": "2025-11-16",
-      "price": 581,
-      "details": {
-        "rsiFast": "44.78",
-        "rsiSlow": "46.98",
-        "uptrendPrice": "583.58",
-        "breakdownStrength": "0.44"
-      }
-    },
-    {
-      "symbol": "RMF2",
-      "signal": "SELL",
-      "date": "2025_11_16",
-      "generatedOn": "2025-11-16",
-      "price": 8.84,
-      "details": {
-        "rsiFast": "40.97",
-        "rsiSlow": "44.87",
-        "uptrendPrice": "8.90",
-        "breakdownStrength": "0.63"
+        "rsiFast": "40.38",
+        "rsiSlow": "43.65",
+        "uptrendPrice": "1740.70",
+        "breakdownStrength": "0.33"
       }
     }
   ],
@@ -639,6 +639,51 @@
         {
           "symbol": "RMF2",
           "price": 8.84
+        }
+      ]
+    },
+    {
+      "date": "2025-11-17",
+      "buyCount": 6,
+      "sellCount": 3,
+      "buySignals": [
+        {
+          "symbol": "BNL",
+          "price": 16320
+        },
+        {
+          "symbol": "GRDBL",
+          "price": 1090
+        },
+        {
+          "symbol": "GVL",
+          "price": 535
+        },
+        {
+          "symbol": "PBD84",
+          "price": 1134
+        },
+        {
+          "symbol": "SAPDBL",
+          "price": 825
+        },
+        {
+          "symbol": "STC",
+          "price": 5285
+        }
+      ],
+      "sellSignals": [
+        {
+          "symbol": "AHL",
+          "price": 600
+        },
+        {
+          "symbol": "SEF",
+          "price": 9.02
+        },
+        {
+          "symbol": "SHLB",
+          "price": 1735
         }
       ]
     }
