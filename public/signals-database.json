@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2025-11-17T13:44:24.957Z",
+  "lastUpdated": "2025-11-18T13:44:30.927Z",
   "currentBuySignals": [
     {
       "symbol": "BNL",
       "signal": "BUY",
       "date": "2025_11_16",
-      "generatedOn": "2025-11-17",
+      "generatedOn": "2025-11-18",
       "price": 16320,
       "details": {
         "rsiFast": "49.86",
@@ -18,7 +18,7 @@
       "symbol": "GRDBL",
       "signal": "BUY",
       "date": "2025_11_17",
-      "generatedOn": "2025-11-17",
+      "generatedOn": "2025-11-18",
       "price": 1090,
       "details": {
         "rsiFast": "50.23",
@@ -31,7 +31,7 @@
       "symbol": "GVL",
       "signal": "BUY",
       "date": "2025_11_17",
-      "generatedOn": "2025-11-17",
+      "generatedOn": "2025-11-18",
       "price": 535,
       "details": {
         "rsiFast": "54.50",
@@ -44,7 +44,7 @@
       "symbol": "PBD84",
       "signal": "BUY",
       "date": "2025_11_16",
-      "generatedOn": "2025-11-17",
+      "generatedOn": "2025-11-18",
       "price": 1134,
       "details": {
         "rsiFast": "57.35",
@@ -57,7 +57,7 @@
       "symbol": "SAPDBL",
       "signal": "BUY",
       "date": "2025_11_17",
-      "generatedOn": "2025-11-17",
+      "generatedOn": "2025-11-18",
       "price": 825,
       "details": {
         "rsiFast": "49.55",
@@ -70,7 +70,7 @@
       "symbol": "STC",
       "signal": "BUY",
       "date": "2025_11_17",
-      "generatedOn": "2025-11-17",
+      "generatedOn": "2025-11-18",
       "price": 5285,
       "details": {
         "rsiFast": "52.53",
@@ -85,7 +85,7 @@
       "symbol": "AHL",
       "signal": "SELL",
       "date": "2025_11_17",
-      "generatedOn": "2025-11-17",
+      "generatedOn": "2025-11-18",
       "price": 600,
       "details": {
         "rsiFast": "44.99",
@@ -98,7 +98,7 @@
       "symbol": "SEF",
       "signal": "SELL",
       "date": "2025_11_17",
-      "generatedOn": "2025-11-17",
+      "generatedOn": "2025-11-18",
       "price": 9.02,
       "details": {
         "rsiFast": "41.51",
@@ -111,7 +111,7 @@
       "symbol": "SHLB",
       "signal": "SELL",
       "date": "2025_11_17",
-      "generatedOn": "2025-11-17",
+      "generatedOn": "2025-11-18",
       "price": 1735,
       "details": {
         "rsiFast": "40.38",
@@ -644,6 +644,51 @@
     },
     {
       "date": "2025-11-17",
+      "buyCount": 6,
+      "sellCount": 3,
+      "buySignals": [
+        {
+          "symbol": "BNL",
+          "price": 16320
+        },
+        {
+          "symbol": "GRDBL",
+          "price": 1090
+        },
+        {
+          "symbol": "GVL",
+          "price": 535
+        },
+        {
+          "symbol": "PBD84",
+          "price": 1134
+        },
+        {
+          "symbol": "SAPDBL",
+          "price": 825
+        },
+        {
+          "symbol": "STC",
+          "price": 5285
+        }
+      ],
+      "sellSignals": [
+        {
+          "symbol": "AHL",
+          "price": 600
+        },
+        {
+          "symbol": "SEF",
+          "price": 9.02
+        },
+        {
+          "symbol": "SHLB",
+          "price": 1735
+        }
+      ]
+    },
+    {
+      "date": "2025-11-18",
       "buyCount": 6,
       "sellCount": 3,
       "buySignals": [
