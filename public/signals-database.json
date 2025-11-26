@@ -1,76 +1,50 @@
 {
-  "lastUpdated": "2025-11-25T13:45:56.480Z",
+  "lastUpdated": "2025-11-26T13:46:57.560Z",
   "currentBuySignals": [
     {
-      "symbol": "CMF2",
+      "symbol": "API",
       "signal": "BUY",
-      "date": "2025_11_25",
-      "generatedOn": "2025-11-25",
-      "price": 9.25,
+      "date": "2025_11_26",
+      "generatedOn": "2025-11-26",
+      "price": 292.7,
       "details": {
-        "rsiFast": "49.08",
-        "rsiSlow": "48.44",
-        "downtrendPrice": "9.16",
-        "breakoutStrength": "0.96"
+        "rsiFast": "55.62",
+        "rsiSlow": "51.14",
+        "downtrendPrice": "291.60",
+        "breakoutStrength": "0.38"
       }
     },
     {
-      "symbol": "HIDCL",
+      "symbol": "HDHPC",
       "signal": "BUY",
-      "date": "2025_11_25",
-      "generatedOn": "2025-11-25",
-      "price": 282,
+      "date": "2025_11_26",
+      "generatedOn": "2025-11-26",
+      "price": 186,
       "details": {
-        "rsiFast": "55.81",
-        "rsiSlow": "50.47",
-        "downtrendPrice": "279.89",
-        "breakoutStrength": "0.75"
+        "rsiFast": "54.17",
+        "rsiSlow": "48.42",
+        "downtrendPrice": "180.39",
+        "breakoutStrength": "3.11"
       }
     },
     {
-      "symbol": "MBJC",
+      "symbol": "MBLEF",
       "signal": "BUY",
-      "date": "2025_11_25",
-      "generatedOn": "2025-11-25",
-      "price": 286,
+      "date": "2025_11_26",
+      "generatedOn": "2025-11-26",
+      "price": 9.15,
       "details": {
-        "rsiFast": "47.33",
-        "rsiSlow": "45.58",
-        "downtrendPrice": "284.65",
-        "breakoutStrength": "0.48"
-      }
-    },
-    {
-      "symbol": "MLBSL",
-      "signal": "BUY",
-      "date": "2025_11_25",
-      "generatedOn": "2025-11-25",
-      "price": 2054,
-      "details": {
-        "rsiFast": "48.56",
-        "rsiSlow": "47.07",
-        "downtrendPrice": "2047.48",
-        "breakoutStrength": "0.32"
-      }
-    },
-    {
-      "symbol": "MSLB",
-      "signal": "BUY",
-      "date": "2025_11_25",
-      "generatedOn": "2025-11-25",
-      "price": 1476.5,
-      "details": {
-        "rsiFast": "58.00",
-        "rsiSlow": "53.82",
-        "downtrendPrice": "1475.67",
-        "breakoutStrength": "0.06"
+        "rsiFast": "52.16",
+        "rsiSlow": "50.63",
+        "downtrendPrice": "9.11",
+        "breakoutStrength": "0.49"
       }
     },
     {
       "symbol": "NICD83/84",
       "signal": "BUY",
       "date": "2025_11_24",
-      "generatedOn": "2025-11-25",
+      "generatedOn": "2025-11-26",
       "price": 1146,
       "details": {
         "rsiFast": "58.40",
@@ -80,23 +54,10 @@
       }
     },
     {
-      "symbol": "NICFC",
-      "signal": "BUY",
-      "date": "2025_11_25",
-      "generatedOn": "2025-11-25",
-      "price": 8.96,
-      "details": {
-        "rsiFast": "49.65",
-        "rsiSlow": "48.28",
-        "downtrendPrice": "8.77",
-        "breakoutStrength": "2.19"
-      }
-    },
-    {
       "symbol": "PBD84",
       "signal": "BUY",
       "date": "2025_11_16",
-      "generatedOn": "2025-11-25",
+      "generatedOn": "2025-11-26",
       "price": 1134,
       "details": {
         "rsiFast": "57.35",
@@ -106,57 +67,70 @@
       }
     },
     {
-      "symbol": "SALICO",
+      "symbol": "RMF2",
       "signal": "BUY",
-      "date": "2025_11_25",
-      "generatedOn": "2025-11-25",
-      "price": 605,
+      "date": "2025_11_26",
+      "generatedOn": "2025-11-26",
+      "price": 9.17,
       "details": {
-        "rsiFast": "46.65",
-        "rsiSlow": "43.77",
-        "downtrendPrice": "604.64",
-        "breakoutStrength": "0.06"
+        "rsiFast": "49.76",
+        "rsiSlow": "48.16",
+        "downtrendPrice": "8.94",
+        "breakoutStrength": "2.55"
       }
     },
     {
-      "symbol": "TPC",
+      "symbol": "SWBBL",
       "signal": "BUY",
-      "date": "2025_11_25",
-      "generatedOn": "2025-11-25",
-      "price": 345,
+      "date": "2025_11_26",
+      "generatedOn": "2025-11-26",
+      "price": 815.1,
       "details": {
-        "rsiFast": "54.52",
-        "rsiSlow": "46.20",
-        "downtrendPrice": "343.82",
-        "breakoutStrength": "0.34"
+        "rsiFast": "49.90",
+        "rsiSlow": "47.91",
+        "downtrendPrice": "804.86",
+        "breakoutStrength": "1.27"
+      }
+    },
+    {
+      "symbol": "UHEWA",
+      "signal": "BUY",
+      "date": "2025_11_26",
+      "generatedOn": "2025-11-26",
+      "price": 618.8,
+      "details": {
+        "rsiFast": "59.75",
+        "rsiSlow": "51.07",
+        "downtrendPrice": "606.75",
+        "breakoutStrength": "1.99"
       }
     }
   ],
   "currentSellSignals": [
     {
-      "symbol": "KSY",
+      "symbol": "ICFCD88",
       "signal": "SELL",
-      "date": "2025_11_25",
-      "generatedOn": "2025-11-25",
-      "price": 8.64,
+      "date": "2025_11_26",
+      "generatedOn": "2025-11-26",
+      "price": 1103.3,
       "details": {
-        "rsiFast": "40.67",
-        "rsiSlow": "45.42",
-        "uptrendPrice": "8.70",
-        "breakdownStrength": "0.71"
+        "rsiFast": "47.93",
+        "rsiSlow": "50.23",
+        "uptrendPrice": "1118.05",
+        "breakdownStrength": "1.32"
       }
     },
     {
-      "symbol": "MMKJL",
+      "symbol": "SEF",
       "signal": "SELL",
-      "date": "2025_11_25",
-      "generatedOn": "2025-11-25",
-      "price": 588.1,
+      "date": "2025_11_26",
+      "generatedOn": "2025-11-26",
+      "price": 8.96,
       "details": {
-        "rsiFast": "47.10",
-        "rsiSlow": "47.83",
-        "uptrendPrice": "590.07",
-        "breakdownStrength": "0.33"
+        "rsiFast": "41.33",
+        "rsiSlow": "43.97",
+        "uptrendPrice": "9.06",
+        "breakdownStrength": "1.14"
       }
     }
   ],
@@ -1271,6 +1245,55 @@
         {
           "symbol": "MMKJL",
           "price": 588.1
+        }
+      ]
+    },
+    {
+      "date": "2025-11-26",
+      "buyCount": 8,
+      "sellCount": 2,
+      "buySignals": [
+        {
+          "symbol": "API",
+          "price": 292.7
+        },
+        {
+          "symbol": "HDHPC",
+          "price": 186
+        },
+        {
+          "symbol": "MBLEF",
+          "price": 9.15
+        },
+        {
+          "symbol": "NICD83/84",
+          "price": 1146
+        },
+        {
+          "symbol": "PBD84",
+          "price": 1134
+        },
+        {
+          "symbol": "RMF2",
+          "price": 9.17
+        },
+        {
+          "symbol": "SWBBL",
+          "price": 815.1
+        },
+        {
+          "symbol": "UHEWA",
+          "price": 618.8
+        }
+      ],
+      "sellSignals": [
+        {
+          "symbol": "ICFCD88",
+          "price": 1103.3
+        },
+        {
+          "symbol": "SEF",
+          "price": 8.96
         }
       ]
     }
