@@ -1,28 +1,28 @@
 {
-  "lastUpdated": "2025-11-26T11:40:31.124Z",
+  "lastUpdated": "2025-11-27T11:40:13.844Z",
   "institutionalStocks": {
     "801.00": {
       "score": 50,
       "price": 20,
       "patterns": "Volume Spike (Bullish), Narrow Range, High Volume (Bullish), Below VWAP, Upthrust Pattern, Statistical Anomaly (Bullish)",
-      "lastUpdated": "2025-11-26T11:40:31.122Z"
+      "lastUpdated": "2025-11-27T11:40:13.841Z"
     }
   },
   "trendlineStocks": {},
   "rsiSupportStocks": {
     "SAHAS\n                New": {
-      "ltp": 565.7,
+      "ltp": 565.5,
       "rsi": 32.97,
       "supportPrice1": 545.99,
       "diff1": "",
-      "lastUpdated": "2025-11-26T11:40:31.124Z"
+      "lastUpdated": "2025-11-27T11:40:13.844Z"
     }
   },
   "heatmapStocks": {
     "801.00": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2025-11-26T11:40:31.124Z"
+      "lastUpdated": "2025-11-27T11:40:13.843Z"
     }
   }
 }
