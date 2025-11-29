@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2025-11-28T11:39:46.364Z",
+  "lastUpdated": "2025-11-29T11:38:59.877Z",
   "institutionalStocks": {
     "801.00": {
       "score": 50,
       "price": 20,
       "patterns": "Volume Spike (Bullish), Narrow Range, High Volume (Bullish), Below VWAP, Upthrust Pattern, Statistical Anomaly (Bullish)",
-      "lastUpdated": "2025-11-28T11:39:46.362Z"
+      "lastUpdated": "2025-11-29T11:38:59.875Z"
     }
   },
   "trendlineStocks": {},
@@ -15,14 +15,14 @@
       "rsi": 32.97,
       "supportPrice1": 545.99,
       "diff1": "",
-      "lastUpdated": "2025-11-28T11:39:46.364Z"
+      "lastUpdated": "2025-11-29T11:38:59.877Z"
     }
   },
   "heatmapStocks": {
     "801.00": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2025-11-28T11:39:46.364Z"
+      "lastUpdated": "2025-11-29T11:38:59.876Z"
     }
   }
 }
