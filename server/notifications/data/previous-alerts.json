@@ -1,39 +1,46 @@
 {
-  "lastUpdated": "2025-12-02T11:41:40.138Z",
+  "lastUpdated": "2025-12-03T11:41:41.415Z",
   "institutionalStocks": {
-    "1680.00": {
-      "score": 50,
+    "474.50": {
+      "score": 60,
       "price": 0,
-      "patterns": "Volume Spike (Bullish), Narrow Range, High Volume (Bullish), Below VWAP, Stopping Volume (Bullish), Statistical Anomaly (Bullish)",
-      "lastUpdated": "2025-12-02T11:41:40.135Z"
+      "patterns": "Volume Spike (Bullish), OBV Bullish Divergence, Below VWAP, Statistical Anomaly (Bullish)",
+      "lastUpdated": "2025-12-03T11:41:41.413Z"
     },
-    "1714.00": {
+    "399.90": {
       "score": 50,
       "price": 0,
-      "patterns": "Volume Spike (Bullish), Narrow Range, High Volume (Bullish), Above VWAP, Stopping Volume (Bullish), Statistical Anomaly (Bullish)",
-      "lastUpdated": "2025-12-02T11:41:40.135Z"
+      "patterns": "Volume Spike (Bullish), Narrow Range, High Volume (Bullish), Below VWAP, Statistical Anomaly (Bullish)",
+      "lastUpdated": "2025-12-03T11:41:41.413Z"
     }
   },
   "trendlineStocks": {},
   "rsiSupportStocks": {
     "SAHAS\n                New": {
-      "ltp": 555,
-      "rsi": 31.76,
+      "ltp": 549,
+      "rsi": 30.66,
       "supportPrice1": 545.99,
       "diff1": "",
-      "lastUpdated": "2025-12-02T11:41:40.138Z"
+      "lastUpdated": "2025-12-03T11:41:41.415Z"
+    },
+    "ADBL\n                New": {
+      "ltp": 298.2,
+      "rsi": 33.59,
+      "supportPrice1": 284.42,
+      "diff1": "",
+      "lastUpdated": "2025-12-03T11:41:41.415Z"
     }
   },
   "heatmapStocks": {
-    "1680.00": {
+    "474.50": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2025-12-02T11:41:40.137Z"
+      "lastUpdated": "2025-12-03T11:41:41.415Z"
     },
-    "1714.00": {
+    "399.90": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2025-12-02T11:41:40.137Z"
+      "lastUpdated": "2025-12-03T11:41:41.415Z"
     }
   }
 }
