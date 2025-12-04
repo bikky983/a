@@ -1,17 +1,17 @@
 {
-  "lastUpdated": "2025-12-03T11:41:41.415Z",
+  "lastUpdated": "2025-12-04T11:41:38.621Z",
   "institutionalStocks": {
     "474.50": {
       "score": 60,
       "price": 0,
       "patterns": "Volume Spike (Bullish), OBV Bullish Divergence, Below VWAP, Statistical Anomaly (Bullish)",
-      "lastUpdated": "2025-12-03T11:41:41.413Z"
+      "lastUpdated": "2025-12-04T11:41:38.619Z"
     },
     "399.90": {
       "score": 50,
       "price": 0,
       "patterns": "Volume Spike (Bullish), Narrow Range, High Volume (Bullish), Below VWAP, Statistical Anomaly (Bullish)",
-      "lastUpdated": "2025-12-03T11:41:41.413Z"
+      "lastUpdated": "2025-12-04T11:41:38.619Z"
     }
   },
   "trendlineStocks": {},
@@ -21,26 +21,26 @@
       "rsi": 30.66,
       "supportPrice1": 545.99,
       "diff1": "",
-      "lastUpdated": "2025-12-03T11:41:41.415Z"
+      "lastUpdated": "2025-12-04T11:41:38.621Z"
     },
     "ADBL\n                New": {
       "ltp": 298.2,
       "rsi": 33.59,
       "supportPrice1": 284.42,
       "diff1": "",
-      "lastUpdated": "2025-12-03T11:41:41.415Z"
+      "lastUpdated": "2025-12-04T11:41:38.621Z"
     }
   },
   "heatmapStocks": {
     "474.50": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2025-12-03T11:41:41.415Z"
+      "lastUpdated": "2025-12-04T11:41:38.621Z"
     },
     "399.90": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2025-12-03T11:41:41.415Z"
+      "lastUpdated": "2025-12-04T11:41:38.621Z"
     }
   }
 }
