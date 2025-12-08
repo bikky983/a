@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2025-12-07T13:35:12.682Z",
+  "lastUpdated": "2025-12-08T13:47:11.748Z",
   "currentBuySignals": [
     {
       "symbol": "GUFL",
       "signal": "BUY",
       "date": "2025_12_03",
-      "generatedOn": "2025-12-07",
+      "generatedOn": "2025-12-08",
       "price": 515,
       "details": {
         "rsiFast": "51.36",
@@ -18,7 +18,7 @@
       "symbol": "MANDU",
       "signal": "BUY",
       "date": "2025_12_03",
-      "generatedOn": "2025-12-07",
+      "generatedOn": "2025-12-08",
       "price": 816,
       "details": {
         "rsiFast": "50.71",
@@ -31,7 +31,7 @@
       "symbol": "MPFL",
       "signal": "BUY",
       "date": "2025_12_03",
-      "generatedOn": "2025-12-07",
+      "generatedOn": "2025-12-08",
       "price": 559,
       "details": {
         "rsiFast": "52.33",
@@ -44,7 +44,7 @@
       "symbol": "NICD83/84",
       "signal": "BUY",
       "date": "2025_11_24",
-      "generatedOn": "2025-12-07",
+      "generatedOn": "2025-12-08",
       "price": 1146,
       "details": {
         "rsiFast": "58.40",
@@ -57,7 +57,7 @@
       "symbol": "NSIF2",
       "signal": "BUY",
       "date": "2025_12_03",
-      "generatedOn": "2025-12-07",
+      "generatedOn": "2025-12-08",
       "price": 10.25,
       "details": {
         "rsiFast": "50.36",
@@ -70,7 +70,7 @@
       "symbol": "PFL",
       "signal": "BUY",
       "date": "2025_12_03",
-      "generatedOn": "2025-12-07",
+      "generatedOn": "2025-12-08",
       "price": 378,
       "details": {
         "rsiFast": "45.73",
@@ -83,7 +83,7 @@
       "symbol": "SLCF",
       "signal": "BUY",
       "date": "2025_12_03",
-      "generatedOn": "2025-12-07",
+      "generatedOn": "2025-12-08",
       "price": 9.28,
       "details": {
         "rsiFast": "49.09",
@@ -96,7 +96,7 @@
       "symbol": "USHL",
       "signal": "BUY",
       "date": "2025_12_03",
-      "generatedOn": "2025-12-07",
+      "generatedOn": "2025-12-08",
       "price": 722,
       "details": {
         "rsiFast": "53.85",
@@ -111,7 +111,7 @@
       "symbol": "GVL",
       "signal": "SELL",
       "date": "2025_12_03",
-      "generatedOn": "2025-12-07",
+      "generatedOn": "2025-12-08",
       "price": 528.1,
       "details": {
         "rsiFast": "50.28",
@@ -124,7 +124,7 @@
       "symbol": "HBLD83",
       "signal": "SELL",
       "date": "2025_11_30",
-      "generatedOn": "2025-12-07",
+      "generatedOn": "2025-12-08",
       "price": 1067,
       "details": {
         "rsiFast": "48.23",
@@ -137,7 +137,7 @@
       "symbol": "ICFCD88",
       "signal": "SELL",
       "date": "2025_12_03",
-      "generatedOn": "2025-12-07",
+      "generatedOn": "2025-12-08",
       "price": 1120,
       "details": {
         "rsiFast": "51.13",
@@ -150,7 +150,7 @@
       "symbol": "KBLD86",
       "signal": "SELL",
       "date": "2025_11_30",
-      "generatedOn": "2025-12-07",
+      "generatedOn": "2025-12-08",
       "price": 1134,
       "details": {
         "rsiFast": "49.37",
@@ -163,7 +163,7 @@
       "symbol": "KSY",
       "signal": "SELL",
       "date": "2025_12_03",
-      "generatedOn": "2025-12-07",
+      "generatedOn": "2025-12-08",
       "price": 8.64,
       "details": {
         "rsiFast": "42.20",
@@ -176,7 +176,7 @@
       "symbol": "RURU",
       "signal": "SELL",
       "date": "2025_12_03",
-      "generatedOn": "2025-12-07",
+      "generatedOn": "2025-12-08",
       "price": 740,
       "details": {
         "rsiFast": "49.77",
@@ -189,7 +189,7 @@
       "symbol": "SHEL",
       "signal": "SELL",
       "date": "2025_12_03",
-      "generatedOn": "2025-12-07",
+      "generatedOn": "2025-12-08",
       "price": 289,
       "details": {
         "rsiFast": "49.27",
@@ -200,35 +200,6 @@
     }
   ],
   "signalHistory": [
-    {
-      "date": "2025-11-07",
-      "buyCount": 4,
-      "sellCount": 1,
-      "buySignals": [
-        {
-          "symbol": "CLI",
-          "price": 472
-        },
-        {
-          "symbol": "DLBS",
-          "price": 1365
-        },
-        {
-          "symbol": "NICD83/84",
-          "price": 1122
-        },
-        {
-          "symbol": "WNLB",
-          "price": 2039
-        }
-      ],
-      "sellSignals": [
-        {
-          "symbol": "UPPER",
-          "price": 178.2
-        }
-      ]
-    },
     {
       "date": "2025-11-09",
       "buyCount": 2,
@@ -1771,6 +1742,75 @@
     },
     {
       "date": "2025-12-07",
+      "buyCount": 8,
+      "sellCount": 7,
+      "buySignals": [
+        {
+          "symbol": "GUFL",
+          "price": 515
+        },
+        {
+          "symbol": "MANDU",
+          "price": 816
+        },
+        {
+          "symbol": "MPFL",
+          "price": 559
+        },
+        {
+          "symbol": "NICD83/84",
+          "price": 1146
+        },
+        {
+          "symbol": "NSIF2",
+          "price": 10.25
+        },
+        {
+          "symbol": "PFL",
+          "price": 378
+        },
+        {
+          "symbol": "SLCF",
+          "price": 9.28
+        },
+        {
+          "symbol": "USHL",
+          "price": 722
+        }
+      ],
+      "sellSignals": [
+        {
+          "symbol": "GVL",
+          "price": 528.1
+        },
+        {
+          "symbol": "HBLD83",
+          "price": 1067
+        },
+        {
+          "symbol": "ICFCD88",
+          "price": 1120
+        },
+        {
+          "symbol": "KBLD86",
+          "price": 1134
+        },
+        {
+          "symbol": "KSY",
+          "price": 8.64
+        },
+        {
+          "symbol": "RURU",
+          "price": 740
+        },
+        {
+          "symbol": "SHEL",
+          "price": 289
+        }
+      ]
+    },
+    {
+      "date": "2025-12-08",
       "buyCount": 8,
       "sellCount": 7,
       "buySignals": [
