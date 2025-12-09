@@ -1,46 +1,67 @@
 {
-  "lastUpdated": "2025-12-08T11:41:28.012Z",
+  "lastUpdated": "2025-12-09T11:41:24.831Z",
   "institutionalStocks": {
-    "474.50": {
-      "score": 60,
-      "price": 0,
-      "patterns": "Volume Spike (Bullish), OBV Bullish Divergence, Below VWAP, Statistical Anomaly (Bullish)",
-      "lastUpdated": "2025-12-08T11:41:28.010Z"
+    "575.00": {
+      "score": 55,
+      "price": 20,
+      "patterns": "Volume Spike (Bullish), Below VWAP, Stopping Volume (Bullish), Spring Pattern, Upthrust Pattern, Statistical Anomaly (Bullish)",
+      "lastUpdated": "2025-12-09T11:41:24.829Z"
     },
-    "399.90": {
-      "score": 50,
+    "1732.90": {
+      "score": 55,
       "price": 0,
-      "patterns": "Volume Spike (Bullish), Narrow Range, High Volume (Bullish), Below VWAP, Statistical Anomaly (Bullish)",
-      "lastUpdated": "2025-12-08T11:41:28.010Z"
+      "patterns": "Volume Spike (Bullish), Above VWAP, Spring Pattern, Statistical Anomaly (Bullish)",
+      "lastUpdated": "2025-12-09T11:41:24.829Z"
     }
   },
   "trendlineStocks": {},
   "rsiSupportStocks": {
-    "SAHAS\n                New": {
-      "ltp": 543.8,
-      "rsi": 30.66,
-      "supportPrice1": 545.99,
+    "SIKLES\n                New": {
+      "ltp": 566,
+      "rsi": 27.43,
+      "supportPrice1": 576,
       "diff1": "",
-      "lastUpdated": "2025-12-08T11:41:28.012Z"
+      "lastUpdated": "2025-12-09T11:41:24.831Z"
+    },
+    "ILBS\n                New": {
+      "ltp": 1044.9,
+      "rsi": 28.44,
+      "supportPrice1": 1010.2,
+      "diff1": "",
+      "lastUpdated": "2025-12-09T11:41:24.831Z"
     },
     "ADBL\n                New": {
-      "ltp": 296.6,
-      "rsi": 33.59,
+      "ltp": 292.3,
+      "rsi": 29.58,
       "supportPrice1": 284.42,
       "diff1": "",
-      "lastUpdated": "2025-12-08T11:41:28.012Z"
+      "lastUpdated": "2025-12-09T11:41:24.831Z"
+    },
+    "SAHAS\n                New": {
+      "ltp": 545,
+      "rsi": 29.92,
+      "supportPrice1": 545.99,
+      "diff1": "",
+      "lastUpdated": "2025-12-09T11:41:24.831Z"
+    },
+    "PRVU\n                New": {
+      "ltp": 185,
+      "rsi": 32.98,
+      "supportPrice1": 184.14,
+      "diff1": "",
+      "lastUpdated": "2025-12-09T11:41:24.831Z"
     }
   },
   "heatmapStocks": {
-    "474.50": {
+    "575.00": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2025-12-08T11:41:28.012Z"
+      "lastUpdated": "2025-12-09T11:41:24.831Z"
     },
-    "399.90": {
+    "1732.90": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2025-12-08T11:41:28.012Z"
+      "lastUpdated": "2025-12-09T11:41:24.831Z"
     }
   }
 }
