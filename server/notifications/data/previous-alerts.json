@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2025-12-11T11:42:11.781Z",
+  "lastUpdated": "2025-12-12T11:42:42.742Z",
   "institutionalStocks": {
     "undefined": {
       "score": 0,
       "price": null,
       "patterns": "",
-      "lastUpdated": "2025-12-11T11:42:11.779Z"
+      "lastUpdated": "2025-12-12T11:42:42.739Z"
     }
   },
   "trendlineStocks": {},
@@ -15,35 +15,35 @@
       "rsi": 25.56,
       "supportPrice1": 1010.2,
       "diff1": "",
-      "lastUpdated": "2025-12-11T11:42:11.781Z"
+      "lastUpdated": "2025-12-12T11:42:42.742Z"
     },
     "SAHAS\n                New": {
       "ltp": 539.2,
       "rsi": 28.82,
       "supportPrice1": 545.99,
       "diff1": "",
-      "lastUpdated": "2025-12-11T11:42:11.781Z"
+      "lastUpdated": "2025-12-12T11:42:42.742Z"
     },
     "ADBL\n                New": {
       "ltp": 292,
       "rsi": 29.97,
       "supportPrice1": 284.42,
       "diff1": "",
-      "lastUpdated": "2025-12-11T11:42:11.781Z"
+      "lastUpdated": "2025-12-12T11:42:42.742Z"
     },
     "PRVU\n                New": {
       "ltp": 183.7,
       "rsi": 31.49,
       "supportPrice1": 184.14,
       "diff1": "",
-      "lastUpdated": "2025-12-11T11:42:11.781Z"
+      "lastUpdated": "2025-12-12T11:42:42.742Z"
     },
     "MKJC\n                New": {
       "ltp": 522,
       "rsi": 33.96,
       "supportPrice1": 516.14,
       "diff1": "",
-      "lastUpdated": "2025-12-11T11:42:11.781Z"
+      "lastUpdated": "2025-12-12T11:42:42.742Z"
     }
   },
   "heatmapStocks": {}
