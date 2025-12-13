@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2025-12-12T13:46:54.729Z",
+  "lastUpdated": "2025-12-13T13:37:17.395Z",
   "currentBuySignals": [
     {
       "symbol": "MHCL",
       "signal": "BUY",
       "date": "2025_12_11",
-      "generatedOn": "2025-12-12",
+      "generatedOn": "2025-12-13",
       "price": 417.7,
       "details": {
         "rsiFast": "53.26",
@@ -18,7 +18,7 @@
       "symbol": "NICD83/84",
       "signal": "BUY",
       "date": "2025_11_24",
-      "generatedOn": "2025-12-12",
+      "generatedOn": "2025-12-13",
       "price": 1146,
       "details": {
         "rsiFast": "58.40",
@@ -31,7 +31,7 @@
       "symbol": "RSY",
       "signal": "BUY",
       "date": "2025_12_11",
-      "generatedOn": "2025-12-12",
+      "generatedOn": "2025-12-13",
       "price": 9.12,
       "details": {
         "rsiFast": "51.32",
@@ -46,7 +46,7 @@
       "symbol": "CBLD88",
       "signal": "SELL",
       "date": "2025_12_11",
-      "generatedOn": "2025-12-12",
+      "generatedOn": "2025-12-13",
       "price": 1211,
       "details": {
         "rsiFast": "51.19",
@@ -59,7 +59,7 @@
       "symbol": "GLH",
       "signal": "SELL",
       "date": "2025_12_11",
-      "generatedOn": "2025-12-12",
+      "generatedOn": "2025-12-13",
       "price": 247,
       "details": {
         "rsiFast": "42.33",
@@ -72,7 +72,7 @@
       "symbol": "HATHY",
       "signal": "SELL",
       "date": "2025_12_11",
-      "generatedOn": "2025-12-12",
+      "generatedOn": "2025-12-13",
       "price": 905,
       "details": {
         "rsiFast": "36.40",
@@ -85,7 +85,7 @@
       "symbol": "NIBD2082",
       "signal": "SELL",
       "date": "2025_12_10",
-      "generatedOn": "2025-12-12",
+      "generatedOn": "2025-12-13",
       "price": 1060,
       "details": {
         "rsiFast": "44.75",
@@ -98,7 +98,7 @@
       "symbol": "NIMBD90",
       "signal": "SELL",
       "date": "2025_12_10",
-      "generatedOn": "2025-12-12",
+      "generatedOn": "2025-12-13",
       "price": 1215,
       "details": {
         "rsiFast": "50.80",
@@ -109,39 +109,6 @@
     }
   ],
   "signalHistory": [
-    {
-      "date": "2025-11-13",
-      "buyCount": 3,
-      "sellCount": 3,
-      "buySignals": [
-        {
-          "symbol": "JOSHI",
-          "price": 316.9
-        },
-        {
-          "symbol": "MAKAR",
-          "price": 561
-        },
-        {
-          "symbol": "SGHC",
-          "price": 366.3
-        }
-      ],
-      "sellSignals": [
-        {
-          "symbol": "GLH",
-          "price": 252.8
-        },
-        {
-          "symbol": "NMBHF2",
-          "price": 8.8
-        },
-        {
-          "symbol": "NSIF2",
-          "price": 9.8
-        }
-      ]
-    },
     {
       "date": "2025-11-14",
       "buyCount": 3,
@@ -1812,6 +1779,47 @@
     },
     {
       "date": "2025-12-12",
+      "buyCount": 3,
+      "sellCount": 5,
+      "buySignals": [
+        {
+          "symbol": "MHCL",
+          "price": 417.7
+        },
+        {
+          "symbol": "NICD83/84",
+          "price": 1146
+        },
+        {
+          "symbol": "RSY",
+          "price": 9.12
+        }
+      ],
+      "sellSignals": [
+        {
+          "symbol": "CBLD88",
+          "price": 1211
+        },
+        {
+          "symbol": "GLH",
+          "price": 247
+        },
+        {
+          "symbol": "HATHY",
+          "price": 905
+        },
+        {
+          "symbol": "NIBD2082",
+          "price": 1060
+        },
+        {
+          "symbol": "NIMBD90",
+          "price": 1215
+        }
+      ]
+    },
+    {
+      "date": "2025-12-13",
       "buyCount": 3,
       "sellCount": 5,
       "buySignals": [
