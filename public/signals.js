@@ -176,10 +176,10 @@ class SignalsDashboard {
     renderStockList(signals) {
         if (!signals || signals.length === 0) return '';
         
-        const stockNames = signals.slice(0, 5).map(s => s.symbol).join(', ');
-        const remaining = signals.length > 5 ? ` +${signals.length - 5} more` : '';
+        // Show all stocks with their prices
+        const stockItems = signals.map(s => `${s.symbol} (Rs.${this.formatNumber(s.price)})`).join(', ');
         
-        return `<div style="font-size: 0.85em; color: #718096; margin-top: 5px;">${stockNames}${remaining}</div>`;
+        return `<div style="font-size: 0.85em; color: #718096; margin-top: 5px;">${stockItems}</div>`;
     }
 
     formatDate(dateStr) {
