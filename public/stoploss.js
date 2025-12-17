@@ -5,7 +5,338 @@ let stoplossStocks = [];
 let stockHistoricalData = {}; // To store historical data
 let chartInstances = {}; // To store chart instances by symbol
 let autoRefreshInterval = null;
+let stockSignalStatus = {}; // To store calculated signal status for each stock
 const DEFAULT_STOPLOSS_PERCENT = 15;
+
+// ============================================
+// RSI Pivot Trendline Signal Calculator
+// (Calculates signals directly from historical data)
+// ============================================
+
+const SignalCalculator = {
+    // RSI Settings
+    rsiFastPeriod: 21,
+    rsiSlowPeriod: 55,
+    
+    // Pivot Detection Settings
+    pivotLookback: 5,
+    minPivotDistance: 10,
+    
+    // Calculate RSI for a given period
+    calculateRSI(data, period) {
+        if (data.length < period + 1) return null;
+
+        let gains = 0;
+        let losses = 0;
+
+        // Initial average gain/loss
+        for (let i = 1; i <= period; i++) {
+            const change = data[i].close - data[i - 1].close;
+            if (change > 0) gains += change;
+            else losses += Math.abs(change);
+        }
+
+        let avgGain = gains / period;
+        let avgLoss = losses / period;
+
+        const rsiValues = [];
+        
+        // First RSI value
+        const rs = avgGain / (avgLoss || 0.0001);
+        rsiValues.push(100 - (100 / (1 + rs)));
+
+        // Subsequent RSI values using smoothed averages
+        for (let i = period + 1; i < data.length; i++) {
+            const change = data[i].close - data[i - 1].close;
+            const gain = change > 0 ? change : 0;
+            const loss = change < 0 ? Math.abs(change) : 0;
+
+            avgGain = (avgGain * (period - 1) + gain) / period;
+            avgLoss = (avgLoss * (period - 1) + loss) / period;
+
+            const rs = avgGain / (avgLoss || 0.0001);
+            rsiValues.push(100 - (100 / (1 + rs)));
+        }
+
+        return rsiValues;
+    },
+
+    // Detect pivot highs
+    detectPivotHighs(data, lookback) {
+        const pivots = [];
+        
+        for (let i = lookback; i < data.length - lookback; i++) {
+            let isPivot = true;
+            const currentHigh = data[i].high;
+
+            // Check left side
+            for (let j = i - lookback; j < i; j++) {
+                if (data[j].high >= currentHigh) {
+                    isPivot = false;
+                    break;
+                }
+            }
+
+            // Check right side
+            if (isPivot) {
+                for (let j = i + 1; j <= i + lookback; j++) {
+                    if (data[j].high >= currentHigh) {
+                        isPivot = false;
+                        break;
+                    }
+                }
+            }
+
+            if (isPivot) {
+                pivots.push({ index: i, price: currentHigh, time: data[i].time || data[i].date });
+            }
+        }
+
+        return pivots;
+    },
+
+    // Detect pivot lows
+    detectPivotLows(data, lookback) {
+        const pivots = [];
+        
+        for (let i = lookback; i < data.length - lookback; i++) {
+            let isPivot = true;
+            const currentLow = data[i].low;
+
+            // Check left side
+            for (let j = i - lookback; j < i; j++) {
+                if (data[j].low <= currentLow) {
+                    isPivot = false;
+                    break;
+                }
+            }
+
+            // Check right side
+            if (isPivot) {
+                for (let j = i + 1; j <= i + lookback; j++) {
+                    if (data[j].low <= currentLow) {
+                        isPivot = false;
+                        break;
+                    }
+                }
+            }
+
+            if (isPivot) {
+                pivots.push({ index: i, price: currentLow, time: data[i].time || data[i].date });
+            }
+        }
+
+        return pivots;
+    },
+
+    // Filter pivots by minimum distance
+    filterPivotsByDistance(pivots, minDistance) {
+        if (pivots.length === 0) return [];
+
+        const filtered = [pivots[0]];
+        
+        for (let i = 1; i < pivots.length; i++) {
+            const lastPivot = filtered[filtered.length - 1];
+            if (pivots[i].index - lastPivot.index >= minDistance) {
+                filtered.push(pivots[i]);
+            }
+        }
+
+        return filtered;
+    },
+
+    // Calculate trendline price at a given index
+    getTrendlinePrice(x1, y1, x2, y2, targetX) {
+        if (x1 === x2) return y1;
+        const slope = (y2 - y1) / (x2 - x1);
+        return y1 + slope * (targetX - x1);
+    },
+
+    // Analyze stock data and generate signal
+    analyzeStock(stockData) {
+        if (!stockData || stockData.length === 0) {
+            return { signal: 'INSUFFICIENT_DATA', details: null };
+        }
+        
+        // Sort data by date
+        const data = [...stockData].sort((a, b) => {
+            const dateA = a.date || a.time;
+            const dateB = b.date || b.time;
+            if (!dateA || !dateB) return 0;
+            const timeA = new Date(String(dateA).replace(/_/g, '-'));
+            const timeB = new Date(String(dateB).replace(/_/g, '-'));
+            return timeA - timeB;
+        });
+
+        if (data.length < Math.max(this.rsiSlowPeriod, this.pivotLookback * 2) + 10) {
+            return { signal: 'INSUFFICIENT_DATA', details: null };
+        }
+
+        // Calculate RSI values
+        const rsiFast = this.calculateRSI(data, this.rsiFastPeriod);
+        const rsiSlow = this.calculateRSI(data, this.rsiSlowPeriod);
+
+        if (!rsiFast || !rsiSlow || rsiFast.length === 0 || rsiSlow.length === 0) {
+            return { signal: 'INSUFFICIENT_DATA', details: null };
+        }
+
+        // Detect RSI state at the latest bar
+        const latestIdx = rsiFast.length - 1;
+        const latestIdxSlow = rsiSlow.length - 1;
+        
+        // Check if we have valid RSI values
+        if (latestIdx < 0 || latestIdxSlow < 0 || 
+            rsiFast[latestIdx] === undefined || rsiSlow[latestIdxSlow] === undefined) {
+            return { signal: 'INSUFFICIENT_DATA', details: null };
+        }
+        
+        const rsiBullish = rsiFast[latestIdx] > rsiSlow[latestIdxSlow];
+        const rsiBearish = rsiFast[latestIdx] < rsiSlow[latestIdxSlow];
+
+        // Detect pivots
+        const pivotHighs = this.detectPivotHighs(data, this.pivotLookback);
+        const pivotLows = this.detectPivotLows(data, this.pivotLookback);
+
+        // Filter by minimum distance
+        const filteredHighs = this.filterPivotsByDistance(pivotHighs, this.minPivotDistance);
+        const filteredLows = this.filterPivotsByDistance(pivotLows, this.minPivotDistance);
+
+        // Get recent pivots for trendline construction
+        const recentHighs = filteredHighs.slice(-3);
+        const recentLows = filteredLows.slice(-3);
+
+        // Check for BUY signal
+        if (rsiBullish && recentHighs.length >= 2) {
+            const h1 = recentHighs[recentHighs.length - 2];
+            const h2 = recentHighs[recentHighs.length - 1];
+
+            // Check if it's a descending line (lower high)
+            if (h2.price < h1.price) {
+                // Calculate downtrend line price at current bar
+                const currentIdx = data.length - 1;
+                const downtrendPrice = this.getTrendlinePrice(h1.index, h1.price, h2.index, h2.price, currentIdx);
+
+                // Check if price broke above downtrend
+                const currentClose = data[currentIdx].close;
+                const prevClose = data[currentIdx - 1].close;
+
+                if (currentClose > downtrendPrice && prevClose <= downtrendPrice) {
+                    return {
+                        signal: 'BUY',
+                        date: data[currentIdx].date || data[currentIdx].time,
+                        price: currentClose,
+                        details: {
+                            rsiFast: rsiFast[latestIdx].toFixed(2),
+                            rsiSlow: rsiSlow[latestIdxSlow].toFixed(2),
+                            downtrendPrice: downtrendPrice.toFixed(2),
+                            breakoutStrength: ((currentClose - downtrendPrice) / downtrendPrice * 100).toFixed(2)
+                        }
+                    };
+                }
+            }
+        }
+
+        // Check for SELL signal
+        if (rsiBearish && recentLows.length >= 2) {
+            const l1 = recentLows[recentLows.length - 2];
+            const l2 = recentLows[recentLows.length - 1];
+
+            // Check if it's an ascending line (higher low)
+            if (l2.price > l1.price) {
+                // Calculate uptrend line price at current bar
+                const currentIdx = data.length - 1;
+                const uptrendPrice = this.getTrendlinePrice(l1.index, l1.price, l2.index, l2.price, currentIdx);
+
+                // Check if price broke below uptrend
+                const currentClose = data[currentIdx].close;
+                const prevClose = data[currentIdx - 1].close;
+
+                if (currentClose < uptrendPrice && prevClose >= uptrendPrice) {
+                    return {
+                        signal: 'SELL',
+                        date: data[currentIdx].date || data[currentIdx].time,
+                        price: currentClose,
+                        details: {
+                            rsiFast: rsiFast[latestIdx].toFixed(2),
+                            rsiSlow: rsiSlow[latestIdxSlow].toFixed(2),
+                            uptrendPrice: uptrendPrice.toFixed(2),
+                            breakdownStrength: ((uptrendPrice - currentClose) / uptrendPrice * 100).toFixed(2)
+                        }
+                    };
+                }
+            }
+        }
+
+        return {
+            signal: 'NEUTRAL',
+            date: data[data.length - 1].date || data[data.length - 1].time,
+            price: data[data.length - 1].close,
+            details: {
+                rsiFast: rsiFast[latestIdx].toFixed(2),
+                rsiSlow: rsiSlow[latestIdxSlow].toFixed(2),
+                rsiBullish,
+                rsiBearish
+            }
+        };
+    }
+};
+
+// Calculate signals for all stocks in stoploss tracker
+function calculateSignalsForStoplossStocks() {
+    console.log('Calculating signals for stoploss stocks...');
+    stockSignalStatus = {};
+    
+    // Get list of symbols from bought stocks
+    const symbols = boughtStocks.map(stock => stock.symbol);
+    
+    let sellCount = 0;
+    let buyCount = 0;
+    let neutralCount = 0;
+    
+    symbols.forEach(symbol => {
+        const historicalData = stockHistoricalData[symbol];
+        
+        if (!historicalData || historicalData.length === 0) {
+            console.log(`No historical data for ${symbol}`);
+            return;
+        }
+        
+        try {
+            const result = SignalCalculator.analyzeStock(historicalData);
+            
+            if (result.signal === 'SELL') {
+                stockSignalStatus[symbol] = {
+                    type: 'SELL',
+                    date: result.date,
+                    price: result.price,
+                    details: result.details
+                };
+                sellCount++;
+                console.log(`SELL signal for ${symbol}:`, result.details);
+            } else if (result.signal === 'BUY') {
+                stockSignalStatus[symbol] = {
+                    type: 'BUY',
+                    date: result.date,
+                    price: result.price,
+                    details: result.details
+                };
+                buyCount++;
+            } else if (result.signal === 'NEUTRAL') {
+                stockSignalStatus[symbol] = {
+                    type: 'NEUTRAL',
+                    date: result.date,
+                    price: result.price,
+                    details: result.details
+                };
+                neutralCount++;
+            }
+        } catch (error) {
+            console.error(`Error calculating signal for ${symbol}:`, error);
+        }
+    });
+    
+    console.log(`Signal calculation complete: ${sellCount} SELL, ${buyCount} BUY, ${neutralCount} NEUTRAL`);
+}
 
 // Candlestick pattern recognition functions
 function detectCandlestickPattern(candle) {
@@ -1590,6 +1921,9 @@ function processStoplossStocks() {
         return a.stoplossDiff - b.stoplossDiff;
     });
     
+    // Calculate signals for all stocks using historical data
+    calculateSignalsForStoplossStocks();
+    
     // Display the stoploss stocks
     displayStoplossStocks();
 }
@@ -1599,16 +1933,22 @@ function displayStoplossStocks() {
     tbody.innerHTML = '';
     
     if (stoplossStocks.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="9" class="no-stocks">No stocks found in Stoploss Tracker.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="10" class="no-stocks">No stocks found in Stoploss Tracker.</td></tr>';
         return;
     }
     
     // Debug log to see what stoploss stocks are being displayed
     console.log('Displaying stoploss stocks:', JSON.stringify(stoplossStocks));
     
-    // Sort stoploss stocks - broken stoploss first, then by symbol
+    // Sort stoploss stocks - sell signals first, then broken stoploss, then by symbol
     stoplossStocks.sort((a, b) => {
-        // First sort by broken stoploss
+        // First sort by sell signal
+        const aHasSellSignal = hasSellSignal(a.symbol);
+        const bHasSellSignal = hasSellSignal(b.symbol);
+        if (aHasSellSignal && !bHasSellSignal) return -1;
+        if (!aHasSellSignal && bHasSellSignal) return 1;
+        
+        // Then sort by broken stoploss
         if (a.isBroken && !b.isBroken) return -1;
         if (!a.isBroken && b.isBroken) return 1;
         
@@ -1645,6 +1985,11 @@ function displayStoplossStocks() {
             } else {
                 row.classList.add('broken-stoploss', 'highlight-disabled');
             }
+        }
+        
+        // Add sell signal highlight class if this stock has a sell signal
+        if (hasSellSignal(stock.symbol)) {
+            row.classList.add('has-sell-signal');
         }
         
         // Format date
@@ -1717,6 +2062,23 @@ function displayStoplossStocks() {
         const fallbackPriceBadge = stock.usedFallbackPrice ? 
             `<span style="background-color: #ff9800; color: white; padding: 2px 5px; border-radius: 3px; font-size: 10px; margin-left: 5px;" title="Using historical close price">Hist. Price</span>` : '';
         
+        // Get signal status for this stock
+        const signalStatus = getStockSignalStatus(stock.symbol);
+        let signalStatusHTML = '<td class="signal-status neutral">-</td>';
+        
+        if (signalStatus) {
+            if (signalStatus.type === 'SELL') {
+                const rsiFast = signalStatus.details?.rsiFast || 'N/A';
+                const rsiSlow = signalStatus.details?.rsiSlow || 'N/A';
+                signalStatusHTML = `
+                    <td class="signal-status sell" title="RSI: ${rsiFast}/${rsiSlow}">
+                        SELL <span class="sell-signal-badge">⚠</span>
+                    </td>`;
+            } else if (signalStatus.type === 'BUY') {
+                signalStatusHTML = `<td class="signal-status buy">BUY</td>`;
+            }
+        }
+        
         // Create row HTML - FIXED: Use stock.ltp instead of stock.currentPrice
         row.innerHTML = `
             <td><span class="clickable-symbol">${stock.symbol}</span></td>
@@ -1732,6 +2094,7 @@ function displayStoplossStocks() {
                 ${manuallyUpdatedBadge}
             </td>
             <td class="${slDiffClass}">${formatNumber(stock.stoplossDiff)}%</td>
+            ${signalStatusHTML}
             <td>${formattedDate}</td>
             <td>
                 <button onclick="removeStockFromBought('${stock.symbol}')" class="action-btn delete-btn">Remove</button>
@@ -1773,6 +2136,9 @@ function displayStoplossStocks() {
             initializeStockChart(stock.symbol, stock.stoplossPrice, stock.buyPrice);
         });
     }, 100);
+    
+    // Update the sell signal alert section at the top of the page
+    updateSellSignalAlert();
 }
 
 function updateStoplossPrice(symbol, newStoplossPrice) {
@@ -2212,6 +2578,76 @@ function showFullScreenChart(symbol, stoplossPrice, buyPrice) {
         // Store reference to destroy on close
         popupContainer.chart = svg.node();
     }, 100);
+}
+
+// Get signal status for a specific stock
+function getStockSignalStatus(symbol) {
+    return stockSignalStatus[symbol] || null;
+}
+
+// Check if a stock has a sell signal
+function hasSellSignal(symbol) {
+    const status = stockSignalStatus[symbol];
+    return status && status.type === 'SELL';
+}
+
+// Update the sell signal alert section at the top of the page
+function updateSellSignalAlert() {
+    const alertContainer = document.getElementById('sellSignalAlert');
+    const signalList = document.getElementById('sellSignalList');
+    
+    if (!alertContainer || !signalList) return;
+    
+    // Find stocks in stoploss tracker that have sell signals
+    const stocksWithSellSignals = stoplossStocks.filter(stock => hasSellSignal(stock.symbol));
+    
+    if (stocksWithSellSignals.length === 0) {
+        alertContainer.classList.remove('has-signals');
+        signalList.innerHTML = '';
+        return;
+    }
+    
+    // Show the alert
+    alertContainer.classList.add('has-signals');
+    
+    // Build the list of stocks with sell signals
+    let listHTML = '';
+    stocksWithSellSignals.forEach(stock => {
+        const signalInfo = stockSignalStatus[stock.symbol];
+        const rsiFast = signalInfo.details?.rsiFast || 'N/A';
+        const rsiSlow = signalInfo.details?.rsiSlow || 'N/A';
+        const breakdownStrength = signalInfo.details?.breakdownStrength || 'N/A';
+        
+        listHTML += `
+            <div class="sell-signal-item" onclick="scrollToStock('${stock.symbol}')">
+                <span class="symbol-name">${stock.symbol}</span>
+                <span class="signal-details">
+                    LTP: Rs.${stock.ltp?.toFixed(2) || 'N/A'} | 
+                    RSI: ${rsiFast}/${rsiSlow} | 
+                    Breakdown: ${breakdownStrength}%
+                </span>
+            </div>
+        `;
+    });
+    
+    signalList.innerHTML = listHTML;
+    
+    console.log(`Updated sell signal alert with ${stocksWithSellSignals.length} stocks`);
+}
+
+// Scroll to a specific stock row in the table
+function scrollToStock(symbol) {
+    const row = document.querySelector(`tr[data-symbol="${symbol}"]`);
+    if (row) {
+        row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        // Add a temporary highlight effect
+        row.style.transition = 'background-color 0.3s';
+        const originalBg = row.style.backgroundColor;
+        row.style.backgroundColor = '#ffeb3b';
+        setTimeout(() => {
+            row.style.backgroundColor = originalBg;
+        }, 1500);
+    }
 }
 
 // Fetch historical data from the JSON file

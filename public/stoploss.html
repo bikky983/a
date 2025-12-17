@@ -247,6 +247,117 @@
             white-space: normal;
             padding: 8px;
         }
+        
+        /* Sell Signal Alert Styles */
+        #sellSignalAlert {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #ff5252 0%, #d32f2f 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
+            display: none;
+        }
+        
+        #sellSignalAlert.has-signals {
+            display: block;
+            animation: pulse-alert 2s infinite;
+        }
+        
+        @keyframes pulse-alert {
+            0% { box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3); }
+            50% { box-shadow: 0 4px 25px rgba(211, 47, 47, 0.6); }
+            100% { box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3); }
+        }
+        
+        #sellSignalAlert h3 {
+            margin: 0 0 10px 0;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        #sellSignalAlert h3::before {
+            content: "⚠️";
+            font-size: 24px;
+        }
+        
+        .sell-signal-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .sell-signal-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .sell-signal-item:hover {
+            background: rgba(255, 255, 255, 0.35);
+            transform: translateY(-2px);
+        }
+        
+        .sell-signal-item .signal-details {
+            font-size: 12px;
+            font-weight: normal;
+            opacity: 0.9;
+        }
+        
+        /* Sell signal row highlight */
+        .has-sell-signal {
+            background-color: rgba(255, 82, 82, 0.25) !important;
+            border-left: 4px solid #ff5252 !important;
+        }
+        
+        .has-sell-signal td:first-child::after {
+            content: " 🔻";
+        }
+        
+        /* Sell signal badge in table */
+        .sell-signal-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff5252 0%, #d32f2f 100%);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+            margin-left: 5px;
+            animation: blink-badge 1.5s infinite;
+        }
+        
+        @keyframes blink-badge {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        /* Signal status column */
+        .signal-status {
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .signal-status.sell {
+            color: #d32f2f;
+        }
+        
+        .signal-status.buy {
+            color: #4caf50;
+        }
+        
+        .signal-status.neutral {
+            color: #ff9800;
+        }
     </style>
                 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2802879468571013"
      crossorigin="anonymous"></script>
@@ -287,6 +398,13 @@
             <div class="spinner"></div>
         </div>
 
+        <!-- Sell Signal Alert Section -->
+        <div id="sellSignalAlert">
+            <h3>SELL SIGNALS DETECTED!</h3>
+            <p>The following stocks in your portfolio have generated sell signals based on RSI + Trendline analysis:</p>
+            <div class="sell-signal-list" id="sellSignalList"></div>
+        </div>
+        
         <!-- Add stoploss counter -->
         <div id="stoplossCounter"></div>
 
@@ -300,6 +418,7 @@
                         <th>Return (%)</th>
                         <th>Stoploss</th>
                         <th>SL Difference (%)</th>
+                        <th>Signal Status</th>
                         <th>Buy Date</th>
                         <th>Actions & Pattern</th>
                         <th>Chart</th>
