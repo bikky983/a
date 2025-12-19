@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2025-12-18T13:49:35.560Z",
+  "lastUpdated": "2025-12-19T13:45:50.928Z",
   "currentBuySignals": [
     {
       "symbol": "CYCL",
       "signal": "BUY",
       "date": "2025_12_18",
-      "generatedOn": "2025-12-18",
+      "generatedOn": "2025-12-19",
       "price": 1572,
       "details": {
         "rsiFast": "51.57",
@@ -18,7 +18,7 @@
       "symbol": "HBLD86",
       "signal": "BUY",
       "date": "2025_04_13",
-      "generatedOn": "2025-12-18",
+      "generatedOn": "2025-12-19",
       "price": 1140,
       "details": {
         "rsiFast": "59.38",
@@ -33,7 +33,7 @@
       "symbol": "EBLD91",
       "signal": "SELL",
       "date": "2025_12_18",
-      "generatedOn": "2025-12-18",
+      "generatedOn": "2025-12-19",
       "price": 1100,
       "details": {
         "rsiFast": "53.44",
@@ -46,7 +46,7 @@
       "symbol": "HATHY",
       "signal": "SELL",
       "date": "2025_12_18",
-      "generatedOn": "2025-12-18",
+      "generatedOn": "2025-12-19",
       "price": 902,
       "details": {
         "rsiFast": "37.35",
@@ -59,7 +59,7 @@
       "symbol": "JBBD87",
       "signal": "SELL",
       "date": "2025_12_15",
-      "generatedOn": "2025-12-18",
+      "generatedOn": "2025-12-19",
       "price": 1161.3,
       "details": {
         "rsiFast": "52.77",
@@ -72,7 +72,7 @@
       "symbol": "LLBS",
       "signal": "SELL",
       "date": "2025_12_18",
-      "generatedOn": "2025-12-18",
+      "generatedOn": "2025-12-19",
       "price": 940,
       "details": {
         "rsiFast": "44.83",
@@ -85,7 +85,7 @@
       "symbol": "MERO",
       "signal": "SELL",
       "date": "2025_12_18",
-      "generatedOn": "2025-12-18",
+      "generatedOn": "2025-12-19",
       "price": 743,
       "details": {
         "rsiFast": "44.09",
@@ -98,7 +98,7 @@
       "symbol": "NICLBSL",
       "signal": "SELL",
       "date": "2025_12_18",
-      "generatedOn": "2025-12-18",
+      "generatedOn": "2025-12-19",
       "price": 546,
       "details": {
         "rsiFast": "41.09",
@@ -111,7 +111,7 @@
       "symbol": "NIMBD90",
       "signal": "SELL",
       "date": "2025_12_17",
-      "generatedOn": "2025-12-18",
+      "generatedOn": "2025-12-19",
       "price": 1235,
       "details": {
         "rsiFast": "51.98",
@@ -124,7 +124,7 @@
       "symbol": "NUBL",
       "signal": "SELL",
       "date": "2025_12_18",
-      "generatedOn": "2025-12-18",
+      "generatedOn": "2025-12-19",
       "price": 744.8,
       "details": {
         "rsiFast": "47.57",
@@ -137,7 +137,7 @@
       "symbol": "NWCL",
       "signal": "SELL",
       "date": "2025_12_18",
-      "generatedOn": "2025-12-18",
+      "generatedOn": "2025-12-19",
       "price": 792.1,
       "details": {
         "rsiFast": "44.55",
@@ -150,7 +150,7 @@
       "symbol": "VLBS",
       "signal": "SELL",
       "date": "2025_12_18",
-      "generatedOn": "2025-12-18",
+      "generatedOn": "2025-12-19",
       "price": 765.3,
       "details": {
         "rsiFast": "43.94",
@@ -161,51 +161,6 @@
     }
   ],
   "signalHistory": [
-    {
-      "date": "2025-11-19",
-      "buyCount": 6,
-      "sellCount": 3,
-      "buySignals": [
-        {
-          "symbol": "BNL",
-          "price": 16320
-        },
-        {
-          "symbol": "GRDBL",
-          "price": 1090
-        },
-        {
-          "symbol": "GVL",
-          "price": 535
-        },
-        {
-          "symbol": "PBD84",
-          "price": 1134
-        },
-        {
-          "symbol": "SAPDBL",
-          "price": 825
-        },
-        {
-          "symbol": "STC",
-          "price": 5285
-        }
-      ],
-      "sellSignals": [
-        {
-          "symbol": "AHL",
-          "price": 600
-        },
-        {
-          "symbol": "SEF",
-          "price": 9.02
-        },
-        {
-          "symbol": "SHLB",
-          "price": 1735
-        }
-      ]
-    },
     {
       "date": "2025-11-20",
       "buyCount": 6,
@@ -1872,6 +1827,63 @@
     },
     {
       "date": "2025-12-18",
+      "buyCount": 2,
+      "sellCount": 10,
+      "buySignals": [
+        {
+          "symbol": "CYCL",
+          "price": 1572
+        },
+        {
+          "symbol": "HBLD86",
+          "price": 1140
+        }
+      ],
+      "sellSignals": [
+        {
+          "symbol": "EBLD91",
+          "price": 1100
+        },
+        {
+          "symbol": "HATHY",
+          "price": 902
+        },
+        {
+          "symbol": "JBBD87",
+          "price": 1161.3
+        },
+        {
+          "symbol": "LLBS",
+          "price": 940
+        },
+        {
+          "symbol": "MERO",
+          "price": 743
+        },
+        {
+          "symbol": "NICLBSL",
+          "price": 546
+        },
+        {
+          "symbol": "NIMBD90",
+          "price": 1235
+        },
+        {
+          "symbol": "NUBL",
+          "price": 744.8
+        },
+        {
+          "symbol": "NWCL",
+          "price": 792.1
+        },
+        {
+          "symbol": "VLBS",
+          "price": 765.3
+        }
+      ]
+    },
+    {
+      "date": "2025-12-19",
       "buyCount": 2,
       "sellCount": 10,
       "buySignals": [
