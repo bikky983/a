@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2025-12-21T13:38:55.662Z",
+  "lastUpdated": "2025-12-22T13:46:38.841Z",
   "currentBuySignals": [
     {
       "symbol": "HBLD86",
       "signal": "BUY",
       "date": "2025_04_13",
-      "generatedOn": "2025-12-21",
+      "generatedOn": "2025-12-22",
       "price": 1140,
       "details": {
         "rsiFast": "59.34",
@@ -18,7 +18,7 @@
       "symbol": "KSY",
       "signal": "BUY",
       "date": "2025_12_21",
-      "generatedOn": "2025-12-21",
+      "generatedOn": "2025-12-22",
       "price": 8.98,
       "details": {
         "rsiFast": "51.82",
@@ -31,7 +31,7 @@
       "symbol": "NMBHF2",
       "signal": "BUY",
       "date": "2025_12_21",
-      "generatedOn": "2025-12-21",
+      "generatedOn": "2025-12-22",
       "price": 9.5,
       "details": {
         "rsiFast": "63.92",
@@ -44,7 +44,7 @@
       "symbol": "SEF",
       "signal": "BUY",
       "date": "2025_12_21",
-      "generatedOn": "2025-12-21",
+      "generatedOn": "2025-12-22",
       "price": 9.5,
       "details": {
         "rsiFast": "53.32",
@@ -59,7 +59,7 @@
       "symbol": "DHPL",
       "signal": "SELL",
       "date": "2025_12_21",
-      "generatedOn": "2025-12-21",
+      "generatedOn": "2025-12-22",
       "price": 289,
       "details": {
         "rsiFast": "43.69",
@@ -72,7 +72,7 @@
       "symbol": "GFCL",
       "signal": "SELL",
       "date": "2025_12_21",
-      "generatedOn": "2025-12-21",
+      "generatedOn": "2025-12-22",
       "price": 570,
       "details": {
         "rsiFast": "43.33",
@@ -85,7 +85,7 @@
       "symbol": "HRL",
       "signal": "SELL",
       "date": "2025_12_21",
-      "generatedOn": "2025-12-21",
+      "generatedOn": "2025-12-22",
       "price": 818,
       "details": {
         "rsiFast": "43.96",
@@ -98,7 +98,7 @@
       "symbol": "LSL",
       "signal": "SELL",
       "date": "2025_12_21",
-      "generatedOn": "2025-12-21",
+      "generatedOn": "2025-12-22",
       "price": 211.5,
       "details": {
         "rsiFast": "38.83",
@@ -111,7 +111,7 @@
       "symbol": "UPPER",
       "signal": "SELL",
       "date": "2025_12_21",
-      "generatedOn": "2025-12-21",
+      "generatedOn": "2025-12-22",
       "price": 174.1,
       "details": {
         "rsiFast": "40.56",
@@ -122,51 +122,6 @@
     }
   ],
   "signalHistory": [
-    {
-      "date": "2025-11-22",
-      "buyCount": 6,
-      "sellCount": 3,
-      "buySignals": [
-        {
-          "symbol": "BNL",
-          "price": 16320
-        },
-        {
-          "symbol": "GRDBL",
-          "price": 1090
-        },
-        {
-          "symbol": "GVL",
-          "price": 535
-        },
-        {
-          "symbol": "PBD84",
-          "price": 1134
-        },
-        {
-          "symbol": "SAPDBL",
-          "price": 825
-        },
-        {
-          "symbol": "STC",
-          "price": 5285
-        }
-      ],
-      "sellSignals": [
-        {
-          "symbol": "AHL",
-          "price": 600
-        },
-        {
-          "symbol": "SEF",
-          "price": 9.02
-        },
-        {
-          "symbol": "SHLB",
-          "price": 1735
-        }
-      ]
-    },
     {
       "date": "2025-11-23",
       "buyCount": 31,
@@ -1869,6 +1824,51 @@
     },
     {
       "date": "2025-12-21",
+      "buyCount": 4,
+      "sellCount": 5,
+      "buySignals": [
+        {
+          "symbol": "HBLD86",
+          "price": 1140
+        },
+        {
+          "symbol": "KSY",
+          "price": 8.98
+        },
+        {
+          "symbol": "NMBHF2",
+          "price": 9.5
+        },
+        {
+          "symbol": "SEF",
+          "price": 9.5
+        }
+      ],
+      "sellSignals": [
+        {
+          "symbol": "DHPL",
+          "price": 289
+        },
+        {
+          "symbol": "GFCL",
+          "price": 570
+        },
+        {
+          "symbol": "HRL",
+          "price": 818
+        },
+        {
+          "symbol": "LSL",
+          "price": 211.5
+        },
+        {
+          "symbol": "UPPER",
+          "price": 174.1
+        }
+      ]
+    },
+    {
+      "date": "2025-12-22",
       "buyCount": 4,
       "sellCount": 5,
       "buySignals": [
