@@ -1,71 +1,117 @@
 {
-  "lastUpdated": "2025-12-22T11:41:12.338Z",
+  "lastUpdated": "2025-12-23T11:41:57.274Z",
   "institutionalStocks": {
-    "487.10": {
-      "score": 60,
-      "price": 0,
-      "patterns": "OBV Bullish Divergence, Above VWAP, Spring Pattern, Statistical Anomaly (Bullish)",
-      "lastUpdated": "2025-12-22T11:41:12.335Z"
-    },
-    "508.00": {
+    "254.90": {
       "score": 15,
       "price": 60,
-      "patterns": "Volume Spike (Bearish), OBV Bearish Divergence, Narrow Range, High Volume (Bearish), Below VWAP, Statistical Anomaly (Bullish)",
-      "lastUpdated": "2025-12-22T11:41:12.335Z"
+      "patterns": "Volume Spike (Bearish), OBV Bearish Divergence, Narrow Range, High Volume (Bearish), Statistical Anomaly (Bullish)",
+      "lastUpdated": "2025-12-23T11:41:57.271Z"
     },
-    "533.00": {
+    "1466.30": {
+      "score": 20,
+      "price": 55,
+      "patterns": "Volume Spike (Bearish), Below VWAP, Stopping Volume (Bearish), Spring Pattern, Upthrust Pattern, Statistical Anomaly (Bearish)",
+      "lastUpdated": "2025-12-23T11:41:57.271Z"
+    },
+    "882.00": {
+      "score": 0,
+      "price": 55,
+      "patterns": "Volume Spike (Bearish), Narrow Range, High Volume (Bearish), Below VWAP, Upthrust Pattern",
+      "lastUpdated": "2025-12-23T11:41:57.271Z"
+    },
+    "366.00": {
       "score": 55,
-      "price": 20,
-      "patterns": "Volume Spike (Bullish), Below VWAP, Spring Pattern, Upthrust Pattern, Statistical Anomaly (Bullish)",
-      "lastUpdated": "2025-12-22T11:41:12.335Z"
+      "price": 0,
+      "patterns": "Volume Spike (Bullish), Below VWAP, Spring Pattern, Statistical Anomaly (Bullish)",
+      "lastUpdated": "2025-12-23T11:41:57.271Z"
     }
   },
   "trendlineStocks": {},
   "rsiSupportStocks": {
-    "GMLI\n                New": {
-      "ltp": 1706.3,
-      "rsi": 30.67,
-      "supportPrice1": 1626.93,
-      "diff1": "",
-      "lastUpdated": "2025-12-22T11:41:12.338Z"
-    },
-    "GCIL\n                New": {
-      "ltp": 407,
-      "rsi": 31.23,
-      "supportPrice1": 400,
-      "diff1": "",
-      "lastUpdated": "2025-12-22T11:41:12.338Z"
-    },
     "ADBL\n                New": {
-      "ltp": 288.8,
-      "rsi": 32.38,
+      "ltp": 286.9,
+      "rsi": 30.06,
       "supportPrice1": 284.42,
       "diff1": "",
-      "lastUpdated": "2025-12-22T11:41:12.338Z"
+      "lastUpdated": "2025-12-23T11:41:57.274Z"
     },
     "PRVU\n                New": {
-      "ltp": 182.1,
-      "rsi": 33.13,
+      "ltp": 181.2,
+      "rsi": 30.72,
       "supportPrice1": 184.14,
       "diff1": "",
-      "lastUpdated": "2025-12-22T11:41:12.338Z"
+      "lastUpdated": "2025-12-23T11:41:57.274Z"
+    },
+    "GCIL\n                New": {
+      "ltp": 405,
+      "rsi": 30.85,
+      "supportPrice1": 400,
+      "diff1": "",
+      "lastUpdated": "2025-12-23T11:41:57.274Z"
+    },
+    "NRIC\n                New": {
+      "ltp": 1234.4,
+      "rsi": 31.47,
+      "supportPrice1": 1258.21,
+      "diff1": "",
+      "lastUpdated": "2025-12-23T11:41:57.274Z"
+    },
+    "SAHAS\n                New": {
+      "ltp": 541.5,
+      "rsi": 33.1,
+      "supportPrice1": 545.99,
+      "diff1": "",
+      "lastUpdated": "2025-12-23T11:41:57.274Z"
+    },
+    "SHEL\n                New": {
+      "ltp": 270.5,
+      "rsi": 33.54,
+      "supportPrice1": 257.81,
+      "diff1": "",
+      "lastUpdated": "2025-12-23T11:41:57.274Z"
+    },
+    "HATHY\n                New": {
+      "ltp": 889,
+      "rsi": 34.08,
+      "supportPrice1": 893.65,
+      "diff1": "",
+      "lastUpdated": "2025-12-23T11:41:57.274Z"
+    },
+    "MKJC\n                New": {
+      "ltp": 510,
+      "rsi": 34.93,
+      "supportPrice1": 516.14,
+      "diff1": "",
+      "lastUpdated": "2025-12-23T11:41:57.274Z"
+    },
+    "NYADI\n                New": {
+      "ltp": 372,
+      "rsi": 34.95,
+      "supportPrice1": 356.11,
+      "diff1": "",
+      "lastUpdated": "2025-12-23T11:41:57.274Z"
     }
   },
   "heatmapStocks": {
-    "487.10": {
+    "254.90": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2025-12-22T11:41:12.337Z"
+      "lastUpdated": "2025-12-23T11:41:57.273Z"
     },
-    "508.00": {
+    "1466.30": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2025-12-22T11:41:12.337Z"
+      "lastUpdated": "2025-12-23T11:41:57.273Z"
     },
-    "533.00": {
+    "882.00": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2025-12-22T11:41:12.337Z"
+      "lastUpdated": "2025-12-23T11:41:57.273Z"
+    },
+    "366.00": {
+      "price": 0,
+      "volume": 0,
+      "lastUpdated": "2025-12-23T11:41:57.273Z"
     }
   }
 }
