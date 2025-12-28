@@ -1,23 +1,23 @@
 {
-  "lastUpdated": "2025-12-27T11:39:24.595Z",
+  "lastUpdated": "2025-12-28T11:39:43.310Z",
   "institutionalStocks": {
-    "417.00": {
-      "score": 0,
-      "price": 60,
-      "patterns": "OBV Bearish Divergence, Below VWAP, Upthrust Pattern, Statistical Anomaly (Bearish)",
-      "lastUpdated": "2025-12-27T11:39:24.592Z"
-    },
-    "762.00": {
-      "score": 0,
-      "price": 55,
-      "patterns": "Volume Spike (Bearish), Below VWAP, Upthrust Pattern, Statistical Anomaly (Bearish)",
-      "lastUpdated": "2025-12-27T11:39:24.592Z"
-    },
-    "367.00": {
-      "score": 50,
+    "848.00": {
+      "score": 55,
       "price": 0,
-      "patterns": "Volume Spike (Bullish), Narrow Range, High Volume (Bullish), Below VWAP, Statistical Anomaly (Bullish)",
-      "lastUpdated": "2025-12-27T11:39:24.592Z"
+      "patterns": "Volume Spike (Bullish), Below VWAP, Stopping Volume (Bullish), Spring Pattern, Statistical Anomaly (Bullish)",
+      "lastUpdated": "2025-12-28T11:39:43.308Z"
+    },
+    "490.00": {
+      "score": 55,
+      "price": 0,
+      "patterns": "Volume Spike (Bullish), Above VWAP, Spring Pattern, Statistical Anomaly (Bullish)",
+      "lastUpdated": "2025-12-28T11:39:43.308Z"
+    },
+    "193.90": {
+      "score": 55,
+      "price": 0,
+      "patterns": "Volume Spike (Bullish), Below VWAP, Spring Pattern, Statistical Anomaly (Bullish)",
+      "lastUpdated": "2025-12-28T11:39:43.308Z"
     }
   },
   "trendlineStocks": {},
@@ -80,20 +80,20 @@
     }
   },
   "heatmapStocks": {
-    "417.00": {
+    "848.00": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2025-12-27T11:39:24.594Z"
+      "lastUpdated": "2025-12-28T11:39:43.310Z"
     },
-    "762.00": {
+    "490.00": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2025-12-27T11:39:24.594Z"
+      "lastUpdated": "2025-12-28T11:39:43.310Z"
     },
-    "367.00": {
+    "193.90": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2025-12-27T11:39:24.594Z"
+      "lastUpdated": "2025-12-28T11:39:43.310Z"
     }
   }
 }
