@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2025-12-29T13:49:29.597Z",
+  "lastUpdated": "2025-12-30T13:48:44.087Z",
   "currentBuySignals": [
     {
       "symbol": "DHPL",
       "signal": "BUY",
       "date": "2025_12_29",
-      "generatedOn": "2025-12-29",
+      "generatedOn": "2025-12-30",
       "price": 295.9,
       "details": {
         "rsiFast": "49.28",
@@ -18,7 +18,7 @@
       "symbol": "EBLD86",
       "signal": "BUY",
       "date": "2025_12_29",
-      "generatedOn": "2025-12-29",
+      "generatedOn": "2025-12-30",
       "price": 1125,
       "details": {
         "rsiFast": "56.98",
@@ -31,11 +31,11 @@
       "symbol": "KSY",
       "signal": "BUY",
       "date": "2025_12_29",
-      "generatedOn": "2025-12-29",
+      "generatedOn": "2025-12-30",
       "price": 9,
       "details": {
         "rsiFast": "52.36",
-        "rsiSlow": "49.25",
+        "rsiSlow": "49.26",
         "downtrendPrice": "8.94",
         "breakoutStrength": "0.72"
       }
@@ -46,7 +46,7 @@
       "symbol": "SANVI",
       "signal": "SELL",
       "date": "2025_12_29",
-      "generatedOn": "2025-12-29",
+      "generatedOn": "2025-12-30",
       "price": 645,
       "details": {
         "rsiFast": "54.46",
@@ -59,7 +59,7 @@
       "symbol": "SNLI",
       "signal": "SELL",
       "date": "2025_12_29",
-      "generatedOn": "2025-12-29",
+      "generatedOn": "2025-12-30",
       "price": 474,
       "details": {
         "rsiFast": "45.64",
@@ -72,7 +72,7 @@
       "symbol": "SPDL",
       "signal": "SELL",
       "date": "2025_12_29",
-      "generatedOn": "2025-12-29",
+      "generatedOn": "2025-12-30",
       "price": 393,
       "details": {
         "rsiFast": "44.20",
@@ -85,7 +85,7 @@
       "symbol": "UPPER",
       "signal": "SELL",
       "date": "2025_12_29",
-      "generatedOn": "2025-12-29",
+      "generatedOn": "2025-12-30",
       "price": 174,
       "details": {
         "rsiFast": "41.99",
@@ -96,87 +96,6 @@
     }
   ],
   "signalHistory": [
-    {
-      "date": "2025-11-30",
-      "buyCount": 7,
-      "sellCount": 11,
-      "buySignals": [
-        {
-          "symbol": "DHPL",
-          "price": 307
-        },
-        {
-          "symbol": "NICD83/84",
-          "price": 1146
-        },
-        {
-          "symbol": "NIFRAGED",
-          "price": 1137.2
-        },
-        {
-          "symbol": "NMB",
-          "price": 253.8
-        },
-        {
-          "symbol": "NSIF2",
-          "price": 10.2
-        },
-        {
-          "symbol": "PRSF",
-          "price": 10.42
-        },
-        {
-          "symbol": "RSY",
-          "price": 9.11
-        }
-      ],
-      "sellSignals": [
-        {
-          "symbol": "AHL",
-          "price": 603.5
-        },
-        {
-          "symbol": "BPCL",
-          "price": 720.4
-        },
-        {
-          "symbol": "EDBL",
-          "price": 587
-        },
-        {
-          "symbol": "FMDBL",
-          "price": 830
-        },
-        {
-          "symbol": "HBLD83",
-          "price": 1067
-        },
-        {
-          "symbol": "JFL",
-          "price": 423.3
-        },
-        {
-          "symbol": "KBLD86",
-          "price": 1134
-        },
-        {
-          "symbol": "KSY",
-          "price": 8.7
-        },
-        {
-          "symbol": "NRN",
-          "price": 1500
-        },
-        {
-          "symbol": "RADHI",
-          "price": 737.1
-        },
-        {
-          "symbol": "SARBTM",
-          "price": 879.9
-        }
-      ]
-    },
     {
       "date": "2025-12-01",
       "buyCount": 6,
@@ -1731,6 +1650,43 @@
     },
     {
       "date": "2025-12-29",
+      "buyCount": 3,
+      "sellCount": 4,
+      "buySignals": [
+        {
+          "symbol": "DHPL",
+          "price": 295.9
+        },
+        {
+          "symbol": "EBLD86",
+          "price": 1125
+        },
+        {
+          "symbol": "KSY",
+          "price": 9
+        }
+      ],
+      "sellSignals": [
+        {
+          "symbol": "SANVI",
+          "price": 645
+        },
+        {
+          "symbol": "SNLI",
+          "price": 474
+        },
+        {
+          "symbol": "SPDL",
+          "price": 393
+        },
+        {
+          "symbol": "UPPER",
+          "price": 174
+        }
+      ]
+    },
+    {
+      "date": "2025-12-30",
       "buyCount": 3,
       "sellCount": 4,
       "buySignals": [
