@@ -1,23 +1,23 @@
 {
-  "lastUpdated": "2026-01-08T11:43:29.178Z",
+  "lastUpdated": "2026-01-09T11:42:52.037Z",
   "institutionalStocks": {
     "858.00": {
       "score": 60,
       "price": 0,
       "patterns": "OBV Bullish Divergence, Below VWAP, Spring Pattern, Statistical Anomaly (Bullish)",
-      "lastUpdated": "2026-01-08T11:43:29.175Z"
+      "lastUpdated": "2026-01-09T11:42:52.035Z"
     },
     "725.10": {
       "score": 55,
       "price": 0,
       "patterns": "Volume Spike (Bullish), Below VWAP, Stopping Volume (Bullish), Spring Pattern, Statistical Anomaly (Bullish)",
-      "lastUpdated": "2026-01-08T11:43:29.175Z"
+      "lastUpdated": "2026-01-09T11:42:52.035Z"
     },
     "387.90": {
       "score": 55,
       "price": 0,
       "patterns": "Volume Spike (Bullish), Below VWAP, Spring Pattern, Statistical Anomaly (Bullish)",
-      "lastUpdated": "2026-01-08T11:43:29.175Z"
+      "lastUpdated": "2026-01-09T11:42:52.035Z"
     }
   },
   "trendlineStocks": {},
@@ -27,45 +27,45 @@
       "rsi": 27.31,
       "supportPrice1": 1728.27,
       "diff1": "",
-      "lastUpdated": "2026-01-08T11:43:29.178Z"
+      "lastUpdated": "2026-01-09T11:42:52.037Z"
     },
     "CBBL\n                New": {
       "ltp": 918,
       "rsi": 30.11,
       "supportPrice1": 914.29,
       "diff1": "",
-      "lastUpdated": "2026-01-08T11:43:29.178Z"
+      "lastUpdated": "2026-01-09T11:42:52.037Z"
     },
     "KDL\n                New": {
       "ltp": 797.9,
       "rsi": 31.88,
       "supportPrice1": 778.07,
       "diff1": "",
-      "lastUpdated": "2026-01-08T11:43:29.178Z"
+      "lastUpdated": "2026-01-09T11:42:52.037Z"
     },
     "PHCL\n                New": {
       "ltp": 261.9,
       "rsi": 33.73,
       "supportPrice1": 252,
       "diff1": "",
-      "lastUpdated": "2026-01-08T11:43:29.178Z"
+      "lastUpdated": "2026-01-09T11:42:52.037Z"
     }
   },
   "heatmapStocks": {
     "858.00": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2026-01-08T11:43:29.177Z"
+      "lastUpdated": "2026-01-09T11:42:52.037Z"
     },
     "725.10": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2026-01-08T11:43:29.177Z"
+      "lastUpdated": "2026-01-09T11:42:52.037Z"
     },
     "387.90": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2026-01-08T11:43:29.177Z"
+      "lastUpdated": "2026-01-09T11:42:52.037Z"
     }
   }
 }
