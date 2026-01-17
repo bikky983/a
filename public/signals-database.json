@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-01-16T13:50:30.407Z",
+  "lastUpdated": "2026-01-17T13:40:18.581Z",
   "currentBuySignals": [
     {
       "symbol": "DOLTI",
       "signal": "BUY",
       "date": "2026_01_14",
-      "generatedOn": "2026-01-16",
+      "generatedOn": "2026-01-17",
       "price": 511.8,
       "details": {
         "rsiFast": "45.47",
@@ -18,7 +18,7 @@
       "symbol": "ICFC",
       "signal": "BUY",
       "date": "2026_01_14",
-      "generatedOn": "2026-01-16",
+      "generatedOn": "2026-01-17",
       "price": 660,
       "details": {
         "rsiFast": "57.47",
@@ -31,7 +31,7 @@
       "symbol": "IGI",
       "signal": "BUY",
       "date": "2026_01_14",
-      "generatedOn": "2026-01-16",
+      "generatedOn": "2026-01-17",
       "price": 420.9,
       "details": {
         "rsiFast": "46.33",
@@ -44,7 +44,7 @@
       "symbol": "JBBL",
       "signal": "BUY",
       "date": "2026_01_14",
-      "generatedOn": "2026-01-16",
+      "generatedOn": "2026-01-17",
       "price": 339.9,
       "details": {
         "rsiFast": "58.40",
@@ -57,7 +57,7 @@
       "symbol": "KEF",
       "signal": "BUY",
       "date": "2026_01_14",
-      "generatedOn": "2026-01-16",
+      "generatedOn": "2026-01-17",
       "price": 9.29,
       "details": {
         "rsiFast": "53.95",
@@ -70,7 +70,7 @@
       "symbol": "NICBF",
       "signal": "BUY",
       "date": "2026_01_14",
-      "generatedOn": "2026-01-16",
+      "generatedOn": "2026-01-17",
       "price": 9.28,
       "details": {
         "rsiFast": "55.57",
@@ -83,7 +83,7 @@
       "symbol": "NMB50",
       "signal": "BUY",
       "date": "2026_01_14",
-      "generatedOn": "2026-01-16",
+      "generatedOn": "2026-01-17",
       "price": 10.47,
       "details": {
         "rsiFast": "52.36",
@@ -96,7 +96,7 @@
       "symbol": "OHL",
       "signal": "BUY",
       "date": "2026_01_14",
-      "generatedOn": "2026-01-16",
+      "generatedOn": "2026-01-17",
       "price": 704,
       "details": {
         "rsiFast": "46.95",
@@ -111,7 +111,7 @@
       "symbol": "CIZBD90",
       "signal": "SELL",
       "date": "2026_01_13",
-      "generatedOn": "2026-01-16",
+      "generatedOn": "2026-01-17",
       "price": 1240,
       "details": {
         "rsiFast": "54.57",
@@ -124,7 +124,7 @@
       "symbol": "EBLD91",
       "signal": "SELL",
       "date": "2026_01_14",
-      "generatedOn": "2026-01-16",
+      "generatedOn": "2026-01-17",
       "price": 1110,
       "details": {
         "rsiFast": "52.36",
@@ -137,7 +137,7 @@
       "symbol": "HDL",
       "signal": "SELL",
       "date": "2026_01_14",
-      "generatedOn": "2026-01-16",
+      "generatedOn": "2026-01-17",
       "price": 1139,
       "details": {
         "rsiFast": "41.33",
@@ -150,7 +150,7 @@
       "symbol": "NBLD87",
       "signal": "SELL",
       "date": "2026_01_13",
-      "generatedOn": "2026-01-16",
+      "generatedOn": "2026-01-17",
       "price": 1090.2,
       "details": {
         "rsiFast": "47.59",
@@ -163,7 +163,7 @@
       "symbol": "NIFRAGED",
       "signal": "SELL",
       "date": "2026_01_14",
-      "generatedOn": "2026-01-16",
+      "generatedOn": "2026-01-17",
       "price": 1030,
       "details": {
         "rsiFast": "48.97",
@@ -176,7 +176,7 @@
       "symbol": "RBBD2088",
       "signal": "SELL",
       "date": "2026_01_14",
-      "generatedOn": "2026-01-16",
+      "generatedOn": "2026-01-17",
       "price": 1075,
       "details": {
         "rsiFast": "53.96",
@@ -189,7 +189,7 @@
       "symbol": "SBD87",
       "signal": "SELL",
       "date": "2026_01_13",
-      "generatedOn": "2026-01-16",
+      "generatedOn": "2026-01-17",
       "price": 1100,
       "details": {
         "rsiFast": "51.93",
@@ -202,7 +202,7 @@
       "symbol": "ULHC",
       "signal": "SELL",
       "date": "2026_01_14",
-      "generatedOn": "2026-01-16",
+      "generatedOn": "2026-01-17",
       "price": 450.3,
       "details": {
         "rsiFast": "46.18",
@@ -213,63 +213,6 @@
     }
   ],
   "signalHistory": [
-    {
-      "date": "2025-12-18",
-      "buyCount": 2,
-      "sellCount": 10,
-      "buySignals": [
-        {
-          "symbol": "CYCL",
-          "price": 1572
-        },
-        {
-          "symbol": "HBLD86",
-          "price": 1140
-        }
-      ],
-      "sellSignals": [
-        {
-          "symbol": "EBLD91",
-          "price": 1100
-        },
-        {
-          "symbol": "HATHY",
-          "price": 902
-        },
-        {
-          "symbol": "JBBD87",
-          "price": 1161.3
-        },
-        {
-          "symbol": "LLBS",
-          "price": 940
-        },
-        {
-          "symbol": "MERO",
-          "price": 743
-        },
-        {
-          "symbol": "NICLBSL",
-          "price": 546
-        },
-        {
-          "symbol": "NIMBD90",
-          "price": 1235
-        },
-        {
-          "symbol": "NUBL",
-          "price": 744.8
-        },
-        {
-          "symbol": "NWCL",
-          "price": 792.1
-        },
-        {
-          "symbol": "VLBS",
-          "price": 765.3
-        }
-      ]
-    },
     {
       "date": "2025-12-19",
       "buyCount": 2,
@@ -1792,6 +1735,79 @@
     },
     {
       "date": "2026-01-16",
+      "buyCount": 8,
+      "sellCount": 8,
+      "buySignals": [
+        {
+          "symbol": "DOLTI",
+          "price": 511.8
+        },
+        {
+          "symbol": "ICFC",
+          "price": 660
+        },
+        {
+          "symbol": "IGI",
+          "price": 420.9
+        },
+        {
+          "symbol": "JBBL",
+          "price": 339.9
+        },
+        {
+          "symbol": "KEF",
+          "price": 9.29
+        },
+        {
+          "symbol": "NICBF",
+          "price": 9.28
+        },
+        {
+          "symbol": "NMB50",
+          "price": 10.47
+        },
+        {
+          "symbol": "OHL",
+          "price": 704
+        }
+      ],
+      "sellSignals": [
+        {
+          "symbol": "CIZBD90",
+          "price": 1240
+        },
+        {
+          "symbol": "EBLD91",
+          "price": 1110
+        },
+        {
+          "symbol": "HDL",
+          "price": 1139
+        },
+        {
+          "symbol": "NBLD87",
+          "price": 1090.2
+        },
+        {
+          "symbol": "NIFRAGED",
+          "price": 1030
+        },
+        {
+          "symbol": "RBBD2088",
+          "price": 1075
+        },
+        {
+          "symbol": "SBD87",
+          "price": 1100
+        },
+        {
+          "symbol": "ULHC",
+          "price": 450.3
+        }
+      ]
+    },
+    {
+      "date": "2026-01-17",
       "buyCount": 8,
       "sellCount": 8,
       "buySignals": [
