@@ -1,69 +1,69 @@
 {
-  "lastUpdated": "2026-01-21T13:56:24.078Z",
+  "lastUpdated": "2026-01-22T13:56:01.498Z",
   "currentBuySignals": [
     {
-      "symbol": "MEL",
+      "symbol": "CORBL",
       "signal": "BUY",
-      "date": "2026_01_21",
-      "generatedOn": "2026-01-21",
-      "price": 278.9,
+      "date": "2026_01_22",
+      "generatedOn": "2026-01-22",
+      "price": 1775.3,
       "details": {
-        "rsiFast": "51.04",
-        "rsiSlow": "47.26",
-        "downtrendPrice": "278.27",
-        "breakoutStrength": "0.23"
+        "rsiFast": "57.03",
+        "rsiSlow": "49.16",
+        "downtrendPrice": "1638.33",
+        "breakoutStrength": "8.36"
       }
     },
     {
-      "symbol": "NMLBBL",
+      "symbol": "NMIC",
       "signal": "BUY",
-      "date": "2026_01_21",
-      "generatedOn": "2026-01-21",
-      "price": 648,
+      "date": "2026_01_22",
+      "generatedOn": "2026-01-22",
+      "price": 1316,
       "details": {
-        "rsiFast": "50.85",
-        "rsiSlow": "49.09",
-        "downtrendPrice": "647.65",
-        "breakoutStrength": "0.05"
+        "rsiFast": "54.55",
+        "rsiSlow": "54.31",
+        "downtrendPrice": "1280.00",
+        "breakoutStrength": "2.81"
       }
     },
     {
-      "symbol": "RMF1",
+      "symbol": "PRVU",
       "signal": "BUY",
-      "date": "2026_01_21",
-      "generatedOn": "2026-01-21",
-      "price": 9.39,
+      "date": "2026_01_22",
+      "generatedOn": "2026-01-22",
+      "price": 188,
       "details": {
-        "rsiFast": "54.74",
-        "rsiSlow": "50.59",
-        "downtrendPrice": "9.36",
-        "breakoutStrength": "0.34"
+        "rsiFast": "47.89",
+        "rsiSlow": "45.29",
+        "downtrendPrice": "187.73",
+        "breakoutStrength": "0.15"
       }
     },
     {
-      "symbol": "SBCF",
+      "symbol": "RAWA",
       "signal": "BUY",
-      "date": "2026_01_21",
-      "generatedOn": "2026-01-21",
-      "price": 9.39,
+      "date": "2026_01_22",
+      "generatedOn": "2026-01-22",
+      "price": 799,
       "details": {
-        "rsiFast": "57.97",
-        "rsiSlow": "51.18",
-        "downtrendPrice": "9.32",
-        "breakoutStrength": "0.77"
+        "rsiFast": "67.20",
+        "rsiSlow": "54.36",
+        "downtrendPrice": "767.86",
+        "breakoutStrength": "4.06"
       }
     },
     {
-      "symbol": "SBI",
+      "symbol": "RHPL",
       "signal": "BUY",
-      "date": "2026_01_21",
-      "generatedOn": "2026-01-21",
-      "price": 415.1,
+      "date": "2026_01_22",
+      "generatedOn": "2026-01-22",
+      "price": 281.1,
       "details": {
-        "rsiFast": "57.80",
-        "rsiSlow": "52.64",
-        "downtrendPrice": "413.93",
-        "breakoutStrength": "0.28"
+        "rsiFast": "53.61",
+        "rsiSlow": "45.88",
+        "downtrendPrice": "279.92",
+        "breakoutStrength": "0.42"
       }
     }
   ],
@@ -72,106 +72,17 @@
       "symbol": "CIZBD90",
       "signal": "SELL",
       "date": "2026_01_13",
-      "generatedOn": "2026-01-21",
+      "generatedOn": "2026-01-22",
       "price": 1240,
       "details": {
         "rsiFast": "54.57",
-        "rsiSlow": "54.90",
+        "rsiSlow": "54.88",
         "uptrendPrice": "1248.80",
         "breakdownStrength": "0.70"
       }
     }
   ],
   "signalHistory": [
-    {
-      "date": "2025-12-23",
-      "buyCount": 3,
-      "sellCount": 17,
-      "buySignals": [
-        {
-          "symbol": "EBLD86",
-          "price": 1121
-        },
-        {
-          "symbol": "HBLD86",
-          "price": 1140
-        },
-        {
-          "symbol": "LVF2",
-          "price": 9.75
-        }
-      ],
-      "sellSignals": [
-        {
-          "symbol": "BHL",
-          "price": 174
-        },
-        {
-          "symbol": "CIT",
-          "price": 1807
-        },
-        {
-          "symbol": "GILB",
-          "price": 1170
-        },
-        {
-          "symbol": "HDHPC",
-          "price": 174.1
-        },
-        {
-          "symbol": "KBL",
-          "price": 178
-        },
-        {
-          "symbol": "LLBS",
-          "price": 928
-        },
-        {
-          "symbol": "MCHL",
-          "price": 454
-        },
-        {
-          "symbol": "MLBS",
-          "price": 1466.3
-        },
-        {
-          "symbol": "NGPL",
-          "price": 389
-        },
-        {
-          "symbol": "NHDL",
-          "price": 670
-        },
-        {
-          "symbol": "NMLBBL",
-          "price": 640
-        },
-        {
-          "symbol": "RBCL",
-          "price": 14550
-        },
-        {
-          "symbol": "RSDC",
-          "price": 627.7
-        },
-        {
-          "symbol": "SBI",
-          "price": 385.4
-        },
-        {
-          "symbol": "SWBBL",
-          "price": 773
-        },
-        {
-          "symbol": "TSHL",
-          "price": 692
-        },
-        {
-          "symbol": "WNLB",
-          "price": 1874
-        }
-      ]
-    },
     {
       "date": "2025-12-24",
       "buyCount": 3,
@@ -1852,6 +1763,39 @@
         {
           "symbol": "SBI",
           "price": 415.1
+        }
+      ],
+      "sellSignals": [
+        {
+          "symbol": "CIZBD90",
+          "price": 1240
+        }
+      ]
+    },
+    {
+      "date": "2026-01-22",
+      "buyCount": 5,
+      "sellCount": 1,
+      "buySignals": [
+        {
+          "symbol": "CORBL",
+          "price": 1775.3
+        },
+        {
+          "symbol": "NMIC",
+          "price": 1316
+        },
+        {
+          "symbol": "PRVU",
+          "price": 188
+        },
+        {
+          "symbol": "RAWA",
+          "price": 799
+        },
+        {
+          "symbol": "RHPL",
+          "price": 281.1
         }
       ],
       "sellSignals": [
