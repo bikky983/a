@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-02-06T14:08:31.968Z",
+  "lastUpdated": "2026-02-07T13:53:21.617Z",
   "currentBuySignals": [
     {
       "symbol": "AVYAN",
       "signal": "BUY",
       "date": "2026_02_05",
-      "generatedOn": "2026-02-06",
+      "generatedOn": "2026-02-07",
       "price": 958,
       "details": {
         "rsiFast": "48.40",
@@ -18,7 +18,7 @@
       "symbol": "JOSHI",
       "signal": "BUY",
       "date": "2026_02_05",
-      "generatedOn": "2026-02-06",
+      "generatedOn": "2026-02-07",
       "price": 305.3,
       "details": {
         "rsiFast": "52.20",
@@ -31,7 +31,7 @@
       "symbol": "MEN",
       "signal": "BUY",
       "date": "2026_02_05",
-      "generatedOn": "2026-02-06",
+      "generatedOn": "2026-02-07",
       "price": 595,
       "details": {
         "rsiFast": "50.96",
@@ -44,7 +44,7 @@
       "symbol": "PMHPL",
       "signal": "BUY",
       "date": "2026_02_05",
-      "generatedOn": "2026-02-06",
+      "generatedOn": "2026-02-07",
       "price": 350,
       "details": {
         "rsiFast": "56.18",
@@ -59,7 +59,7 @@
       "symbol": "MND84/85",
       "signal": "SELL",
       "date": "2026_01_25",
-      "generatedOn": "2026-02-06",
+      "generatedOn": "2026-02-07",
       "price": 1085.1,
       "details": {
         "rsiFast": "50.34",
@@ -72,7 +72,7 @@
       "symbol": "NIMBD90",
       "signal": "SELL",
       "date": "2026_02_05",
-      "generatedOn": "2026-02-06",
+      "generatedOn": "2026-02-07",
       "price": 1211,
       "details": {
         "rsiFast": "48.44",
@@ -85,7 +85,7 @@
       "symbol": "PBLD84",
       "signal": "SELL",
       "date": "2026_02_03",
-      "generatedOn": "2026-02-06",
+      "generatedOn": "2026-02-07",
       "price": 1102.5,
       "details": {
         "rsiFast": "47.38",
@@ -96,43 +96,6 @@
     }
   ],
   "signalHistory": [
-    {
-      "date": "2026-01-08",
-      "buyCount": 1,
-      "sellCount": 6,
-      "buySignals": [
-        {
-          "symbol": "GSY",
-          "price": 9.2
-        }
-      ],
-      "sellSignals": [
-        {
-          "symbol": "HEIP",
-          "price": 308.7
-        },
-        {
-          "symbol": "JBBD87",
-          "price": 1151
-        },
-        {
-          "symbol": "JBLB",
-          "price": 1360
-        },
-        {
-          "symbol": "KPCL",
-          "price": 527.7
-        },
-        {
-          "symbol": "RNLI",
-          "price": 461.1
-        },
-        {
-          "symbol": "UNL",
-          "price": 47000
-        }
-      ]
-    },
     {
       "date": "2026-01-09",
       "buyCount": 1,
@@ -1606,6 +1569,43 @@
     },
     {
       "date": "2026-02-06",
+      "buyCount": 4,
+      "sellCount": 3,
+      "buySignals": [
+        {
+          "symbol": "AVYAN",
+          "price": 958
+        },
+        {
+          "symbol": "JOSHI",
+          "price": 305.3
+        },
+        {
+          "symbol": "MEN",
+          "price": 595
+        },
+        {
+          "symbol": "PMHPL",
+          "price": 350
+        }
+      ],
+      "sellSignals": [
+        {
+          "symbol": "MND84/85",
+          "price": 1085.1
+        },
+        {
+          "symbol": "NIMBD90",
+          "price": 1211
+        },
+        {
+          "symbol": "PBLD84",
+          "price": 1102.5
+        }
+      ]
+    },
+    {
+      "date": "2026-02-07",
       "buyCount": 4,
       "sellCount": 3,
       "buySignals": [
