@@ -1,17 +1,35 @@
 {
-  "lastUpdated": "2026-02-07T11:45:55.316Z",
+  "lastUpdated": "2026-02-08T11:46:33.857Z",
   "institutionalStocks": {
-    "1285.00": {
+    "585.50": {
+      "score": 75,
+      "price": 0,
+      "patterns": "Volume Spike (Bullish), OBV Bullish Divergence, Narrow Range, High Volume (Bullish), Below VWAP, Stopping Volume (Bullish), Statistical Anomaly (Bullish)",
+      "lastUpdated": "2026-02-08T11:46:33.855Z"
+    },
+    "966.00": {
+      "score": 60,
+      "price": 0,
+      "patterns": "Volume Spike (Bullish), OBV Bullish Divergence, Below VWAP, Stopping Volume (Bullish), Statistical Anomaly (Bullish)",
+      "lastUpdated": "2026-02-08T11:46:33.855Z"
+    },
+    "558.70": {
+      "score": 60,
+      "price": 0,
+      "patterns": "OBV Bullish Divergence, Below VWAP, Spring Pattern, Statistical Anomaly (Bullish)",
+      "lastUpdated": "2026-02-08T11:46:33.855Z"
+    },
+    "1319.90": {
       "score": 55,
       "price": 0,
-      "patterns": "Volume Spike (Bullish), Above VWAP, Spring Pattern, Statistical Anomaly (Bullish)",
-      "lastUpdated": "2026-02-07T11:45:55.315Z"
+      "patterns": "Volume Spike (Bullish), Above VWAP, Stopping Volume (Bullish), Spring Pattern, Statistical Anomaly (Bullish)",
+      "lastUpdated": "2026-02-08T11:46:33.855Z"
     },
-    "14910.00": {
+    "15005.00": {
       "score": 0,
       "price": 0,
       "patterns": "Below VWAP, Circular Trading Pattern",
-      "lastUpdated": "2026-02-07T11:45:55.315Z"
+      "lastUpdated": "2026-02-08T11:46:33.855Z"
     }
   },
   "trendlineStocks": {},
@@ -25,15 +43,30 @@
     }
   },
   "heatmapStocks": {
-    "1285.00": {
+    "585.50": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2026-02-07T11:45:55.316Z"
+      "lastUpdated": "2026-02-08T11:46:33.857Z"
     },
-    "14910.00": {
+    "966.00": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2026-02-07T11:45:55.316Z"
+      "lastUpdated": "2026-02-08T11:46:33.857Z"
+    },
+    "558.70": {
+      "price": 0,
+      "volume": 0,
+      "lastUpdated": "2026-02-08T11:46:33.857Z"
+    },
+    "1319.90": {
+      "price": 0,
+      "volume": 0,
+      "lastUpdated": "2026-02-08T11:46:33.857Z"
+    },
+    "15005.00": {
+      "price": 0,
+      "volume": 0,
+      "lastUpdated": "2026-02-08T11:46:33.857Z"
     }
   }
 }
