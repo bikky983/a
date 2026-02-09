@@ -1,138 +1,127 @@
 {
-  "lastUpdated": "2026-02-08T13:53:58.896Z",
+  "lastUpdated": "2026-02-09T14:19:38.738Z",
   "currentBuySignals": [
     {
-      "symbol": "HHL",
+      "symbol": "PMHPL",
       "signal": "BUY",
-      "date": "2026_02_08",
-      "generatedOn": "2026-02-08",
-      "price": 360,
+      "date": "2026_02_09",
+      "generatedOn": "2026-02-09",
+      "price": 349,
       "details": {
-        "rsiFast": "61.59",
-        "rsiSlow": "50.14",
-        "downtrendPrice": "353.06",
-        "breakoutStrength": "1.96"
+        "rsiFast": "55.64",
+        "rsiSlow": "51.40",
+        "downtrendPrice": "347.88",
+        "breakoutStrength": "0.32"
       }
     }
   ],
   "currentSellSignals": [
     {
-      "symbol": "HIMSTAR",
+      "symbol": "BEDC",
       "signal": "SELL",
-      "date": "2026_02_08",
-      "generatedOn": "2026-02-08",
-      "price": 1000,
+      "date": "2026_02_09",
+      "generatedOn": "2026-02-09",
+      "price": 532,
       "details": {
-        "rsiFast": "56.00",
-        "rsiSlow": "63.99",
-        "uptrendPrice": "1002.78",
-        "breakdownStrength": "0.28"
+        "rsiFast": "43.66",
+        "rsiSlow": "44.81",
+        "uptrendPrice": "533.06",
+        "breakdownStrength": "0.20"
+      }
+    },
+    {
+      "symbol": "FOWAD",
+      "signal": "SELL",
+      "date": "2026_02_09",
+      "generatedOn": "2026-02-09",
+      "price": 1068.8,
+      "details": {
+        "rsiFast": "43.88",
+        "rsiSlow": "45.85",
+        "uptrendPrice": "1073.42",
+        "breakdownStrength": "0.43"
+      }
+    },
+    {
+      "symbol": "GBIME",
+      "signal": "SELL",
+      "date": "2026_02_09",
+      "generatedOn": "2026-02-09",
+      "price": 224.6,
+      "details": {
+        "rsiFast": "43.07",
+        "rsiSlow": "46.17",
+        "uptrendPrice": "225.20",
+        "breakdownStrength": "0.27"
+      }
+    },
+    {
+      "symbol": "GMLI",
+      "signal": "SELL",
+      "date": "2026_02_09",
+      "generatedOn": "2026-02-09",
+      "price": 1772,
+      "details": {
+        "rsiFast": "46.97",
+        "rsiSlow": "47.99",
+        "uptrendPrice": "1773.80",
+        "breakdownStrength": "0.10"
       }
     },
     {
       "symbol": "MND84/85",
       "signal": "SELL",
       "date": "2026_01_25",
-      "generatedOn": "2026-02-08",
+      "generatedOn": "2026-02-09",
       "price": 1085.1,
       "details": {
         "rsiFast": "50.34",
-        "rsiSlow": "52.31",
+        "rsiSlow": "52.32",
         "uptrendPrice": "1097.51",
         "breakdownStrength": "1.13"
       }
     },
     {
-      "symbol": "NADEP",
+      "symbol": "NIMB",
       "signal": "SELL",
-      "date": "2026_02_08",
-      "generatedOn": "2026-02-08",
-      "price": 795,
+      "date": "2026_02_09",
+      "generatedOn": "2026-02-09",
+      "price": 190,
       "details": {
-        "rsiFast": "47.90",
-        "rsiSlow": "48.43",
-        "uptrendPrice": "804.50",
-        "breakdownStrength": "1.18"
+        "rsiFast": "43.41",
+        "rsiSlow": "44.85",
+        "uptrendPrice": "190.13",
+        "breakdownStrength": "0.07"
       }
     },
     {
-      "symbol": "NIFRAGED",
+      "symbol": "PURE",
       "signal": "SELL",
-      "date": "2026_02_08",
-      "generatedOn": "2026-02-08",
-      "price": 1025.1,
+      "date": "2026_02_09",
+      "generatedOn": "2026-02-09",
+      "price": 1027,
       "details": {
-        "rsiFast": "48.39",
-        "rsiSlow": "50.32",
-        "uptrendPrice": "1033.80",
-        "breakdownStrength": "0.84"
+        "rsiFast": "50.40",
+        "rsiSlow": "58.00",
+        "uptrendPrice": "1051.89",
+        "breakdownStrength": "2.37"
       }
     },
     {
-      "symbol": "SIGS2",
+      "symbol": "UMHL",
       "signal": "SELL",
-      "date": "2026_02_08",
-      "generatedOn": "2026-02-08",
-      "price": 9.65,
+      "date": "2026_02_09",
+      "generatedOn": "2026-02-09",
+      "price": 619,
       "details": {
-        "rsiFast": "48.74",
-        "rsiSlow": "49.13",
-        "uptrendPrice": "9.74",
-        "breakdownStrength": "0.88"
-      }
-    },
-    {
-      "symbol": "SPC",
-      "signal": "SELL",
-      "date": "2026_02_08",
-      "generatedOn": "2026-02-08",
-      "price": 518,
-      "details": {
-        "rsiFast": "49.86",
-        "rsiSlow": "50.36",
-        "uptrendPrice": "524.09",
-        "breakdownStrength": "1.16"
+        "rsiFast": "53.94",
+        "rsiSlow": "56.40",
+        "uptrendPrice": "629.59",
+        "breakdownStrength": "1.68"
       }
     }
   ],
   "signalHistory": [
-    {
-      "date": "2026-01-10",
-      "buyCount": 1,
-      "sellCount": 6,
-      "buySignals": [
-        {
-          "symbol": "GSY",
-          "price": 9.2
-        }
-      ],
-      "sellSignals": [
-        {
-          "symbol": "HEIP",
-          "price": 308.7
-        },
-        {
-          "symbol": "JBBD87",
-          "price": 1151
-        },
-        {
-          "symbol": "JBLB",
-          "price": 1360
-        },
-        {
-          "symbol": "KPCL",
-          "price": 527.7
-        },
-        {
-          "symbol": "RNLI",
-          "price": 461.1
-        },
-        {
-          "symbol": "UNL",
-          "price": 47000
-        }
-      ]
-    },
     {
       "date": "2026-01-11",
       "buyCount": 1,
@@ -1638,6 +1627,51 @@
         {
           "symbol": "SPC",
           "price": 518
+        }
+      ]
+    },
+    {
+      "date": "2026-02-09",
+      "buyCount": 1,
+      "sellCount": 8,
+      "buySignals": [
+        {
+          "symbol": "PMHPL",
+          "price": 349
+        }
+      ],
+      "sellSignals": [
+        {
+          "symbol": "BEDC",
+          "price": 532
+        },
+        {
+          "symbol": "FOWAD",
+          "price": 1068.8
+        },
+        {
+          "symbol": "GBIME",
+          "price": 224.6
+        },
+        {
+          "symbol": "GMLI",
+          "price": 1772
+        },
+        {
+          "symbol": "MND84/85",
+          "price": 1085.1
+        },
+        {
+          "symbol": "NIMB",
+          "price": 190
+        },
+        {
+          "symbol": "PURE",
+          "price": 1027
+        },
+        {
+          "symbol": "UMHL",
+          "price": 619
         }
       ]
     }
