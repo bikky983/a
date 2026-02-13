@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-02-12T14:16:39.074Z",
+  "lastUpdated": "2026-02-13T14:08:33.895Z",
   "currentBuySignals": [
     {
       "symbol": "PMHPL",
       "signal": "BUY",
       "date": "2026_02_12",
-      "generatedOn": "2026-02-12",
+      "generatedOn": "2026-02-13",
       "price": 363.3,
       "details": {
         "rsiFast": "60.14",
@@ -18,11 +18,11 @@
       "symbol": "RBCL",
       "signal": "BUY",
       "date": "2026_02_12",
-      "generatedOn": "2026-02-12",
+      "generatedOn": "2026-02-13",
       "price": 15200,
       "details": {
         "rsiFast": "55.19",
-        "rsiSlow": "51.25",
+        "rsiSlow": "51.23",
         "downtrendPrice": "15151.54",
         "breakoutStrength": "0.32"
       }
@@ -33,7 +33,7 @@
       "symbol": "ALICL",
       "signal": "SELL",
       "date": "2026_02_12",
-      "generatedOn": "2026-02-12",
+      "generatedOn": "2026-02-13",
       "price": 445.9,
       "details": {
         "rsiFast": "36.90",
@@ -46,7 +46,7 @@
       "symbol": "CBLD88",
       "signal": "SELL",
       "date": "2026_02_10",
-      "generatedOn": "2026-02-12",
+      "generatedOn": "2026-02-13",
       "price": 1234.8,
       "details": {
         "rsiFast": "52.34",
@@ -59,7 +59,7 @@
       "symbol": "MERO",
       "signal": "SELL",
       "date": "2026_02_12",
-      "generatedOn": "2026-02-12",
+      "generatedOn": "2026-02-13",
       "price": 727,
       "details": {
         "rsiFast": "44.05",
@@ -72,11 +72,11 @@
       "symbol": "MND84/85",
       "signal": "SELL",
       "date": "2026_01_25",
-      "generatedOn": "2026-02-12",
+      "generatedOn": "2026-02-13",
       "price": 1085.1,
       "details": {
         "rsiFast": "50.34",
-        "rsiSlow": "52.15",
+        "rsiSlow": "52.33",
         "uptrendPrice": "1097.51",
         "breakdownStrength": "1.13"
       }
@@ -85,11 +85,11 @@
       "symbol": "NIMB",
       "signal": "SELL",
       "date": "2026_02_12",
-      "generatedOn": "2026-02-12",
+      "generatedOn": "2026-02-13",
       "price": 190,
       "details": {
         "rsiFast": "43.70",
-        "rsiSlow": "44.93",
+        "rsiSlow": "44.91",
         "uptrendPrice": "190.50",
         "breakdownStrength": "0.26"
       }
@@ -98,7 +98,7 @@
       "symbol": "NMIC",
       "signal": "SELL",
       "date": "2026_02_12",
-      "generatedOn": "2026-02-12",
+      "generatedOn": "2026-02-13",
       "price": 1315,
       "details": {
         "rsiFast": "49.44",
@@ -109,79 +109,6 @@
     }
   ],
   "signalHistory": [
-    {
-      "date": "2026-01-14",
-      "buyCount": 8,
-      "sellCount": 8,
-      "buySignals": [
-        {
-          "symbol": "DOLTI",
-          "price": 511.8
-        },
-        {
-          "symbol": "ICFC",
-          "price": 660
-        },
-        {
-          "symbol": "IGI",
-          "price": 420.9
-        },
-        {
-          "symbol": "JBBL",
-          "price": 339.9
-        },
-        {
-          "symbol": "KEF",
-          "price": 9.29
-        },
-        {
-          "symbol": "NICBF",
-          "price": 9.28
-        },
-        {
-          "symbol": "NMB50",
-          "price": 10.47
-        },
-        {
-          "symbol": "OHL",
-          "price": 704
-        }
-      ],
-      "sellSignals": [
-        {
-          "symbol": "CIZBD90",
-          "price": 1240
-        },
-        {
-          "symbol": "EBLD91",
-          "price": 1110
-        },
-        {
-          "symbol": "HDL",
-          "price": 1139
-        },
-        {
-          "symbol": "NBLD87",
-          "price": 1090.2
-        },
-        {
-          "symbol": "NIFRAGED",
-          "price": 1030
-        },
-        {
-          "symbol": "RBBD2088",
-          "price": 1075
-        },
-        {
-          "symbol": "SBD87",
-          "price": 1100
-        },
-        {
-          "symbol": "ULHC",
-          "price": 450.3
-        }
-      ]
-    },
     {
       "date": "2026-01-15",
       "buyCount": 8,
@@ -1647,6 +1574,47 @@
     },
     {
       "date": "2026-02-12",
+      "buyCount": 2,
+      "sellCount": 6,
+      "buySignals": [
+        {
+          "symbol": "PMHPL",
+          "price": 363.3
+        },
+        {
+          "symbol": "RBCL",
+          "price": 15200
+        }
+      ],
+      "sellSignals": [
+        {
+          "symbol": "ALICL",
+          "price": 445.9
+        },
+        {
+          "symbol": "CBLD88",
+          "price": 1234.8
+        },
+        {
+          "symbol": "MERO",
+          "price": 727
+        },
+        {
+          "symbol": "MND84/85",
+          "price": 1085.1
+        },
+        {
+          "symbol": "NIMB",
+          "price": 190
+        },
+        {
+          "symbol": "NMIC",
+          "price": 1315
+        }
+      ]
+    },
+    {
+      "date": "2026-02-13",
       "buyCount": 2,
       "sellCount": 6,
       "buySignals": [
