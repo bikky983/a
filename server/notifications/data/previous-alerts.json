@@ -1,68 +1,46 @@
 {
-  "lastUpdated": "2026-02-28T11:43:07.096Z",
+  "lastUpdated": "2026-03-01T11:44:39.832Z",
   "institutionalStocks": {
-    "1654.00": {
-      "score": 60,
-      "price": 20,
-      "patterns": "Volume Spike (Bullish), OBV Bullish Divergence, Below VWAP, Upthrust Pattern, Statistical Anomaly (Bullish)",
-      "lastUpdated": "2026-02-28T11:43:07.094Z"
-    },
-    "615.00": {
+    "415.80": {
       "score": 60,
       "price": 0,
       "patterns": "OBV Bullish Divergence, Below VWAP, Spring Pattern, Statistical Anomaly (Bullish)",
-      "lastUpdated": "2026-02-28T11:43:07.094Z"
+      "lastUpdated": "2026-03-01T11:44:39.829Z"
     },
-    "741.00": {
-      "score": 0,
-      "price": 50,
-      "patterns": "Volume Spike (Bearish), Narrow Range, High Volume (Bearish), Below VWAP, Stopping Volume (Bearish), Statistical Anomaly (Bearish)",
-      "lastUpdated": "2026-02-28T11:43:07.094Z"
-    },
-    "464.80": {
-      "score": 50,
+    "1665.00": {
+      "score": 55,
       "price": 0,
-      "patterns": "Volume Spike (Bullish), Narrow Range, High Volume (Bullish), Below VWAP, Stopping Volume (Bullish), Statistical Anomaly (Bullish)",
-      "lastUpdated": "2026-02-28T11:43:07.094Z"
+      "patterns": "OBV Bullish Divergence, Narrow Range, High Volume (Bullish), Below VWAP, Statistical Anomaly (Bullish)",
+      "lastUpdated": "2026-03-01T11:44:39.829Z"
     }
   },
   "trendlineStocks": {},
   "rsiSupportStocks": {
-    "AHL\n                New": {
-      "ltp": 493,
-      "rsi": 27.88,
-      "supportPrice1": 497.83,
-      "diff1": "",
-      "lastUpdated": "2026-02-28T11:43:07.096Z"
-    },
     "ULBSL\n                New": {
-      "ltp": 3170,
-      "rsi": 34.29,
+      "ltp": 3118,
+      "rsi": 29.87,
       "supportPrice1": 3115.58,
       "diff1": "",
-      "lastUpdated": "2026-02-28T11:43:07.096Z"
+      "lastUpdated": "2026-03-01T11:44:39.832Z"
+    },
+    "AHL\n                New": {
+      "ltp": 499.8,
+      "rsi": 31.66,
+      "supportPrice1": 497.83,
+      "diff1": "",
+      "lastUpdated": "2026-03-01T11:44:39.832Z"
     }
   },
   "heatmapStocks": {
-    "1654.00": {
+    "415.80": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2026-02-28T11:43:07.096Z"
+      "lastUpdated": "2026-03-01T11:44:39.831Z"
     },
-    "615.00": {
+    "1665.00": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2026-02-28T11:43:07.096Z"
-    },
-    "741.00": {
-      "price": 0,
-      "volume": 0,
-      "lastUpdated": "2026-02-28T11:43:07.096Z"
-    },
-    "464.80": {
-      "price": 0,
-      "volume": 0,
-      "lastUpdated": "2026-02-28T11:43:07.096Z"
+      "lastUpdated": "2026-03-01T11:44:39.831Z"
     }
   }
 }
