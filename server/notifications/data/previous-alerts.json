@@ -1,46 +1,50 @@
 {
-  "lastUpdated": "2026-03-02T11:54:37.067Z",
+  "lastUpdated": "2026-03-03T11:55:13.538Z",
   "institutionalStocks": {
-    "415.80": {
-      "score": 60,
-      "price": 0,
-      "patterns": "OBV Bullish Divergence, Below VWAP, Spring Pattern, Statistical Anomaly (Bullish)",
-      "lastUpdated": "2026-03-02T11:54:37.064Z"
-    },
-    "1665.00": {
+    "1940.00": {
       "score": 55,
       "price": 0,
-      "patterns": "OBV Bullish Divergence, Narrow Range, High Volume (Bullish), Below VWAP, Statistical Anomaly (Bullish)",
-      "lastUpdated": "2026-03-02T11:54:37.064Z"
+      "patterns": "Volume Spike (Bullish), Below VWAP, Spring Pattern, Statistical Anomaly (Bullish)",
+      "lastUpdated": "2026-03-03T11:55:13.535Z"
+    },
+    "236.20": {
+      "score": 55,
+      "price": 0,
+      "patterns": "Volume Spike (Bullish), Stopping Volume (Bullish), Spring Pattern, Statistical Anomaly (Bullish)",
+      "lastUpdated": "2026-03-03T11:55:13.535Z"
+    },
+    "194.00": {
+      "score": 55,
+      "price": 0,
+      "patterns": "Volume Spike (Bullish), Below VWAP, Spring Pattern, Statistical Anomaly (Bullish)",
+      "lastUpdated": "2026-03-03T11:55:13.535Z"
     }
   },
   "trendlineStocks": {},
   "rsiSupportStocks": {
-    "ULBSL\n                New": {
-      "ltp": 3118,
-      "rsi": 29.87,
-      "supportPrice1": 3115.58,
-      "diff1": "",
-      "lastUpdated": "2026-03-02T11:54:37.066Z"
-    },
     "AHL\n                New": {
-      "ltp": 499.8,
-      "rsi": 31.66,
+      "ltp": 504.9,
+      "rsi": 34.43,
       "supportPrice1": 497.83,
       "diff1": "",
-      "lastUpdated": "2026-03-02T11:54:37.067Z"
+      "lastUpdated": "2026-03-03T11:55:13.538Z"
     }
   },
   "heatmapStocks": {
-    "415.80": {
+    "1940.00": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2026-03-02T11:54:37.066Z"
+      "lastUpdated": "2026-03-03T11:55:13.537Z"
     },
-    "1665.00": {
+    "236.20": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2026-03-02T11:54:37.066Z"
+      "lastUpdated": "2026-03-03T11:55:13.537Z"
+    },
+    "194.00": {
+      "price": 0,
+      "volume": 0,
+      "lastUpdated": "2026-03-03T11:55:13.537Z"
     }
   }
 }
