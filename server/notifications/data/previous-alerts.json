@@ -1,47 +1,47 @@
 {
-  "lastUpdated": "2026-03-13T11:54:23.249Z",
+  "lastUpdated": "2026-03-14T11:48:38.691Z",
   "institutionalStocks": {
     "977.90": {
       "score": 20,
       "price": 70,
       "patterns": "Volume Spike (Bearish), Narrow Range, High Volume (Bearish), Below VWAP, Stopping Volume (Bearish), Spring Pattern, Upthrust Pattern, Statistical Anomaly (Bearish)",
-      "lastUpdated": "2026-03-13T11:54:23.247Z"
+      "lastUpdated": "2026-03-14T11:48:38.689Z"
     },
     "548.10": {
       "score": 15,
       "price": 60,
       "patterns": "Volume Spike (Bearish), OBV Bearish Divergence, Narrow Range, High Volume (Bearish), Below VWAP, Stopping Volume (Bearish), Statistical Anomaly (Bullish)",
-      "lastUpdated": "2026-03-13T11:54:23.247Z"
+      "lastUpdated": "2026-03-14T11:48:38.689Z"
     },
     "481.20": {
       "score": 0,
       "price": 60,
       "patterns": "OBV Bearish Divergence, Below VWAP, Upthrust Pattern, Statistical Anomaly (Bearish)",
-      "lastUpdated": "2026-03-13T11:54:23.247Z"
+      "lastUpdated": "2026-03-14T11:48:38.689Z"
     },
     "1162.00": {
       "score": 0,
       "price": 55,
       "patterns": "Volume Spike (Bearish), Above VWAP, Upthrust Pattern, Statistical Anomaly (Bearish)",
-      "lastUpdated": "2026-03-13T11:54:23.247Z"
+      "lastUpdated": "2026-03-14T11:48:38.689Z"
     },
     "790.00": {
       "score": 20,
       "price": 50,
       "patterns": "Narrow Range, High Volume (Bearish), Below VWAP, Spring Pattern, Upthrust Pattern, Statistical Anomaly (Bearish)",
-      "lastUpdated": "2026-03-13T11:54:23.247Z"
+      "lastUpdated": "2026-03-14T11:48:38.689Z"
     },
     "890.00": {
       "score": 0,
       "price": 50,
       "patterns": "Volume Spike (Bearish), Narrow Range, High Volume (Bearish), Below VWAP, Statistical Anomaly (Bearish)",
-      "lastUpdated": "2026-03-13T11:54:23.247Z"
+      "lastUpdated": "2026-03-14T11:48:38.689Z"
     },
     "902.00": {
       "score": 0,
       "price": 50,
       "patterns": "Volume Spike (Bearish), Narrow Range, High Volume (Bearish), Above VWAP, Stopping Volume (Bearish), Statistical Anomaly (Bearish)",
-      "lastUpdated": "2026-03-13T11:54:23.247Z"
+      "lastUpdated": "2026-03-14T11:48:38.689Z"
     }
   },
   "trendlineStocks": {},
@@ -58,37 +58,37 @@
     "977.90": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2026-03-13T11:54:23.249Z"
+      "lastUpdated": "2026-03-14T11:48:38.691Z"
     },
     "548.10": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2026-03-13T11:54:23.249Z"
+      "lastUpdated": "2026-03-14T11:48:38.691Z"
     },
     "481.20": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2026-03-13T11:54:23.249Z"
+      "lastUpdated": "2026-03-14T11:48:38.691Z"
     },
     "1162.00": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2026-03-13T11:54:23.249Z"
+      "lastUpdated": "2026-03-14T11:48:38.691Z"
     },
     "790.00": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2026-03-13T11:54:23.249Z"
+      "lastUpdated": "2026-03-14T11:48:38.691Z"
     },
     "890.00": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2026-03-13T11:54:23.249Z"
+      "lastUpdated": "2026-03-14T11:48:38.691Z"
     },
     "902.00": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2026-03-13T11:54:23.249Z"
+      "lastUpdated": "2026-03-14T11:48:38.691Z"
     }
   }
 }
