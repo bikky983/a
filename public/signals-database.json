@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-03-13T14:06:19.005Z",
+  "lastUpdated": "2026-03-14T13:54:24.421Z",
   "currentBuySignals": [
     {
       "symbol": "GIBF1",
       "signal": "BUY",
       "date": "2026_03_12",
-      "generatedOn": "2026-03-13",
+      "generatedOn": "2026-03-14",
       "price": 11,
       "details": {
         "rsiFast": "61.08",
@@ -18,7 +18,7 @@
       "symbol": "MHNL",
       "signal": "BUY",
       "date": "2026_03_12",
-      "generatedOn": "2026-03-13",
+      "generatedOn": "2026-03-14",
       "price": 287.1,
       "details": {
         "rsiFast": "59.47",
@@ -31,7 +31,7 @@
       "symbol": "NICBF",
       "signal": "BUY",
       "date": "2026_03_12",
-      "generatedOn": "2026-03-13",
+      "generatedOn": "2026-03-14",
       "price": 9.71,
       "details": {
         "rsiFast": "55.46",
@@ -46,7 +46,7 @@
       "symbol": "MMKJL",
       "signal": "SELL",
       "date": "2026_03_12",
-      "generatedOn": "2026-03-13",
+      "generatedOn": "2026-03-14",
       "price": 579,
       "details": {
         "rsiFast": "47.49",
@@ -59,7 +59,7 @@
       "symbol": "SBD87",
       "signal": "SELL",
       "date": "2026_03_01",
-      "generatedOn": "2026-03-13",
+      "generatedOn": "2026-03-14",
       "price": 1108,
       "details": {
         "rsiFast": "52.53",
@@ -70,47 +70,6 @@
     }
   ],
   "signalHistory": [
-    {
-      "date": "2026-02-12",
-      "buyCount": 2,
-      "sellCount": 6,
-      "buySignals": [
-        {
-          "symbol": "PMHPL",
-          "price": 363.3
-        },
-        {
-          "symbol": "RBCL",
-          "price": 15200
-        }
-      ],
-      "sellSignals": [
-        {
-          "symbol": "ALICL",
-          "price": 445.9
-        },
-        {
-          "symbol": "CBLD88",
-          "price": 1234.8
-        },
-        {
-          "symbol": "MERO",
-          "price": 727
-        },
-        {
-          "symbol": "MND84/85",
-          "price": 1085.1
-        },
-        {
-          "symbol": "NIMB",
-          "price": 190
-        },
-        {
-          "symbol": "NMIC",
-          "price": 1315
-        }
-      ]
-    },
     {
       "date": "2026-02-13",
       "buyCount": 2,
@@ -2108,6 +2067,35 @@
     },
     {
       "date": "2026-03-13",
+      "buyCount": 3,
+      "sellCount": 2,
+      "buySignals": [
+        {
+          "symbol": "GIBF1",
+          "price": 11
+        },
+        {
+          "symbol": "MHNL",
+          "price": 287.1
+        },
+        {
+          "symbol": "NICBF",
+          "price": 9.71
+        }
+      ],
+      "sellSignals": [
+        {
+          "symbol": "MMKJL",
+          "price": 579
+        },
+        {
+          "symbol": "SBD87",
+          "price": 1108
+        }
+      ]
+    },
+    {
+      "date": "2026-03-14",
       "buyCount": 3,
       "sellCount": 2,
       "buySignals": [
