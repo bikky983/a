@@ -1,12 +1,104 @@
 {
-  "lastUpdated": "2026-03-16T14:38:45.648Z",
-  "currentBuySignals": [],
+  "lastUpdated": "2026-03-17T14:35:39.333Z",
+  "currentBuySignals": [
+    {
+      "symbol": "ICFCD88",
+      "signal": "BUY",
+      "date": "2026_03_17",
+      "generatedOn": "2026-03-17",
+      "price": 1170,
+      "details": {
+        "rsiFast": "56.81",
+        "rsiSlow": "53.71",
+        "downtrendPrice": "1151.51",
+        "breakoutStrength": "1.61"
+      }
+    },
+    {
+      "symbol": "KSY",
+      "signal": "BUY",
+      "date": "2026_03_17",
+      "generatedOn": "2026-03-17",
+      "price": 9.67,
+      "details": {
+        "rsiFast": "54.56",
+        "rsiSlow": "53.02",
+        "downtrendPrice": "9.62",
+        "breakoutStrength": "0.50"
+      }
+    },
+    {
+      "symbol": "NICAD85/86",
+      "signal": "BUY",
+      "date": "2026_03_17",
+      "generatedOn": "2026-03-17",
+      "price": 1181,
+      "details": {
+        "rsiFast": "57.13",
+        "rsiSlow": "53.64",
+        "downtrendPrice": "1162.32",
+        "breakoutStrength": "1.61"
+      }
+    },
+    {
+      "symbol": "NMBHF2",
+      "signal": "BUY",
+      "date": "2026_03_17",
+      "generatedOn": "2026-03-17",
+      "price": 9.8,
+      "details": {
+        "rsiFast": "56.66",
+        "rsiSlow": "54.10",
+        "downtrendPrice": "9.76",
+        "breakoutStrength": "0.46"
+      }
+    },
+    {
+      "symbol": "SLCF",
+      "signal": "BUY",
+      "date": "2026_03_17",
+      "generatedOn": "2026-03-17",
+      "price": 9.9,
+      "details": {
+        "rsiFast": "56.61",
+        "rsiSlow": "52.60",
+        "downtrendPrice": "9.89",
+        "breakoutStrength": "0.10"
+      }
+    }
+  ],
   "currentSellSignals": [
+    {
+      "symbol": "NICGF2",
+      "signal": "SELL",
+      "date": "2026_03_17",
+      "generatedOn": "2026-03-17",
+      "price": 9.24,
+      "details": {
+        "rsiFast": "50.09",
+        "rsiSlow": "51.60",
+        "uptrendPrice": "9.27",
+        "breakdownStrength": "0.37"
+      }
+    },
+    {
+      "symbol": "SAND2085",
+      "signal": "SELL",
+      "date": "2026_03_17",
+      "generatedOn": "2026-03-17",
+      "price": 1112.6,
+      "details": {
+        "rsiFast": "47.41",
+        "rsiSlow": "50.16",
+        "uptrendPrice": "1120.32",
+        "breakdownStrength": "0.69"
+      }
+    },
     {
       "symbol": "SRBLD83",
       "signal": "SELL",
       "date": "2026_03_16",
-      "generatedOn": "2026-03-16",
+      "generatedOn": "2026-03-17",
       "price": 1048,
       "details": {
         "rsiFast": "45.10",
@@ -17,47 +109,6 @@
     }
   ],
   "signalHistory": [
-    {
-      "date": "2026-02-15",
-      "buyCount": 2,
-      "sellCount": 6,
-      "buySignals": [
-        {
-          "symbol": "PMHPL",
-          "price": 363.3
-        },
-        {
-          "symbol": "RBCL",
-          "price": 15200
-        }
-      ],
-      "sellSignals": [
-        {
-          "symbol": "ALICL",
-          "price": 445.9
-        },
-        {
-          "symbol": "CBLD88",
-          "price": 1234.8
-        },
-        {
-          "symbol": "MERO",
-          "price": 727
-        },
-        {
-          "symbol": "MND84/85",
-          "price": 1085.1
-        },
-        {
-          "symbol": "NIMB",
-          "price": 190
-        },
-        {
-          "symbol": "NMIC",
-          "price": 1315
-        }
-      ]
-    },
     {
       "date": "2026-02-16",
       "buyCount": 0,
@@ -2035,6 +2086,47 @@
       "sellCount": 1,
       "buySignals": [],
       "sellSignals": [
+        {
+          "symbol": "SRBLD83",
+          "price": 1048
+        }
+      ]
+    },
+    {
+      "date": "2026-03-17",
+      "buyCount": 5,
+      "sellCount": 3,
+      "buySignals": [
+        {
+          "symbol": "ICFCD88",
+          "price": 1170
+        },
+        {
+          "symbol": "KSY",
+          "price": 9.67
+        },
+        {
+          "symbol": "NICAD85/86",
+          "price": 1181
+        },
+        {
+          "symbol": "NMBHF2",
+          "price": 9.8
+        },
+        {
+          "symbol": "SLCF",
+          "price": 9.9
+        }
+      ],
+      "sellSignals": [
+        {
+          "symbol": "NICGF2",
+          "price": 9.24
+        },
+        {
+          "symbol": "SAND2085",
+          "price": 1112.6
+        },
         {
           "symbol": "SRBLD83",
           "price": 1048
