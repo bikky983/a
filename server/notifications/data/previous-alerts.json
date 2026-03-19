@@ -1,11 +1,35 @@
 {
-  "lastUpdated": "2026-03-17T12:03:06.108Z",
+  "lastUpdated": "2026-03-19T11:58:40.013Z",
   "institutionalStocks": {
-    "undefined": {
-      "score": 0,
-      "price": null,
-      "patterns": "",
-      "lastUpdated": "2026-03-17T12:03:06.106Z"
+    "773.10": {
+      "score": 60,
+      "price": 0,
+      "patterns": "Volume Spike (Bullish), OBV Bullish Divergence, Below VWAP, Stopping Volume (Bullish), Statistical Anomaly (Bullish)",
+      "lastUpdated": "2026-03-19T11:58:40.011Z"
+    },
+    "580.00": {
+      "score": 60,
+      "price": 20,
+      "patterns": "Volume Spike (Bullish), OBV Bullish Divergence, Below VWAP, Stopping Volume (Bullish), Upthrust Pattern, Statistical Anomaly (Bullish)",
+      "lastUpdated": "2026-03-19T11:58:40.011Z"
+    },
+    "426.00": {
+      "score": 60,
+      "price": 0,
+      "patterns": "Volume Spike (Bullish), OBV Bullish Divergence, Below VWAP, Statistical Anomaly (Bullish)",
+      "lastUpdated": "2026-03-19T11:58:40.011Z"
+    },
+    "487.10": {
+      "score": 60,
+      "price": 0,
+      "patterns": "Volume Spike (Bullish), OBV Bullish Divergence, Below VWAP, Statistical Anomaly (Bullish)",
+      "lastUpdated": "2026-03-19T11:58:40.011Z"
+    },
+    "307.00": {
+      "score": 50,
+      "price": 0,
+      "patterns": "Volume Spike (Bullish), Narrow Range, High Volume (Bullish), Below VWAP, Stopping Volume (Bullish), Statistical Anomaly (Bullish)",
+      "lastUpdated": "2026-03-19T11:58:40.011Z"
     }
   },
   "trendlineStocks": {},
@@ -18,5 +42,31 @@
       "lastUpdated": "2026-03-08T11:45:20.478Z"
     }
   },
-  "heatmapStocks": {}
+  "heatmapStocks": {
+    "773.10": {
+      "price": 0,
+      "volume": 0,
+      "lastUpdated": "2026-03-19T11:58:40.013Z"
+    },
+    "580.00": {
+      "price": 0,
+      "volume": 0,
+      "lastUpdated": "2026-03-19T11:58:40.013Z"
+    },
+    "426.00": {
+      "price": 0,
+      "volume": 0,
+      "lastUpdated": "2026-03-19T11:58:40.013Z"
+    },
+    "487.10": {
+      "price": 0,
+      "volume": 0,
+      "lastUpdated": "2026-03-19T11:58:40.013Z"
+    },
+    "307.00": {
+      "price": 0,
+      "volume": 0,
+      "lastUpdated": "2026-03-19T11:58:40.013Z"
+    }
+  }
 }
