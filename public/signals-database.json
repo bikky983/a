@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-03-20T14:06:46.986Z",
+  "lastUpdated": "2026-03-21T13:52:13.218Z",
   "currentBuySignals": [
     {
       "symbol": "ALBSL",
       "signal": "BUY",
       "date": "2026_03_19",
-      "generatedOn": "2026-03-20",
+      "generatedOn": "2026-03-21",
       "price": 1160,
       "details": {
         "rsiFast": "54.75",
@@ -18,7 +18,7 @@
       "symbol": "H8020",
       "signal": "BUY",
       "date": "2026_03_19",
-      "generatedOn": "2026-03-20",
+      "generatedOn": "2026-03-21",
       "price": 11.68,
       "details": {
         "rsiFast": "54.54",
@@ -31,7 +31,7 @@
       "symbol": "JSLBB",
       "signal": "BUY",
       "date": "2026_03_19",
-      "generatedOn": "2026-03-20",
+      "generatedOn": "2026-03-21",
       "price": 1197,
       "details": {
         "rsiFast": "56.59",
@@ -44,7 +44,7 @@
       "symbol": "KDL",
       "signal": "BUY",
       "date": "2026_03_19",
-      "generatedOn": "2026-03-20",
+      "generatedOn": "2026-03-21",
       "price": 898,
       "details": {
         "rsiFast": "50.55",
@@ -57,7 +57,7 @@
       "symbol": "MHCL",
       "signal": "BUY",
       "date": "2026_03_19",
-      "generatedOn": "2026-03-20",
+      "generatedOn": "2026-03-21",
       "price": 393.2,
       "details": {
         "rsiFast": "53.62",
@@ -70,7 +70,7 @@
       "symbol": "MKHC",
       "signal": "BUY",
       "date": "2026_03_19",
-      "generatedOn": "2026-03-20",
+      "generatedOn": "2026-03-21",
       "price": 361.1,
       "details": {
         "rsiFast": "55.92",
@@ -83,7 +83,7 @@
       "symbol": "NICAD85/86",
       "signal": "BUY",
       "date": "2026_03_17",
-      "generatedOn": "2026-03-20",
+      "generatedOn": "2026-03-21",
       "price": 1181,
       "details": {
         "rsiFast": "57.13",
@@ -96,7 +96,7 @@
       "symbol": "SHPC",
       "signal": "BUY",
       "date": "2026_03_19",
-      "generatedOn": "2026-03-20",
+      "generatedOn": "2026-03-21",
       "price": 557,
       "details": {
         "rsiFast": "55.58",
@@ -108,71 +108,6 @@
   ],
   "currentSellSignals": [],
   "signalHistory": [
-    {
-      "date": "2026-02-19",
-      "buyCount": 2,
-      "sellCount": 12,
-      "buySignals": [
-        {
-          "symbol": "CMF2",
-          "price": 10.2
-        },
-        {
-          "symbol": "MHL",
-          "price": 534
-        }
-      ],
-      "sellSignals": [
-        {
-          "symbol": "AHL",
-          "price": 540.5
-        },
-        {
-          "symbol": "GCIL",
-          "price": 411.5
-        },
-        {
-          "symbol": "HIDCL",
-          "price": 259.9
-        },
-        {
-          "symbol": "HPPL",
-          "price": 461.4
-        },
-        {
-          "symbol": "LLBS",
-          "price": 925
-        },
-        {
-          "symbol": "MANDU",
-          "price": 803.7
-        },
-        {
-          "symbol": "NMB50",
-          "price": 10.17
-        },
-        {
-          "symbol": "NMBD89/90",
-          "price": 1249
-        },
-        {
-          "symbol": "PFL",
-          "price": 372
-        },
-        {
-          "symbol": "SHIVM",
-          "price": 604
-        },
-        {
-          "symbol": "SRLI",
-          "price": 384.5
-        },
-        {
-          "symbol": "UMRH",
-          "price": 546
-        }
-      ]
-    },
     {
       "date": "2026-02-20",
       "buyCount": 2,
@@ -2049,6 +1984,46 @@
     },
     {
       "date": "2026-03-20",
+      "buyCount": 8,
+      "sellCount": 0,
+      "buySignals": [
+        {
+          "symbol": "ALBSL",
+          "price": 1160
+        },
+        {
+          "symbol": "H8020",
+          "price": 11.68
+        },
+        {
+          "symbol": "JSLBB",
+          "price": 1197
+        },
+        {
+          "symbol": "KDL",
+          "price": 898
+        },
+        {
+          "symbol": "MHCL",
+          "price": 393.2
+        },
+        {
+          "symbol": "MKHC",
+          "price": 361.1
+        },
+        {
+          "symbol": "NICAD85/86",
+          "price": 1181
+        },
+        {
+          "symbol": "SHPC",
+          "price": 557
+        }
+      ],
+      "sellSignals": []
+    },
+    {
+      "date": "2026-03-21",
       "buyCount": 8,
       "sellCount": 0,
       "buySignals": [
