@@ -1,61 +1,50 @@
 {
-  "lastUpdated": "2026-03-24T12:04:32.243Z",
+  "lastUpdated": "2026-03-25T12:03:57.588Z",
   "institutionalStocks": {
-    "459.00": {
-      "score": 65,
-      "price": 0,
-      "patterns": "Volume Spike (Bullish), OBV Bullish Divergence, Below VWAP, Spring Pattern",
-      "lastUpdated": "2026-03-24T12:04:32.241Z"
+    "618.00": {
+      "score": 15,
+      "price": 65,
+      "patterns": "Volume Spike (Bearish), OBV Bearish Divergence, Upthrust Pattern, Statistical Anomaly (Bullish)",
+      "lastUpdated": "2026-03-25T12:03:57.586Z"
     },
-    "495.00": {
+    "489.00": {
       "score": 0,
       "price": 60,
-      "patterns": "Volume Spike (Bearish), OBV Bearish Divergence, Below VWAP, Statistical Anomaly (Bearish)",
-      "lastUpdated": "2026-03-24T12:04:32.241Z"
+      "patterns": "OBV Bearish Divergence, Below VWAP, Upthrust Pattern, Statistical Anomaly (Bearish)",
+      "lastUpdated": "2026-03-25T12:03:57.586Z"
     },
-    "1623.00": {
-      "score": 55,
-      "price": 0,
-      "patterns": "Volume Spike (Bullish), Above VWAP, Spring Pattern, Statistical Anomaly (Bullish)",
-      "lastUpdated": "2026-03-24T12:04:32.241Z"
-    },
-    "1434.00": {
-      "score": 50,
-      "price": 0,
-      "patterns": "Volume Spike (Bullish), Narrow Range, High Volume (Bullish), Below VWAP, Stopping Volume (Bullish), Statistical Anomaly (Bullish)",
-      "lastUpdated": "2026-03-24T12:04:32.241Z"
+    "676.50": {
+      "score": 0,
+      "price": 55,
+      "patterns": "Volume Spike (Bearish), Below VWAP, Upthrust Pattern, Statistical Anomaly (Bearish)",
+      "lastUpdated": "2026-03-25T12:03:57.586Z"
     }
   },
   "trendlineStocks": {},
   "rsiSupportStocks": {
-    "AHL\n                New": {
-      "ltp": 504.9,
-      "rsi": 34.43,
-      "supportPrice1": 497.83,
+    "HPPL\n                New": {
+      "ltp": 418.2,
+      "rsi": 32.94,
+      "supportPrice1": 398.85,
       "diff1": "",
-      "lastUpdated": "2026-03-08T11:45:20.478Z"
+      "lastUpdated": "2026-03-25T12:03:57.588Z"
     }
   },
   "heatmapStocks": {
-    "459.00": {
+    "618.00": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2026-03-24T12:04:32.243Z"
+      "lastUpdated": "2026-03-25T12:03:57.588Z"
     },
-    "495.00": {
+    "489.00": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2026-03-24T12:04:32.243Z"
+      "lastUpdated": "2026-03-25T12:03:57.588Z"
     },
-    "1623.00": {
+    "676.50": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2026-03-24T12:04:32.243Z"
-    },
-    "1434.00": {
-      "price": 0,
-      "volume": 0,
-      "lastUpdated": "2026-03-24T12:04:32.243Z"
+      "lastUpdated": "2026-03-25T12:03:57.588Z"
     }
   }
 }
