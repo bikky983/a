@@ -1,39 +1,52 @@
 {
-  "lastUpdated": "2026-03-25T14:37:22.101Z",
+  "lastUpdated": "2026-03-26T14:44:25.698Z",
   "currentBuySignals": [
     {
-      "symbol": "MSHL",
+      "symbol": "MHCL",
       "signal": "BUY",
-      "date": "2026_03_25",
-      "generatedOn": "2026-03-25",
-      "price": 809,
+      "date": "2026_03_26",
+      "generatedOn": "2026-03-26",
+      "price": 390,
       "details": {
-        "rsiFast": "46.06",
-        "rsiSlow": "45.45",
-        "downtrendPrice": "806.10",
-        "breakoutStrength": "0.36"
+        "rsiFast": "52.32",
+        "rsiSlow": "48.03",
+        "downtrendPrice": "388.30",
+        "breakoutStrength": "0.44"
+      }
+    },
+    {
+      "symbol": "MLBBL",
+      "signal": "BUY",
+      "date": "2026_03_26",
+      "generatedOn": "2026-03-26",
+      "price": 1375,
+      "details": {
+        "rsiFast": "49.95",
+        "rsiSlow": "48.04",
+        "downtrendPrice": "1369.72",
+        "breakoutStrength": "0.39"
+      }
+    },
+    {
+      "symbol": "WNLB",
+      "signal": "BUY",
+      "date": "2026_03_26",
+      "generatedOn": "2026-03-26",
+      "price": 1662,
+      "details": {
+        "rsiFast": "53.51",
+        "rsiSlow": "46.53",
+        "downtrendPrice": "1641.46",
+        "breakoutStrength": "1.25"
       }
     }
   ],
   "currentSellSignals": [
     {
-      "symbol": "AKJCL",
-      "signal": "SELL",
-      "date": "2026_03_25",
-      "generatedOn": "2026-03-25",
-      "price": 402.1,
-      "details": {
-        "rsiFast": "66.92",
-        "rsiSlow": "67.70",
-        "uptrendPrice": "403.21",
-        "breakdownStrength": "0.27"
-      }
-    },
-    {
       "symbol": "MLBLD89",
       "signal": "SELL",
       "date": "2026_03_24",
-      "generatedOn": "2026-03-25",
+      "generatedOn": "2026-03-26",
       "price": 1280,
       "details": {
         "rsiFast": "52.66",
@@ -41,89 +54,9 @@
         "uptrendPrice": "1288.00",
         "breakdownStrength": "0.62"
       }
-    },
-    {
-      "symbol": "NICAD2091",
-      "signal": "SELL",
-      "date": "2026_03_25",
-      "generatedOn": "2026-03-25",
-      "price": 1051.1,
-      "details": {
-        "rsiFast": "46.72",
-        "rsiSlow": "49.71",
-        "uptrendPrice": "1061.45",
-        "breakdownStrength": "0.97"
-      }
-    },
-    {
-      "symbol": "PBLD87",
-      "signal": "SELL",
-      "date": "2026_03_22",
-      "generatedOn": "2026-03-25",
-      "price": 1091.5,
-      "details": {
-        "rsiFast": "50.59",
-        "rsiSlow": "52.25",
-        "uptrendPrice": "1096.41",
-        "breakdownStrength": "0.45"
-      }
-    },
-    {
-      "symbol": "SBLD2091",
-      "signal": "SELL",
-      "date": "2026_03_25",
-      "generatedOn": "2026-03-25",
-      "price": 1062.1,
-      "details": {
-        "rsiFast": "45.82",
-        "rsiSlow": "51.43",
-        "uptrendPrice": "1071.52",
-        "breakdownStrength": "0.88"
-      }
     }
   ],
   "signalHistory": [
-    {
-      "date": "2026-02-24",
-      "buyCount": 4,
-      "sellCount": 4,
-      "buySignals": [
-        {
-          "symbol": "FMDBL",
-          "price": 798.5
-        },
-        {
-          "symbol": "KSBBL",
-          "price": 458
-        },
-        {
-          "symbol": "MHL",
-          "price": 522
-        },
-        {
-          "symbol": "PHCL",
-          "price": 286.8
-        }
-      ],
-      "sellSignals": [
-        {
-          "symbol": "NBL",
-          "price": 240.4
-        },
-        {
-          "symbol": "NIBD84",
-          "price": 1055.1
-        },
-        {
-          "symbol": "NMBD89/90",
-          "price": 1249
-        },
-        {
-          "symbol": "RMF2",
-          "price": 9.66
-        }
-      ]
-    },
     {
       "date": "2026-02-25",
       "buyCount": 4,
@@ -1962,6 +1895,31 @@
         {
           "symbol": "SBLD2091",
           "price": 1062.1
+        }
+      ]
+    },
+    {
+      "date": "2026-03-26",
+      "buyCount": 3,
+      "sellCount": 1,
+      "buySignals": [
+        {
+          "symbol": "MHCL",
+          "price": 390
+        },
+        {
+          "symbol": "MLBBL",
+          "price": 1375
+        },
+        {
+          "symbol": "WNLB",
+          "price": 1662
+        }
+      ],
+      "sellSignals": [
+        {
+          "symbol": "MLBLD89",
+          "price": 1280
         }
       ]
     }
