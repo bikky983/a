@@ -1,15 +1,15 @@
 {
-  "lastUpdated": "2026-03-26T14:44:25.698Z",
+  "lastUpdated": "2026-03-27T14:17:29.757Z",
   "currentBuySignals": [
     {
       "symbol": "MHCL",
       "signal": "BUY",
       "date": "2026_03_26",
-      "generatedOn": "2026-03-26",
+      "generatedOn": "2026-03-27",
       "price": 390,
       "details": {
         "rsiFast": "52.32",
-        "rsiSlow": "48.03",
+        "rsiSlow": "48.02",
         "downtrendPrice": "388.30",
         "breakoutStrength": "0.44"
       }
@@ -18,7 +18,7 @@
       "symbol": "MLBBL",
       "signal": "BUY",
       "date": "2026_03_26",
-      "generatedOn": "2026-03-26",
+      "generatedOn": "2026-03-27",
       "price": 1375,
       "details": {
         "rsiFast": "49.95",
@@ -31,11 +31,11 @@
       "symbol": "WNLB",
       "signal": "BUY",
       "date": "2026_03_26",
-      "generatedOn": "2026-03-26",
+      "generatedOn": "2026-03-27",
       "price": 1662,
       "details": {
         "rsiFast": "53.51",
-        "rsiSlow": "46.53",
+        "rsiSlow": "46.52",
         "downtrendPrice": "1641.46",
         "breakoutStrength": "1.25"
       }
@@ -46,7 +46,7 @@
       "symbol": "MLBLD89",
       "signal": "SELL",
       "date": "2026_03_24",
-      "generatedOn": "2026-03-26",
+      "generatedOn": "2026-03-27",
       "price": 1280,
       "details": {
         "rsiFast": "52.66",
@@ -57,51 +57,6 @@
     }
   ],
   "signalHistory": [
-    {
-      "date": "2026-02-25",
-      "buyCount": 4,
-      "sellCount": 5,
-      "buySignals": [
-        {
-          "symbol": "CMF2",
-          "price": 10.18
-        },
-        {
-          "symbol": "H8020",
-          "price": 11.73
-        },
-        {
-          "symbol": "ILI",
-          "price": 442.7
-        },
-        {
-          "symbol": "RNLI",
-          "price": 468
-        }
-      ],
-      "sellSignals": [
-        {
-          "symbol": "CFCL",
-          "price": 523
-        },
-        {
-          "symbol": "NIBD84",
-          "price": 1055.1
-        },
-        {
-          "symbol": "NYADI",
-          "price": 391.2
-        },
-        {
-          "symbol": "SIGS3",
-          "price": 9.97
-        },
-        {
-          "symbol": "SMH",
-          "price": 646
-        }
-      ]
-    },
     {
       "date": "2026-02-26",
       "buyCount": 4,
@@ -1900,6 +1855,31 @@
     },
     {
       "date": "2026-03-26",
+      "buyCount": 3,
+      "sellCount": 1,
+      "buySignals": [
+        {
+          "symbol": "MHCL",
+          "price": 390
+        },
+        {
+          "symbol": "MLBBL",
+          "price": 1375
+        },
+        {
+          "symbol": "WNLB",
+          "price": 1662
+        }
+      ],
+      "sellSignals": [
+        {
+          "symbol": "MLBLD89",
+          "price": 1280
+        }
+      ]
+    },
+    {
+      "date": "2026-03-27",
       "buyCount": 3,
       "sellCount": 1,
       "buySignals": [
