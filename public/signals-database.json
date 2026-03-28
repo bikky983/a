@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-03-27T14:17:29.757Z",
+  "lastUpdated": "2026-03-28T13:57:38.563Z",
   "currentBuySignals": [
     {
       "symbol": "MHCL",
       "signal": "BUY",
       "date": "2026_03_26",
-      "generatedOn": "2026-03-27",
+      "generatedOn": "2026-03-28",
       "price": 390,
       "details": {
         "rsiFast": "52.32",
@@ -18,7 +18,7 @@
       "symbol": "MLBBL",
       "signal": "BUY",
       "date": "2026_03_26",
-      "generatedOn": "2026-03-27",
+      "generatedOn": "2026-03-28",
       "price": 1375,
       "details": {
         "rsiFast": "49.95",
@@ -31,7 +31,7 @@
       "symbol": "WNLB",
       "signal": "BUY",
       "date": "2026_03_26",
-      "generatedOn": "2026-03-27",
+      "generatedOn": "2026-03-28",
       "price": 1662,
       "details": {
         "rsiFast": "53.51",
@@ -46,7 +46,7 @@
       "symbol": "MLBLD89",
       "signal": "SELL",
       "date": "2026_03_24",
-      "generatedOn": "2026-03-27",
+      "generatedOn": "2026-03-28",
       "price": 1280,
       "details": {
         "rsiFast": "52.66",
@@ -57,51 +57,6 @@
     }
   ],
   "signalHistory": [
-    {
-      "date": "2026-02-26",
-      "buyCount": 4,
-      "sellCount": 5,
-      "buySignals": [
-        {
-          "symbol": "HBL",
-          "price": 188.5
-        },
-        {
-          "symbol": "MFIL",
-          "price": 806
-        },
-        {
-          "symbol": "NMB",
-          "price": 238.5
-        },
-        {
-          "symbol": "RBCL",
-          "price": 15120
-        }
-      ],
-      "sellSignals": [
-        {
-          "symbol": "HPPL",
-          "price": 463
-        },
-        {
-          "symbol": "LLBS",
-          "price": 931
-        },
-        {
-          "symbol": "MANDU",
-          "price": 802
-        },
-        {
-          "symbol": "NBLD82",
-          "price": 1077
-        },
-        {
-          "symbol": "NIBD84",
-          "price": 1055.1
-        }
-      ]
-    },
     {
       "date": "2026-02-27",
       "buyCount": 4,
@@ -1880,6 +1835,31 @@
     },
     {
       "date": "2026-03-27",
+      "buyCount": 3,
+      "sellCount": 1,
+      "buySignals": [
+        {
+          "symbol": "MHCL",
+          "price": 390
+        },
+        {
+          "symbol": "MLBBL",
+          "price": 1375
+        },
+        {
+          "symbol": "WNLB",
+          "price": 1662
+        }
+      ],
+      "sellSignals": [
+        {
+          "symbol": "MLBLD89",
+          "price": 1280
+        }
+      ]
+    },
+    {
+      "date": "2026-03-28",
       "buyCount": 3,
       "sellCount": 1,
       "buySignals": [
