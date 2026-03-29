@@ -1,107 +1,139 @@
 {
-  "lastUpdated": "2026-03-28T13:57:38.563Z",
-  "currentBuySignals": [
-    {
-      "symbol": "MHCL",
-      "signal": "BUY",
-      "date": "2026_03_26",
-      "generatedOn": "2026-03-28",
-      "price": 390,
-      "details": {
-        "rsiFast": "52.32",
-        "rsiSlow": "48.02",
-        "downtrendPrice": "388.30",
-        "breakoutStrength": "0.44"
-      }
-    },
-    {
-      "symbol": "MLBBL",
-      "signal": "BUY",
-      "date": "2026_03_26",
-      "generatedOn": "2026-03-28",
-      "price": 1375,
-      "details": {
-        "rsiFast": "49.95",
-        "rsiSlow": "48.04",
-        "downtrendPrice": "1369.72",
-        "breakoutStrength": "0.39"
-      }
-    },
-    {
-      "symbol": "WNLB",
-      "signal": "BUY",
-      "date": "2026_03_26",
-      "generatedOn": "2026-03-28",
-      "price": 1662,
-      "details": {
-        "rsiFast": "53.51",
-        "rsiSlow": "46.52",
-        "downtrendPrice": "1641.46",
-        "breakoutStrength": "1.25"
-      }
-    }
-  ],
+  "lastUpdated": "2026-03-29T13:58:57.097Z",
+  "currentBuySignals": [],
   "currentSellSignals": [
     {
-      "symbol": "MLBLD89",
+      "symbol": "AKJCL",
       "signal": "SELL",
-      "date": "2026_03_24",
-      "generatedOn": "2026-03-28",
-      "price": 1280,
+      "date": "2026_03_29",
+      "generatedOn": "2026-03-29",
+      "price": 406.9,
       "details": {
-        "rsiFast": "52.66",
-        "rsiSlow": "53.44",
-        "uptrendPrice": "1288.00",
-        "breakdownStrength": "0.62"
+        "rsiFast": "66.22",
+        "rsiSlow": "67.33",
+        "uptrendPrice": "412.30",
+        "breakdownStrength": "1.31"
+      }
+    },
+    {
+      "symbol": "BHCL",
+      "signal": "SELL",
+      "date": "2026_03_29",
+      "generatedOn": "2026-03-29",
+      "price": 590.5,
+      "details": {
+        "rsiFast": "52.45",
+        "rsiSlow": "56.97",
+        "uptrendPrice": "599.36",
+        "breakdownStrength": "1.48"
+      }
+    },
+    {
+      "symbol": "CFCL",
+      "signal": "SELL",
+      "date": "2026_03_29",
+      "generatedOn": "2026-03-29",
+      "price": 549.7,
+      "details": {
+        "rsiFast": "51.50",
+        "rsiSlow": "52.29",
+        "uptrendPrice": "559.64",
+        "breakdownStrength": "1.78"
+      }
+    },
+    {
+      "symbol": "DHEL",
+      "signal": "SELL",
+      "date": "2026_03_29",
+      "generatedOn": "2026-03-29",
+      "price": 708,
+      "details": {
+        "rsiFast": "51.14",
+        "rsiSlow": "58.08",
+        "uptrendPrice": "726.20",
+        "breakdownStrength": "2.51"
+      }
+    },
+    {
+      "symbol": "NICAD2091",
+      "signal": "SELL",
+      "date": "2026_03_29",
+      "generatedOn": "2026-03-29",
+      "price": 1055.1,
+      "details": {
+        "rsiFast": "47.83",
+        "rsiSlow": "49.99",
+        "uptrendPrice": "1062.90",
+        "breakdownStrength": "0.73"
+      }
+    },
+    {
+      "symbol": "OMPL",
+      "signal": "SELL",
+      "date": "2026_03_29",
+      "generatedOn": "2026-03-29",
+      "price": 1325.4,
+      "details": {
+        "rsiFast": "49.18",
+        "rsiSlow": "54.20",
+        "uptrendPrice": "1338.43",
+        "breakdownStrength": "0.97"
+      }
+    },
+    {
+      "symbol": "SANVI",
+      "signal": "SELL",
+      "date": "2026_03_29",
+      "generatedOn": "2026-03-29",
+      "price": 830,
+      "details": {
+        "rsiFast": "51.95",
+        "rsiSlow": "55.81",
+        "uptrendPrice": "834.25",
+        "breakdownStrength": "0.51"
+      }
+    },
+    {
+      "symbol": "SBLD2091",
+      "signal": "SELL",
+      "date": "2026_03_29",
+      "generatedOn": "2026-03-29",
+      "price": 1062.4,
+      "details": {
+        "rsiFast": "46.33",
+        "rsiSlow": "51.35",
+        "uptrendPrice": "1072.64",
+        "breakdownStrength": "0.95"
+      }
+    },
+    {
+      "symbol": "SWASTIK",
+      "signal": "SELL",
+      "date": "2026_03_29",
+      "generatedOn": "2026-03-29",
+      "price": 2781,
+      "details": {
+        "rsiFast": "54.76",
+        "rsiSlow": "69.95",
+        "uptrendPrice": "2849.27",
+        "breakdownStrength": "2.40"
+      }
+    },
+    {
+      "symbol": "UMRH",
+      "signal": "SELL",
+      "date": "2026_03_29",
+      "generatedOn": "2026-03-29",
+      "price": 562.1,
+      "details": {
+        "rsiFast": "48.02",
+        "rsiSlow": "48.65",
+        "uptrendPrice": "574.00",
+        "breakdownStrength": "2.07"
       }
     }
   ],
   "signalHistory": [
-    {
-      "date": "2026-02-27",
-      "buyCount": 4,
-      "sellCount": 5,
-      "buySignals": [
-        {
-          "symbol": "HBL",
-          "price": 188.5
-        },
-        {
-          "symbol": "MFIL",
-          "price": 806
-        },
-        {
-          "symbol": "NMB",
-          "price": 238.5
-        },
-        {
-          "symbol": "RBCL",
-          "price": 15120
-        }
-      ],
-      "sellSignals": [
-        {
-          "symbol": "HPPL",
-          "price": 463
-        },
-        {
-          "symbol": "LLBS",
-          "price": 931
-        },
-        {
-          "symbol": "MANDU",
-          "price": 802
-        },
-        {
-          "symbol": "NBLD82",
-          "price": 1077
-        },
-        {
-          "symbol": "NIBD84",
-          "price": 1055.1
-        }
-      ]
-    },
     {
       "date": "2026-02-28",
       "buyCount": 4,
@@ -1880,6 +1912,54 @@
         {
           "symbol": "MLBLD89",
           "price": 1280
+        }
+      ]
+    },
+    {
+      "date": "2026-03-29",
+      "buyCount": 0,
+      "sellCount": 10,
+      "buySignals": [],
+      "sellSignals": [
+        {
+          "symbol": "AKJCL",
+          "price": 406.9
+        },
+        {
+          "symbol": "BHCL",
+          "price": 590.5
+        },
+        {
+          "symbol": "CFCL",
+          "price": 549.7
+        },
+        {
+          "symbol": "DHEL",
+          "price": 708
+        },
+        {
+          "symbol": "NICAD2091",
+          "price": 1055.1
+        },
+        {
+          "symbol": "OMPL",
+          "price": 1325.4
+        },
+        {
+          "symbol": "SANVI",
+          "price": 830
+        },
+        {
+          "symbol": "SBLD2091",
+          "price": 1062.4
+        },
+        {
+          "symbol": "SWASTIK",
+          "price": 2781
+        },
+        {
+          "symbol": "UMRH",
+          "price": 562.1
         }
       ]
     }
