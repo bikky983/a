@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-04-11T14:01:43.692Z",
+  "lastUpdated": "2026-04-12T14:04:33.865Z",
   "currentBuySignals": [
     {
       "symbol": "BNL",
       "signal": "BUY",
       "date": "2026_04_10",
-      "generatedOn": "2026-04-11",
+      "generatedOn": "2026-04-12",
       "price": 15369,
       "details": {
         "rsiFast": "49.01",
@@ -18,7 +18,7 @@
       "symbol": "UMHL",
       "signal": "BUY",
       "date": "2026_04_10",
-      "generatedOn": "2026-04-11",
+      "generatedOn": "2026-04-12",
       "price": 637.5,
       "details": {
         "rsiFast": "55.88",
@@ -33,7 +33,7 @@
       "symbol": "KSY",
       "signal": "SELL",
       "date": "2026_04_10",
-      "generatedOn": "2026-04-11",
+      "generatedOn": "2026-04-12",
       "price": 9.64,
       "details": {
         "rsiFast": "52.05",
@@ -46,7 +46,7 @@
       "symbol": "MABEL",
       "signal": "SELL",
       "date": "2026_04_10",
-      "generatedOn": "2026-04-11",
+      "generatedOn": "2026-04-12",
       "price": 717,
       "details": {
         "rsiFast": "48.68",
@@ -59,7 +59,7 @@
       "symbol": "MNMF1",
       "signal": "SELL",
       "date": "2026_04_10",
-      "generatedOn": "2026-04-11",
+      "generatedOn": "2026-04-12",
       "price": 9.9,
       "details": {
         "rsiFast": "52.79",
@@ -72,11 +72,11 @@
       "symbol": "SAND2085",
       "signal": "SELL",
       "date": "2026_04_06",
-      "generatedOn": "2026-04-11",
+      "generatedOn": "2026-04-12",
       "price": 1116,
       "details": {
         "rsiFast": "48.11",
-        "rsiSlow": "51.30",
+        "rsiSlow": "51.35",
         "uptrendPrice": "1125.65",
         "breakdownStrength": "0.86"
       }
@@ -85,7 +85,7 @@
       "symbol": "SBL",
       "signal": "SELL",
       "date": "2026_04_10",
-      "generatedOn": "2026-04-11",
+      "generatedOn": "2026-04-12",
       "price": 393,
       "details": {
         "rsiFast": "51.04",
@@ -98,7 +98,7 @@
       "symbol": "SIGS3",
       "signal": "SELL",
       "date": "2026_04_10",
-      "generatedOn": "2026-04-11",
+      "generatedOn": "2026-04-12",
       "price": 10.38,
       "details": {
         "rsiFast": "52.34",
@@ -109,35 +109,6 @@
     }
   ],
   "signalHistory": [
-    {
-      "date": "2026-03-13",
-      "buyCount": 3,
-      "sellCount": 2,
-      "buySignals": [
-        {
-          "symbol": "GIBF1",
-          "price": 11
-        },
-        {
-          "symbol": "MHNL",
-          "price": 287.1
-        },
-        {
-          "symbol": "NICBF",
-          "price": 9.71
-        }
-      ],
-      "sellSignals": [
-        {
-          "symbol": "MMKJL",
-          "price": 579
-        },
-        {
-          "symbol": "SBD87",
-          "price": 1108
-        }
-      ]
-    },
     {
       "date": "2026-03-14",
       "buyCount": 3,
@@ -1446,6 +1417,47 @@
     },
     {
       "date": "2026-04-11",
+      "buyCount": 2,
+      "sellCount": 6,
+      "buySignals": [
+        {
+          "symbol": "BNL",
+          "price": 15369
+        },
+        {
+          "symbol": "UMHL",
+          "price": 637.5
+        }
+      ],
+      "sellSignals": [
+        {
+          "symbol": "KSY",
+          "price": 9.64
+        },
+        {
+          "symbol": "MABEL",
+          "price": 717
+        },
+        {
+          "symbol": "MNMF1",
+          "price": 9.9
+        },
+        {
+          "symbol": "SAND2085",
+          "price": 1116
+        },
+        {
+          "symbol": "SBL",
+          "price": 393
+        },
+        {
+          "symbol": "SIGS3",
+          "price": 10.38
+        }
+      ]
+    },
+    {
+      "date": "2026-04-12",
       "buyCount": 2,
       "sellCount": 6,
       "buySignals": [
