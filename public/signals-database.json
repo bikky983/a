@@ -1,12 +1,12 @@
 {
-  "lastUpdated": "2026-04-13T14:56:19.120Z",
+  "lastUpdated": "2026-04-14T14:56:42.472Z",
   "currentBuySignals": [],
   "currentSellSignals": [
     {
       "symbol": "NFS",
       "signal": "SELL",
       "date": "2026_04_13",
-      "generatedOn": "2026-04-13",
+      "generatedOn": "2026-04-14",
       "price": 617,
       "details": {
         "rsiFast": "44.39",
@@ -19,7 +19,7 @@
       "symbol": "NIBD84",
       "signal": "SELL",
       "date": "2026_04_13",
-      "generatedOn": "2026-04-13",
+      "generatedOn": "2026-04-14",
       "price": 1052,
       "details": {
         "rsiFast": "48.31",
@@ -32,11 +32,11 @@
       "symbol": "SAND2085",
       "signal": "SELL",
       "date": "2026_04_06",
-      "generatedOn": "2026-04-13",
+      "generatedOn": "2026-04-14",
       "price": 1116,
       "details": {
-        "rsiFast": "48.11",
-        "rsiSlow": "51.37",
+        "rsiFast": "48.12",
+        "rsiSlow": "51.39",
         "uptrendPrice": "1125.65",
         "breakdownStrength": "0.86"
       }
@@ -45,7 +45,7 @@
       "symbol": "SHINED",
       "signal": "SELL",
       "date": "2026_04_13",
-      "generatedOn": "2026-04-13",
+      "generatedOn": "2026-04-14",
       "price": 1120,
       "details": {
         "rsiFast": "47.98",
@@ -56,47 +56,6 @@
     }
   ],
   "signalHistory": [
-    {
-      "date": "2026-03-15",
-      "buyCount": 6,
-      "sellCount": 2,
-      "buySignals": [
-        {
-          "symbol": "BHDC",
-          "price": 506
-        },
-        {
-          "symbol": "JSLBB",
-          "price": 1193.5
-        },
-        {
-          "symbol": "KSY",
-          "price": 9.8
-        },
-        {
-          "symbol": "MKHC",
-          "price": 363.9
-        },
-        {
-          "symbol": "NMBHF2",
-          "price": 9.84
-        },
-        {
-          "symbol": "ULBSL",
-          "price": 3300
-        }
-      ],
-      "sellSignals": [
-        {
-          "symbol": "SBD87",
-          "price": 1108
-        },
-        {
-          "symbol": "SCBD",
-          "price": 1128
-        }
-      ]
-    },
     {
       "date": "2026-03-16",
       "buyCount": 0,
@@ -1417,6 +1376,30 @@
     },
     {
       "date": "2026-04-13",
+      "buyCount": 0,
+      "sellCount": 4,
+      "buySignals": [],
+      "sellSignals": [
+        {
+          "symbol": "NFS",
+          "price": 617
+        },
+        {
+          "symbol": "NIBD84",
+          "price": 1052
+        },
+        {
+          "symbol": "SAND2085",
+          "price": 1116
+        },
+        {
+          "symbol": "SHINED",
+          "price": 1120
+        }
+      ]
+    },
+    {
+      "date": "2026-04-14",
       "buyCount": 0,
       "sellCount": 4,
       "buySignals": [],
