@@ -1,65 +1,78 @@
 {
-  "lastUpdated": "2026-04-15T14:50:15.459Z",
+  "lastUpdated": "2026-04-16T15:05:45.497Z",
   "currentBuySignals": [
     {
-      "symbol": "HLICF",
+      "symbol": "BNT",
       "signal": "BUY",
-      "date": "2026_04_15",
-      "generatedOn": "2026-04-15",
-      "price": 9.49,
+      "date": "2026_04_16",
+      "generatedOn": "2026-04-16",
+      "price": 11730.2,
       "details": {
-        "rsiFast": "51.24",
-        "rsiSlow": "50.19",
-        "downtrendPrice": "9.44",
-        "breakoutStrength": "0.48"
-      }
-    },
-    {
-      "symbol": "MHCL",
-      "signal": "BUY",
-      "date": "2026_04_15",
-      "generatedOn": "2026-04-15",
-      "price": 377,
-      "details": {
-        "rsiFast": "50.55",
-        "rsiSlow": "47.50",
-        "downtrendPrice": "375.69",
-        "breakoutStrength": "0.35"
-      }
-    },
-    {
-      "symbol": "MSHL",
-      "signal": "BUY",
-      "date": "2026_04_15",
-      "generatedOn": "2026-04-15",
-      "price": 778,
-      "details": {
-        "rsiFast": "44.35",
-        "rsiSlow": "44.09",
-        "downtrendPrice": "776.70",
-        "breakoutStrength": "0.17"
-      }
-    },
-    {
-      "symbol": "SIGS2",
-      "signal": "BUY",
-      "date": "2026_04_15",
-      "generatedOn": "2026-04-15",
-      "price": 10.28,
-      "details": {
-        "rsiFast": "54.45",
-        "rsiSlow": "52.31",
-        "downtrendPrice": "10.17",
-        "breakoutStrength": "1.12"
+        "rsiFast": "49.01",
+        "rsiSlow": "48.90",
+        "downtrendPrice": "11722.80",
+        "breakoutStrength": "0.06"
       }
     }
   ],
   "currentSellSignals": [
     {
+      "symbol": "KBSH",
+      "signal": "SELL",
+      "date": "2026_04_16",
+      "generatedOn": "2026-04-16",
+      "price": 1636,
+      "details": {
+        "rsiFast": "43.92",
+        "rsiSlow": "44.94",
+        "uptrendPrice": "1640.91",
+        "breakdownStrength": "0.30"
+      }
+    },
+    {
+      "symbol": "MNMF1",
+      "signal": "SELL",
+      "date": "2026_04_16",
+      "generatedOn": "2026-04-16",
+      "price": 9.9,
+      "details": {
+        "rsiFast": "52.43",
+        "rsiSlow": "53.13",
+        "uptrendPrice": "9.98",
+        "breakdownStrength": "0.80"
+      }
+    },
+    {
+      "symbol": "MSLB",
+      "signal": "SELL",
+      "date": "2026_04_16",
+      "generatedOn": "2026-04-16",
+      "price": 1309.9,
+      "details": {
+        "rsiFast": "48.04",
+        "rsiSlow": "48.47",
+        "uptrendPrice": "1321.02",
+        "breakdownStrength": "0.84"
+      }
+    },
+    {
+      "symbol": "NFS",
+      "signal": "SELL",
+      "date": "2026_04_16",
+      "generatedOn": "2026-04-16",
+      "price": 616.6,
+      "details": {
+        "rsiFast": "44.70",
+        "rsiSlow": "46.73",
+        "uptrendPrice": "618.90",
+        "breakdownStrength": "0.37"
+      }
+    },
+    {
       "symbol": "SAND2085",
       "signal": "SELL",
       "date": "2026_04_06",
-      "generatedOn": "2026-04-15",
+      "generatedOn": "2026-04-16",
       "price": 1116,
       "details": {
         "rsiFast": "48.13",
@@ -70,47 +83,6 @@
     }
   ],
   "signalHistory": [
-    {
-      "date": "2026-03-17",
-      "buyCount": 5,
-      "sellCount": 3,
-      "buySignals": [
-        {
-          "symbol": "ICFCD88",
-          "price": 1170
-        },
-        {
-          "symbol": "KSY",
-          "price": 9.67
-        },
-        {
-          "symbol": "NICAD85/86",
-          "price": 1181
-        },
-        {
-          "symbol": "NMBHF2",
-          "price": 9.8
-        },
-        {
-          "symbol": "SLCF",
-          "price": 9.9
-        }
-      ],
-      "sellSignals": [
-        {
-          "symbol": "NICGF2",
-          "price": 9.24
-        },
-        {
-          "symbol": "SAND2085",
-          "price": 1112.6
-        },
-        {
-          "symbol": "SRBLD83",
-          "price": 1048
-        }
-      ]
-    },
     {
       "date": "2026-03-18",
       "buyCount": 5,
@@ -1447,6 +1419,39 @@
         }
       ],
       "sellSignals": [
+        {
+          "symbol": "SAND2085",
+          "price": 1116
+        }
+      ]
+    },
+    {
+      "date": "2026-04-16",
+      "buyCount": 1,
+      "sellCount": 5,
+      "buySignals": [
+        {
+          "symbol": "BNT",
+          "price": 11730.2
+        }
+      ],
+      "sellSignals": [
+        {
+          "symbol": "KBSH",
+          "price": 1636
+        },
+        {
+          "symbol": "MNMF1",
+          "price": 9.9
+        },
+        {
+          "symbol": "MSLB",
+          "price": 1309.9
+        },
+        {
+          "symbol": "NFS",
+          "price": 616.6
+        },
         {
           "symbol": "SAND2085",
           "price": 1116
