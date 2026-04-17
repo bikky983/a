@@ -1,129 +1,61 @@
 {
-  "lastUpdated": "2026-04-16T15:05:45.497Z",
-  "currentBuySignals": [
-    {
-      "symbol": "BNT",
-      "signal": "BUY",
-      "date": "2026_04_16",
-      "generatedOn": "2026-04-16",
-      "price": 11730.2,
-      "details": {
-        "rsiFast": "49.01",
-        "rsiSlow": "48.90",
-        "downtrendPrice": "11722.80",
-        "breakoutStrength": "0.06"
-      }
-    }
-  ],
+  "lastUpdated": "2026-04-17T14:36:44.823Z",
+  "currentBuySignals": [],
   "currentSellSignals": [
     {
-      "symbol": "KBSH",
+      "symbol": "HLICF",
       "signal": "SELL",
-      "date": "2026_04_16",
-      "generatedOn": "2026-04-16",
-      "price": 1636,
+      "date": "2026_04_17",
+      "generatedOn": "2026-04-17",
+      "price": 9.09,
       "details": {
-        "rsiFast": "43.92",
-        "rsiSlow": "44.94",
-        "uptrendPrice": "1640.91",
-        "breakdownStrength": "0.30"
+        "rsiFast": "45.22",
+        "rsiSlow": "48.05",
+        "uptrendPrice": "9.14",
+        "breakdownStrength": "0.53"
       }
     },
     {
-      "symbol": "MNMF1",
+      "symbol": "RSDC",
       "signal": "SELL",
-      "date": "2026_04_16",
-      "generatedOn": "2026-04-16",
-      "price": 9.9,
+      "date": "2026_04_17",
+      "generatedOn": "2026-04-17",
+      "price": 688,
       "details": {
-        "rsiFast": "52.43",
-        "rsiSlow": "53.13",
-        "uptrendPrice": "9.98",
-        "breakdownStrength": "0.80"
-      }
-    },
-    {
-      "symbol": "MSLB",
-      "signal": "SELL",
-      "date": "2026_04_16",
-      "generatedOn": "2026-04-16",
-      "price": 1309.9,
-      "details": {
-        "rsiFast": "48.04",
-        "rsiSlow": "48.47",
-        "uptrendPrice": "1321.02",
+        "rsiFast": "49.76",
+        "rsiSlow": "51.14",
+        "uptrendPrice": "693.85",
         "breakdownStrength": "0.84"
-      }
-    },
-    {
-      "symbol": "NFS",
-      "signal": "SELL",
-      "date": "2026_04_16",
-      "generatedOn": "2026-04-16",
-      "price": 616.6,
-      "details": {
-        "rsiFast": "44.70",
-        "rsiSlow": "46.73",
-        "uptrendPrice": "618.90",
-        "breakdownStrength": "0.37"
       }
     },
     {
       "symbol": "SAND2085",
       "signal": "SELL",
       "date": "2026_04_06",
-      "generatedOn": "2026-04-16",
+      "generatedOn": "2026-04-17",
       "price": 1116,
       "details": {
         "rsiFast": "48.13",
-        "rsiSlow": "51.40",
+        "rsiSlow": "51.25",
         "uptrendPrice": "1125.65",
         "breakdownStrength": "0.86"
+      }
+    },
+    {
+      "symbol": "SHINED",
+      "signal": "SELL",
+      "date": "2026_04_17",
+      "generatedOn": "2026-04-17",
+      "price": 1120,
+      "details": {
+        "rsiFast": "48.11",
+        "rsiSlow": "50.89",
+        "uptrendPrice": "1126.60",
+        "breakdownStrength": "0.59"
       }
     }
   ],
   "signalHistory": [
-    {
-      "date": "2026-03-18",
-      "buyCount": 5,
-      "sellCount": 3,
-      "buySignals": [
-        {
-          "symbol": "ICFCD88",
-          "price": 1170
-        },
-        {
-          "symbol": "KSY",
-          "price": 9.67
-        },
-        {
-          "symbol": "NICAD85/86",
-          "price": 1181
-        },
-        {
-          "symbol": "NMBHF2",
-          "price": 9.8
-        },
-        {
-          "symbol": "SLCF",
-          "price": 9.9
-        }
-      ],
-      "sellSignals": [
-        {
-          "symbol": "NICGF2",
-          "price": 9.24
-        },
-        {
-          "symbol": "SAND2085",
-          "price": 1112.6
-        },
-        {
-          "symbol": "SRBLD83",
-          "price": 1048
-        }
-      ]
-    },
     {
       "date": "2026-03-19",
       "buyCount": 8,
@@ -1455,6 +1387,30 @@
         {
           "symbol": "SAND2085",
           "price": 1116
+        }
+      ]
+    },
+    {
+      "date": "2026-04-17",
+      "buyCount": 0,
+      "sellCount": 4,
+      "buySignals": [],
+      "sellSignals": [
+        {
+          "symbol": "HLICF",
+          "price": 9.09
+        },
+        {
+          "symbol": "RSDC",
+          "price": 688
+        },
+        {
+          "symbol": "SAND2085",
+          "price": 1116
+        },
+        {
+          "symbol": "SHINED",
+          "price": 1120
         }
       ]
     }
