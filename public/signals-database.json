@@ -1,12 +1,12 @@
 {
-  "lastUpdated": "2026-04-18T14:05:46.218Z",
+  "lastUpdated": "2026-04-19T14:04:52.533Z",
   "currentBuySignals": [],
   "currentSellSignals": [
     {
       "symbol": "HLICF",
       "signal": "SELL",
       "date": "2026_04_17",
-      "generatedOn": "2026-04-18",
+      "generatedOn": "2026-04-19",
       "price": 9.09,
       "details": {
         "rsiFast": "45.22",
@@ -19,7 +19,7 @@
       "symbol": "RSDC",
       "signal": "SELL",
       "date": "2026_04_17",
-      "generatedOn": "2026-04-18",
+      "generatedOn": "2026-04-19",
       "price": 688,
       "details": {
         "rsiFast": "49.76",
@@ -32,7 +32,7 @@
       "symbol": "SAND2085",
       "signal": "SELL",
       "date": "2026_04_06",
-      "generatedOn": "2026-04-18",
+      "generatedOn": "2026-04-19",
       "price": 1116,
       "details": {
         "rsiFast": "48.13",
@@ -45,7 +45,7 @@
       "symbol": "SHINED",
       "signal": "SELL",
       "date": "2026_04_17",
-      "generatedOn": "2026-04-18",
+      "generatedOn": "2026-04-19",
       "price": 1120,
       "details": {
         "rsiFast": "48.11",
@@ -56,46 +56,6 @@
     }
   ],
   "signalHistory": [
-    {
-      "date": "2026-03-20",
-      "buyCount": 8,
-      "sellCount": 0,
-      "buySignals": [
-        {
-          "symbol": "ALBSL",
-          "price": 1160
-        },
-        {
-          "symbol": "H8020",
-          "price": 11.68
-        },
-        {
-          "symbol": "JSLBB",
-          "price": 1197
-        },
-        {
-          "symbol": "KDL",
-          "price": 898
-        },
-        {
-          "symbol": "MHCL",
-          "price": 393.2
-        },
-        {
-          "symbol": "MKHC",
-          "price": 361.1
-        },
-        {
-          "symbol": "NICAD85/86",
-          "price": 1181
-        },
-        {
-          "symbol": "SHPC",
-          "price": 557
-        }
-      ],
-      "sellSignals": []
-    },
     {
       "date": "2026-03-21",
       "buyCount": 8,
@@ -1376,6 +1336,30 @@
     },
     {
       "date": "2026-04-18",
+      "buyCount": 0,
+      "sellCount": 4,
+      "buySignals": [],
+      "sellSignals": [
+        {
+          "symbol": "HLICF",
+          "price": 9.09
+        },
+        {
+          "symbol": "RSDC",
+          "price": 688
+        },
+        {
+          "symbol": "SAND2085",
+          "price": 1116
+        },
+        {
+          "symbol": "SHINED",
+          "price": 1120
+        }
+      ]
+    },
+    {
+      "date": "2026-04-19",
       "buyCount": 0,
       "sellCount": 4,
       "buySignals": [],
