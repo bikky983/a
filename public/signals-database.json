@@ -1,38 +1,91 @@
 {
-  "lastUpdated": "2026-04-19T14:04:52.533Z",
-  "currentBuySignals": [],
-  "currentSellSignals": [
+  "lastUpdated": "2026-04-20T14:58:41.181Z",
+  "currentBuySignals": [
     {
-      "symbol": "HLICF",
-      "signal": "SELL",
-      "date": "2026_04_17",
-      "generatedOn": "2026-04-19",
-      "price": 9.09,
+      "symbol": "BNT",
+      "signal": "BUY",
+      "date": "2026_04_20",
+      "generatedOn": "2026-04-20",
+      "price": 11832,
       "details": {
-        "rsiFast": "45.22",
-        "rsiSlow": "48.05",
-        "uptrendPrice": "9.14",
-        "breakdownStrength": "0.53"
+        "rsiFast": "51.19",
+        "rsiSlow": "49.78",
+        "downtrendPrice": "11569.16",
+        "breakoutStrength": "2.27"
       }
     },
     {
-      "symbol": "RSDC",
-      "signal": "SELL",
-      "date": "2026_04_17",
-      "generatedOn": "2026-04-19",
-      "price": 688,
+      "symbol": "CORBL",
+      "signal": "BUY",
+      "date": "2026_04_20",
+      "generatedOn": "2026-04-20",
+      "price": 1849,
       "details": {
-        "rsiFast": "49.76",
-        "rsiSlow": "51.14",
-        "uptrendPrice": "693.85",
-        "breakdownStrength": "0.84"
+        "rsiFast": "51.55",
+        "rsiSlow": "50.56",
+        "downtrendPrice": "1806.92",
+        "breakoutStrength": "2.33"
+      }
+    },
+    {
+      "symbol": "MATRI",
+      "signal": "BUY",
+      "date": "2026_04_20",
+      "generatedOn": "2026-04-20",
+      "price": 970.9,
+      "details": {
+        "rsiFast": "50.15",
+        "rsiSlow": "47.32",
+        "downtrendPrice": "963.87",
+        "breakoutStrength": "0.73"
+      }
+    }
+  ],
+  "currentSellSignals": [
+    {
+      "symbol": "MNMF1",
+      "signal": "SELL",
+      "date": "2026_04_20",
+      "generatedOn": "2026-04-20",
+      "price": 9.82,
+      "details": {
+        "rsiFast": "50.42",
+        "rsiSlow": "52.32",
+        "uptrendPrice": "10.02",
+        "breakdownStrength": "2.00"
+      }
+    },
+    {
+      "symbol": "NIBD84",
+      "signal": "SELL",
+      "date": "2026_04_20",
+      "generatedOn": "2026-04-20",
+      "price": 1052.1,
+      "details": {
+        "rsiFast": "48.41",
+        "rsiSlow": "50.03",
+        "uptrendPrice": "1052.83",
+        "breakdownStrength": "0.07"
+      }
+    },
+    {
+      "symbol": "NICA",
+      "signal": "SELL",
+      "date": "2026_04_20",
+      "generatedOn": "2026-04-20",
+      "price": 362,
+      "details": {
+        "rsiFast": "50.49",
+        "rsiSlow": "51.87",
+        "uptrendPrice": "365.62",
+        "breakdownStrength": "0.99"
       }
     },
     {
       "symbol": "SAND2085",
       "signal": "SELL",
       "date": "2026_04_06",
-      "generatedOn": "2026-04-19",
+      "generatedOn": "2026-04-20",
       "price": 1116,
       "details": {
         "rsiFast": "48.13",
@@ -40,62 +93,9 @@
         "uptrendPrice": "1125.65",
         "breakdownStrength": "0.86"
       }
-    },
-    {
-      "symbol": "SHINED",
-      "signal": "SELL",
-      "date": "2026_04_17",
-      "generatedOn": "2026-04-19",
-      "price": 1120,
-      "details": {
-        "rsiFast": "48.11",
-        "rsiSlow": "50.89",
-        "uptrendPrice": "1126.60",
-        "breakdownStrength": "0.59"
-      }
     }
   ],
   "signalHistory": [
-    {
-      "date": "2026-03-21",
-      "buyCount": 8,
-      "sellCount": 0,
-      "buySignals": [
-        {
-          "symbol": "ALBSL",
-          "price": 1160
-        },
-        {
-          "symbol": "H8020",
-          "price": 11.68
-        },
-        {
-          "symbol": "JSLBB",
-          "price": 1197
-        },
-        {
-          "symbol": "KDL",
-          "price": 898
-        },
-        {
-          "symbol": "MHCL",
-          "price": 393.2
-        },
-        {
-          "symbol": "MKHC",
-          "price": 361.1
-        },
-        {
-          "symbol": "NICAD85/86",
-          "price": 1181
-        },
-        {
-          "symbol": "SHPC",
-          "price": 557
-        }
-      ],
-      "sellSignals": []
-    },
     {
       "date": "2026-03-22",
       "buyCount": 21,
@@ -1379,6 +1379,43 @@
         {
           "symbol": "SHINED",
           "price": 1120
+        }
+      ]
+    },
+    {
+      "date": "2026-04-20",
+      "buyCount": 3,
+      "sellCount": 4,
+      "buySignals": [
+        {
+          "symbol": "BNT",
+          "price": 11832
+        },
+        {
+          "symbol": "CORBL",
+          "price": 1849
+        },
+        {
+          "symbol": "MATRI",
+          "price": 970.9
+        }
+      ],
+      "sellSignals": [
+        {
+          "symbol": "MNMF1",
+          "price": 9.82
+        },
+        {
+          "symbol": "NIBD84",
+          "price": 1052.1
+        },
+        {
+          "symbol": "NICA",
+          "price": 362
+        },
+        {
+          "symbol": "SAND2085",
+          "price": 1116
         }
       ]
     }
