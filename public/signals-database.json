@@ -1,12 +1,12 @@
 {
-  "lastUpdated": "2026-04-23T15:22:00.267Z",
+  "lastUpdated": "2026-04-24T14:49:36.491Z",
   "currentBuySignals": [],
   "currentSellSignals": [
     {
       "symbol": "API",
       "signal": "SELL",
       "date": "2026_04_23",
-      "generatedOn": "2026-04-23",
+      "generatedOn": "2026-04-24",
       "price": 339.9,
       "details": {
         "rsiFast": "52.04",
@@ -19,7 +19,7 @@
       "symbol": "CHCL",
       "signal": "SELL",
       "date": "2026_04_23",
-      "generatedOn": "2026-04-23",
+      "generatedOn": "2026-04-24",
       "price": 482.1,
       "details": {
         "rsiFast": "45.87",
@@ -32,7 +32,7 @@
       "symbol": "HEI",
       "signal": "SELL",
       "date": "2026_04_23",
-      "generatedOn": "2026-04-23",
+      "generatedOn": "2026-04-24",
       "price": 514,
       "details": {
         "rsiFast": "45.39",
@@ -45,7 +45,7 @@
       "symbol": "NBLD82",
       "signal": "SELL",
       "date": "2026_04_22",
-      "generatedOn": "2026-04-23",
+      "generatedOn": "2026-04-24",
       "price": 1068.3,
       "details": {
         "rsiFast": "47.34",
@@ -58,7 +58,7 @@
       "symbol": "NGPL",
       "signal": "SELL",
       "date": "2026_04_23",
-      "generatedOn": "2026-04-23",
+      "generatedOn": "2026-04-24",
       "price": 444.9,
       "details": {
         "rsiFast": "47.70",
@@ -71,7 +71,7 @@
       "symbol": "NIBD84",
       "signal": "SELL",
       "date": "2026_04_20",
-      "generatedOn": "2026-04-23",
+      "generatedOn": "2026-04-24",
       "price": 1052.1,
       "details": {
         "rsiFast": "48.41",
@@ -84,7 +84,7 @@
       "symbol": "SCBD",
       "signal": "SELL",
       "date": "2026_04_23",
-      "generatedOn": "2026-04-23",
+      "generatedOn": "2026-04-24",
       "price": 1115.5,
       "details": {
         "rsiFast": "44.32",
@@ -97,7 +97,7 @@
       "symbol": "SGIC",
       "signal": "SELL",
       "date": "2026_04_23",
-      "generatedOn": "2026-04-23",
+      "generatedOn": "2026-04-24",
       "price": 473.6,
       "details": {
         "rsiFast": "42.71",
@@ -110,7 +110,7 @@
       "symbol": "SJCL",
       "signal": "SELL",
       "date": "2026_04_23",
-      "generatedOn": "2026-04-23",
+      "generatedOn": "2026-04-24",
       "price": 308,
       "details": {
         "rsiFast": "46.11",
@@ -121,39 +121,6 @@
     }
   ],
   "signalHistory": [
-    {
-      "date": "2026-03-25",
-      "buyCount": 1,
-      "sellCount": 5,
-      "buySignals": [
-        {
-          "symbol": "MSHL",
-          "price": 809
-        }
-      ],
-      "sellSignals": [
-        {
-          "symbol": "AKJCL",
-          "price": 402.1
-        },
-        {
-          "symbol": "MLBLD89",
-          "price": 1280
-        },
-        {
-          "symbol": "NICAD2091",
-          "price": 1051.1
-        },
-        {
-          "symbol": "PBLD87",
-          "price": 1091.5
-        },
-        {
-          "symbol": "SBLD2091",
-          "price": 1062.1
-        }
-      ]
-    },
     {
       "date": "2026-03-26",
       "buyCount": 3,
@@ -1372,6 +1339,50 @@
     },
     {
       "date": "2026-04-23",
+      "buyCount": 0,
+      "sellCount": 9,
+      "buySignals": [],
+      "sellSignals": [
+        {
+          "symbol": "API",
+          "price": 339.9
+        },
+        {
+          "symbol": "CHCL",
+          "price": 482.1
+        },
+        {
+          "symbol": "HEI",
+          "price": 514
+        },
+        {
+          "symbol": "NBLD82",
+          "price": 1068.3
+        },
+        {
+          "symbol": "NGPL",
+          "price": 444.9
+        },
+        {
+          "symbol": "NIBD84",
+          "price": 1052.1
+        },
+        {
+          "symbol": "SCBD",
+          "price": 1115.5
+        },
+        {
+          "symbol": "SGIC",
+          "price": 473.6
+        },
+        {
+          "symbol": "SJCL",
+          "price": 308
+        }
+      ]
+    },
+    {
+      "date": "2026-04-24",
       "buyCount": 0,
       "sellCount": 9,
       "buySignals": [],
