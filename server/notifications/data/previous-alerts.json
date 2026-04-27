@@ -1,50 +1,49 @@
 {
-  "lastUpdated": "2026-04-26T12:04:12.300Z",
+  "lastUpdated": "2026-04-27T13:03:29.964Z",
   "institutionalStocks": {
-    "1650.00": {
+    "1600.20": {
       "score": 60,
       "price": 20,
       "patterns": "OBV Bullish Divergence, Below VWAP, Spring Pattern, Upthrust Pattern, Statistical Anomaly (Bullish)",
-      "lastUpdated": "2026-04-26T12:04:12.297Z"
-    },
-    "279.00": {
-      "score": 60,
-      "price": 0,
-      "patterns": "OBV Bullish Divergence, Below VWAP, Spring Pattern, Statistical Anomaly (Bullish)",
-      "lastUpdated": "2026-04-26T12:04:12.297Z"
-    },
-    "820.00": {
-      "score": 60,
-      "price": 0,
-      "patterns": "OBV Bullish Divergence, Below VWAP, Spring Pattern, Statistical Anomaly (Bullish)",
-      "lastUpdated": "2026-04-26T12:04:12.297Z"
+      "lastUpdated": "2026-04-27T13:03:29.962Z"
     }
   },
   "trendlineStocks": {},
   "rsiSupportStocks": {
-    "SMB\n                New": {
-      "ltp": 1750,
+    "DOLTI\n                NewBought": {
+      "ltp": 376,
+      "rsi": 19.71,
+      "supportPrice1": 360,
+      "diff1": "",
+      "lastUpdated": "2026-04-27T13:03:29.964Z"
+    },
+    "RAWA\n                New": {
+      "ltp": 630,
+      "rsi": 31.43,
+      "supportPrice1": 622.21,
+      "diff1": "",
+      "lastUpdated": "2026-04-27T13:03:29.964Z"
+    },
+    "MLBS\n                NewBought": {
+      "ltp": 1327,
       "rsi": 32.61,
+      "supportPrice1": 1328.53,
+      "diff1": "",
+      "lastUpdated": "2026-04-27T13:03:29.964Z"
+    },
+    "SMB\n                New": {
+      "ltp": 1752,
+      "rsi": 33.13,
       "supportPrice1": 1728.27,
       "diff1": "",
-      "lastUpdated": "2026-04-26T12:04:12.300Z"
+      "lastUpdated": "2026-04-27T13:03:29.964Z"
     }
   },
   "heatmapStocks": {
-    "1650.00": {
+    "1600.20": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2026-04-26T12:04:12.299Z"
-    },
-    "279.00": {
-      "price": 0,
-      "volume": 0,
-      "lastUpdated": "2026-04-26T12:04:12.299Z"
-    },
-    "820.00": {
-      "price": 0,
-      "volume": 0,
-      "lastUpdated": "2026-04-26T12:04:12.299Z"
+      "lastUpdated": "2026-04-27T13:03:29.964Z"
     }
   }
 }
