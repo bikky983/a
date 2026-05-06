@@ -1,105 +1,113 @@
 {
-  "lastUpdated": "2026-05-05T12:48:02.241Z",
+  "lastUpdated": "2026-05-06T13:13:20.158Z",
   "institutionalStocks": {
-    "6093.90": {
-      "score": 55,
-      "price": 0,
-      "patterns": "Volume Spike (Bullish), Above VWAP, Spring Pattern, Statistical Anomaly (Bullish)",
-      "lastUpdated": "2026-05-05T12:48:02.238Z"
+    "undefined": {
+      "score": 0,
+      "price": null,
+      "patterns": "",
+      "lastUpdated": "2026-05-06T13:13:20.155Z"
     }
   },
   "trendlineStocks": {},
   "rsiSupportStocks": {
-    "DOLTI\n                NewBought": {
-      "ltp": 356.5,
-      "rsi": 18.26,
-      "supportPrice1": 360,
+    "MEL\n                NewBought": {
+      "ltp": 229,
+      "rsi": 16.4,
+      "supportPrice1": 224.63,
       "diff1": "",
-      "lastUpdated": "2026-05-05T12:48:02.241Z"
+      "lastUpdated": "2026-05-06T13:13:20.158Z"
     },
     "NMIC\n                New": {
-      "ltp": 994.9,
-      "rsi": 22.9,
+      "ltp": 993.7,
+      "rsi": 22.8,
       "supportPrice1": 1000,
       "diff1": "",
-      "lastUpdated": "2026-05-05T12:48:02.241Z"
-    },
-    "MEHL\n                New": {
-      "ltp": 380,
-      "rsi": 28.03,
-      "supportPrice1": 381.35,
-      "diff1": "",
-      "lastUpdated": "2026-05-05T12:48:02.241Z"
+      "lastUpdated": "2026-05-06T13:13:20.158Z"
     },
     "MSHL\n                New": {
-      "ltp": 710.1,
-      "rsi": 28.33,
+      "ltp": 694.1,
+      "rsi": 24.41,
       "supportPrice1": 680.97,
       "diff1": "",
-      "lastUpdated": "2026-05-05T12:48:02.241Z"
+      "lastUpdated": "2026-05-06T13:13:20.158Z"
     },
-    "SMFBS\n                New": {
-      "ltp": 1580,
-      "rsi": 30.11,
-      "supportPrice1": 1585.84,
+    "HRL\n                New": {
+      "ltp": 654.2,
+      "rsi": 25.78,
+      "supportPrice1": 624,
       "diff1": "",
-      "lastUpdated": "2026-05-05T12:48:02.241Z"
+      "lastUpdated": "2026-05-06T13:13:20.158Z"
     },
     "VLBS\n                New": {
-      "ltp": 703,
-      "rsi": 31.57,
+      "ltp": 691.2,
+      "rsi": 28.84,
       "supportPrice1": 672.09,
       "diff1": "",
-      "lastUpdated": "2026-05-05T12:48:02.241Z"
+      "lastUpdated": "2026-05-06T13:13:20.158Z"
     },
-    "SICL\n                New": {
-      "ltp": 610.5,
-      "rsi": 32.63,
-      "supportPrice1": 592,
+    "SHLB\n                NewBought": {
+      "ltp": 1421,
+      "rsi": 29.23,
+      "supportPrice1": 1376,
       "diff1": "",
-      "lastUpdated": "2026-05-05T12:48:02.241Z"
+      "lastUpdated": "2026-05-06T13:13:20.158Z"
     },
-    "SARBTM\n                New": {
-      "ltp": 820,
-      "rsi": 33.1,
-      "supportPrice1": 796.71,
+    "WNLB\n                New": {
+      "ltp": 1405,
+      "rsi": 30.08,
+      "supportPrice1": 1344,
       "diff1": "",
-      "lastUpdated": "2026-05-05T12:48:02.241Z"
+      "lastUpdated": "2026-05-06T13:13:20.158Z"
+    },
+    "KBSH\n                New": {
+      "ltp": 1513,
+      "rsi": 31.63,
+      "supportPrice1": 1494.01,
+      "diff1": "",
+      "lastUpdated": "2026-05-06T13:13:20.158Z"
     },
     "KDL\n                New": {
-      "ltp": 808,
-      "rsi": 33.82,
+      "ltp": 803,
+      "rsi": 32.67,
       "supportPrice1": 778.07,
       "diff1": "",
-      "lastUpdated": "2026-05-05T12:48:02.241Z"
-    },
-    "SIKLES\n                New": {
-      "ltp": 573.4,
-      "rsi": 34.21,
-      "supportPrice1": 576,
-      "diff1": "",
-      "lastUpdated": "2026-05-05T12:48:02.241Z"
+      "lastUpdated": "2026-05-06T13:13:20.158Z"
     },
     "SJLIC\n                New": {
-      "ltp": 427,
-      "rsi": 34.68,
+      "ltp": 426,
+      "rsi": 33.87,
       "supportPrice1": 426.29,
       "diff1": "",
-      "lastUpdated": "2026-05-05T12:48:02.241Z"
+      "lastUpdated": "2026-05-06T13:13:20.158Z"
+    },
+    "SIKLES\n                New": {
+      "ltp": 573,
+      "rsi": 34.08,
+      "supportPrice1": 576,
+      "diff1": "",
+      "lastUpdated": "2026-05-06T13:13:20.158Z"
+    },
+    "SMFBS\n                New": {
+      "ltp": 1595,
+      "rsi": 34.34,
+      "supportPrice1": 1585.84,
+      "diff1": "",
+      "lastUpdated": "2026-05-06T13:13:20.158Z"
+    },
+    "SICL\n                New": {
+      "ltp": 612,
+      "rsi": 34.48,
+      "supportPrice1": 592,
+      "diff1": "",
+      "lastUpdated": "2026-05-06T13:13:20.158Z"
     },
     "SPHL\n                New": {
       "ltp": 504,
       "rsi": 34.7,
       "supportPrice1": 484.19,
       "diff1": "",
-      "lastUpdated": "2026-05-05T12:48:02.241Z"
+      "lastUpdated": "2026-05-06T13:13:20.158Z"
     }
   },
-  "heatmapStocks": {
-    "6093.90": {
-      "price": 0,
-      "volume": 0,
-      "lastUpdated": "2026-05-05T12:48:02.240Z"
-    }
-  }
+  "heatmapStocks": {}
 }
