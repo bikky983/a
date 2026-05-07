@@ -1,112 +1,112 @@
 {
-  "lastUpdated": "2026-05-06T13:13:20.158Z",
+  "lastUpdated": "2026-05-07T13:16:42.946Z",
   "institutionalStocks": {
     "undefined": {
       "score": 0,
       "price": null,
       "patterns": "",
-      "lastUpdated": "2026-05-06T13:13:20.155Z"
+      "lastUpdated": "2026-05-07T13:16:42.943Z"
     }
   },
   "trendlineStocks": {},
   "rsiSupportStocks": {
     "MEL\n                NewBought": {
-      "ltp": 229,
+      "ltp": 229.9,
       "rsi": 16.4,
       "supportPrice1": 224.63,
       "diff1": "",
-      "lastUpdated": "2026-05-06T13:13:20.158Z"
+      "lastUpdated": "2026-05-07T13:16:42.946Z"
     },
     "NMIC\n                New": {
-      "ltp": 993.7,
+      "ltp": 991,
       "rsi": 22.8,
       "supportPrice1": 1000,
       "diff1": "",
-      "lastUpdated": "2026-05-06T13:13:20.158Z"
+      "lastUpdated": "2026-05-07T13:16:42.946Z"
     },
     "MSHL\n                New": {
-      "ltp": 694.1,
+      "ltp": 692,
       "rsi": 24.41,
       "supportPrice1": 680.97,
       "diff1": "",
-      "lastUpdated": "2026-05-06T13:13:20.158Z"
+      "lastUpdated": "2026-05-07T13:16:42.946Z"
     },
-    "HRL\n                New": {
-      "ltp": 654.2,
-      "rsi": 25.78,
-      "supportPrice1": 624,
+    "MEHL\n                New": {
+      "ltp": 376.2,
+      "rsi": 26.27,
+      "supportPrice1": 381.35,
       "diff1": "",
-      "lastUpdated": "2026-05-06T13:13:20.158Z"
+      "lastUpdated": "2026-05-07T13:16:42.946Z"
     },
     "VLBS\n                New": {
-      "ltp": 691.2,
+      "ltp": 693,
       "rsi": 28.84,
       "supportPrice1": 672.09,
       "diff1": "",
-      "lastUpdated": "2026-05-06T13:13:20.158Z"
+      "lastUpdated": "2026-05-07T13:16:42.946Z"
     },
-    "SHLB\n                NewBought": {
-      "ltp": 1421,
-      "rsi": 29.23,
-      "supportPrice1": 1376,
+    "MATRI\n                New": {
+      "ltp": 911.8,
+      "rsi": 29.28,
+      "supportPrice1": 920,
       "diff1": "",
-      "lastUpdated": "2026-05-06T13:13:20.158Z"
+      "lastUpdated": "2026-05-07T13:16:42.946Z"
     },
     "WNLB\n                New": {
-      "ltp": 1405,
+      "ltp": 1396,
       "rsi": 30.08,
       "supportPrice1": 1344,
       "diff1": "",
-      "lastUpdated": "2026-05-06T13:13:20.158Z"
+      "lastUpdated": "2026-05-07T13:16:42.946Z"
     },
     "KBSH\n                New": {
-      "ltp": 1513,
+      "ltp": 1500,
       "rsi": 31.63,
       "supportPrice1": 1494.01,
       "diff1": "",
-      "lastUpdated": "2026-05-06T13:13:20.158Z"
+      "lastUpdated": "2026-05-07T13:16:42.946Z"
     },
     "KDL\n                New": {
-      "ltp": 803,
+      "ltp": 814,
       "rsi": 32.67,
       "supportPrice1": 778.07,
       "diff1": "",
-      "lastUpdated": "2026-05-06T13:13:20.158Z"
+      "lastUpdated": "2026-05-07T13:16:42.946Z"
     },
     "SJLIC\n                New": {
-      "ltp": 426,
+      "ltp": 428,
       "rsi": 33.87,
       "supportPrice1": 426.29,
       "diff1": "",
-      "lastUpdated": "2026-05-06T13:13:20.158Z"
+      "lastUpdated": "2026-05-07T13:16:42.946Z"
     },
     "SIKLES\n                New": {
-      "ltp": 573,
+      "ltp": 573.5,
       "rsi": 34.08,
       "supportPrice1": 576,
       "diff1": "",
-      "lastUpdated": "2026-05-06T13:13:20.158Z"
+      "lastUpdated": "2026-05-07T13:16:42.946Z"
     },
     "SMFBS\n                New": {
-      "ltp": 1595,
+      "ltp": 1639,
       "rsi": 34.34,
       "supportPrice1": 1585.84,
       "diff1": "",
-      "lastUpdated": "2026-05-06T13:13:20.158Z"
+      "lastUpdated": "2026-05-07T13:16:42.946Z"
     },
     "SICL\n                New": {
-      "ltp": 612,
+      "ltp": 609.1,
       "rsi": 34.48,
       "supportPrice1": 592,
       "diff1": "",
-      "lastUpdated": "2026-05-06T13:13:20.158Z"
+      "lastUpdated": "2026-05-07T13:16:42.946Z"
     },
     "SPHL\n                New": {
-      "ltp": 504,
+      "ltp": 505.5,
       "rsi": 34.7,
       "supportPrice1": 484.19,
       "diff1": "",
-      "lastUpdated": "2026-05-06T13:13:20.158Z"
+      "lastUpdated": "2026-05-07T13:16:42.946Z"
     }
   },
   "heatmapStocks": {}
