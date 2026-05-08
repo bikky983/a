@@ -1,113 +1,67 @@
 {
-  "lastUpdated": "2026-05-07T13:16:42.946Z",
+  "lastUpdated": "2026-05-08T12:54:36.516Z",
   "institutionalStocks": {
-    "undefined": {
-      "score": 0,
-      "price": null,
-      "patterns": "",
-      "lastUpdated": "2026-05-07T13:16:42.943Z"
+    "977.10": {
+      "score": 60,
+      "price": 0,
+      "patterns": "Volume Spike (Bullish), OBV Bullish Divergence, Statistical Anomaly (Bullish)",
+      "lastUpdated": "2026-05-08T12:54:36.513Z"
+    },
+    "1319.00": {
+      "score": 55,
+      "price": 20,
+      "patterns": "Volume Spike (Bullish), Below VWAP, Spring Pattern, Upthrust Pattern, Statistical Anomaly (Bullish)",
+      "lastUpdated": "2026-05-08T12:54:36.513Z"
     }
   },
   "trendlineStocks": {},
   "rsiSupportStocks": {
-    "MEL\n                NewBought": {
-      "ltp": 229.9,
-      "rsi": 16.4,
-      "supportPrice1": 224.63,
-      "diff1": "",
-      "lastUpdated": "2026-05-07T13:16:42.946Z"
-    },
     "NMIC\n                New": {
-      "ltp": 991,
-      "rsi": 22.8,
+      "ltp": 1006,
+      "rsi": 26.22,
       "supportPrice1": 1000,
       "diff1": "",
-      "lastUpdated": "2026-05-07T13:16:42.946Z"
+      "lastUpdated": "2026-05-08T12:54:36.516Z"
     },
     "MSHL\n                New": {
-      "ltp": 692,
-      "rsi": 24.41,
+      "ltp": 697,
+      "rsi": 26.4,
       "supportPrice1": 680.97,
       "diff1": "",
-      "lastUpdated": "2026-05-07T13:16:42.946Z"
-    },
-    "MEHL\n                New": {
-      "ltp": 376.2,
-      "rsi": 26.27,
-      "supportPrice1": 381.35,
-      "diff1": "",
-      "lastUpdated": "2026-05-07T13:16:42.946Z"
+      "lastUpdated": "2026-05-08T12:54:36.516Z"
     },
     "VLBS\n                New": {
-      "ltp": 693,
-      "rsi": 28.84,
+      "ltp": 696.1,
+      "rsi": 31.49,
       "supportPrice1": 672.09,
       "diff1": "",
-      "lastUpdated": "2026-05-07T13:16:42.946Z"
+      "lastUpdated": "2026-05-08T12:54:36.516Z"
     },
-    "MATRI\n                New": {
-      "ltp": 911.8,
-      "rsi": 29.28,
-      "supportPrice1": 920,
-      "diff1": "",
-      "lastUpdated": "2026-05-07T13:16:42.946Z"
-    },
-    "WNLB\n                New": {
-      "ltp": 1396,
-      "rsi": 30.08,
-      "supportPrice1": 1344,
-      "diff1": "",
-      "lastUpdated": "2026-05-07T13:16:42.946Z"
-    },
-    "KBSH\n                New": {
-      "ltp": 1500,
+    "MEHL\n                New": {
+      "ltp": 381,
       "rsi": 31.63,
-      "supportPrice1": 1494.01,
+      "supportPrice1": 381.35,
       "diff1": "",
-      "lastUpdated": "2026-05-07T13:16:42.946Z"
-    },
-    "KDL\n                New": {
-      "ltp": 814,
-      "rsi": 32.67,
-      "supportPrice1": 778.07,
-      "diff1": "",
-      "lastUpdated": "2026-05-07T13:16:42.946Z"
-    },
-    "SJLIC\n                New": {
-      "ltp": 428,
-      "rsi": 33.87,
-      "supportPrice1": 426.29,
-      "diff1": "",
-      "lastUpdated": "2026-05-07T13:16:42.946Z"
-    },
-    "SIKLES\n                New": {
-      "ltp": 573.5,
-      "rsi": 34.08,
-      "supportPrice1": 576,
-      "diff1": "",
-      "lastUpdated": "2026-05-07T13:16:42.946Z"
-    },
-    "SMFBS\n                New": {
-      "ltp": 1639,
-      "rsi": 34.34,
-      "supportPrice1": 1585.84,
-      "diff1": "",
-      "lastUpdated": "2026-05-07T13:16:42.946Z"
+      "lastUpdated": "2026-05-08T12:54:36.516Z"
     },
     "SICL\n                New": {
-      "ltp": 609.1,
-      "rsi": 34.48,
+      "ltp": 611.2,
+      "rsi": 33.95,
       "supportPrice1": 592,
       "diff1": "",
-      "lastUpdated": "2026-05-07T13:16:42.946Z"
-    },
-    "SPHL\n                New": {
-      "ltp": 505.5,
-      "rsi": 34.7,
-      "supportPrice1": 484.19,
-      "diff1": "",
-      "lastUpdated": "2026-05-07T13:16:42.946Z"
+      "lastUpdated": "2026-05-08T12:54:36.516Z"
     }
   },
-  "heatmapStocks": {}
+  "heatmapStocks": {
+    "977.10": {
+      "price": 0,
+      "volume": 0,
+      "lastUpdated": "2026-05-08T12:54:36.515Z"
+    },
+    "1319.00": {
+      "price": 0,
+      "volume": 0,
+      "lastUpdated": "2026-05-08T12:54:36.515Z"
+    }
+  }
 }
