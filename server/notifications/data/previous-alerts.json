@@ -1,49 +1,63 @@
 {
-  "lastUpdated": "2026-05-13T13:36:51.142Z",
+  "lastUpdated": "2026-05-14T13:15:36.381Z",
   "institutionalStocks": {
     "undefined": {
       "score": 0,
       "price": null,
       "patterns": "",
-      "lastUpdated": "2026-05-13T13:36:51.140Z"
+      "lastUpdated": "2026-05-14T13:15:36.379Z"
     }
   },
   "trendlineStocks": {},
   "rsiSupportStocks": {
     "MEL\n                NewBought": {
-      "ltp": 226.5,
-      "rsi": 22.39,
+      "ltp": 226.1,
+      "rsi": 22.24,
       "supportPrice1": 224.63,
       "diff1": "",
-      "lastUpdated": "2026-05-13T13:36:51.142Z"
+      "lastUpdated": "2026-05-14T13:15:36.381Z"
     },
     "MSHL\n                New": {
-      "ltp": 691.4,
-      "rsi": 26.96,
+      "ltp": 681.4,
+      "rsi": 24.56,
       "supportPrice1": 680.97,
       "diff1": "",
-      "lastUpdated": "2026-05-13T13:36:51.142Z"
+      "lastUpdated": "2026-05-14T13:15:36.381Z"
+    },
+    "HRL\n                New": {
+      "ltp": 626,
+      "rsi": 26.98,
+      "supportPrice1": 624,
+      "diff1": "",
+      "lastUpdated": "2026-05-14T13:15:36.381Z"
     },
     "NMIC\n                New": {
-      "ltp": 1016,
-      "rsi": 30.61,
+      "ltp": 1000,
+      "rsi": 28.79,
       "supportPrice1": 1000,
       "diff1": "",
-      "lastUpdated": "2026-05-13T13:36:51.142Z"
-    },
-    "SMFBS\n                New": {
-      "ltp": 1555,
-      "rsi": 32.59,
-      "supportPrice1": 1585.84,
-      "diff1": "",
-      "lastUpdated": "2026-05-13T13:36:51.142Z"
+      "lastUpdated": "2026-05-14T13:15:36.381Z"
     },
     "MEHL\n                New": {
-      "ltp": 382.9,
-      "rsi": 33.87,
+      "ltp": 375,
+      "rsi": 31.02,
       "supportPrice1": 381.35,
       "diff1": "",
-      "lastUpdated": "2026-05-13T13:36:51.142Z"
+      "lastUpdated": "2026-05-14T13:15:36.381Z"
+    },
+    "SFCL\n                New": {
+      "ltp": 363.2,
+      "rsi": 32.83,
+      "supportPrice1": 346.63,
+      "diff1": "",
+      "lastUpdated": "2026-05-14T13:15:36.381Z"
+    },
+    "CKHL\n                New": {
+      "ltp": 643.5,
+      "rsi": 34.46,
+      "supportPrice1": 614.53,
+      "diff1": "",
+      "lastUpdated": "2026-05-14T13:15:36.381Z"
     }
   },
   "heatmapStocks": {}
