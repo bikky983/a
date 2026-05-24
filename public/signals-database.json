@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-05-23T14:43:27.287Z",
+  "lastUpdated": "2026-05-24T14:43:06.214Z",
   "currentBuySignals": [
     {
       "symbol": "AKJCL",
       "signal": "BUY",
       "date": "2026_05_22",
-      "generatedOn": "2026-05-23",
+      "generatedOn": "2026-05-24",
       "price": 402,
       "details": {
         "rsiFast": "58.91",
@@ -18,7 +18,7 @@
       "symbol": "CHCL",
       "signal": "BUY",
       "date": "2026_05_22",
-      "generatedOn": "2026-05-23",
+      "generatedOn": "2026-05-24",
       "price": 482,
       "details": {
         "rsiFast": "49.21",
@@ -31,7 +31,7 @@
       "symbol": "GMFIL",
       "signal": "BUY",
       "date": "2026_05_22",
-      "generatedOn": "2026-05-23",
+      "generatedOn": "2026-05-24",
       "price": 469.9,
       "details": {
         "rsiFast": "50.08",
@@ -44,7 +44,7 @@
       "symbol": "HLBSL",
       "signal": "BUY",
       "date": "2026_05_22",
-      "generatedOn": "2026-05-23",
+      "generatedOn": "2026-05-24",
       "price": 898,
       "details": {
         "rsiFast": "47.91",
@@ -57,7 +57,7 @@
       "symbol": "MHCL",
       "signal": "BUY",
       "date": "2026_05_22",
-      "generatedOn": "2026-05-23",
+      "generatedOn": "2026-05-24",
       "price": 368.9,
       "details": {
         "rsiFast": "54.03",
@@ -70,7 +70,7 @@
       "symbol": "NLICL",
       "signal": "BUY",
       "date": "2026_05_22",
-      "generatedOn": "2026-05-23",
+      "generatedOn": "2026-05-24",
       "price": 591,
       "details": {
         "rsiFast": "50.44",
@@ -83,7 +83,7 @@
       "symbol": "RIDI",
       "signal": "BUY",
       "date": "2026_05_22",
-      "generatedOn": "2026-05-23",
+      "generatedOn": "2026-05-24",
       "price": 366.7,
       "details": {
         "rsiFast": "57.99",
@@ -96,7 +96,7 @@
       "symbol": "RMF2",
       "signal": "BUY",
       "date": "2026_05_20",
-      "generatedOn": "2026-05-23",
+      "generatedOn": "2026-05-24",
       "price": 10.5,
       "details": {
         "rsiFast": "57.50",
@@ -109,7 +109,7 @@
       "symbol": "RSY",
       "signal": "BUY",
       "date": "2026_05_22",
-      "generatedOn": "2026-05-23",
+      "generatedOn": "2026-05-24",
       "price": 10.35,
       "details": {
         "rsiFast": "54.68",
@@ -122,7 +122,7 @@
       "symbol": "SARBTM",
       "signal": "BUY",
       "date": "2026_05_22",
-      "generatedOn": "2026-05-23",
+      "generatedOn": "2026-05-24",
       "price": 855,
       "details": {
         "rsiFast": "49.71",
@@ -135,7 +135,7 @@
       "symbol": "SONA",
       "signal": "BUY",
       "date": "2026_05_22",
-      "generatedOn": "2026-05-23",
+      "generatedOn": "2026-05-24",
       "price": 462,
       "details": {
         "rsiFast": "57.34",
@@ -150,7 +150,7 @@
       "symbol": "FMDBL",
       "signal": "SELL",
       "date": "2026_05_22",
-      "generatedOn": "2026-05-23",
+      "generatedOn": "2026-05-24",
       "price": 787.3,
       "details": {
         "rsiFast": "45.07",
@@ -163,7 +163,7 @@
       "symbol": "NIBD84",
       "signal": "SELL",
       "date": "2026_05_22",
-      "generatedOn": "2026-05-23",
+      "generatedOn": "2026-05-24",
       "price": 1050.1,
       "details": {
         "rsiFast": "47.98",
@@ -176,7 +176,7 @@
       "symbol": "NIBSF2",
       "signal": "SELL",
       "date": "2026_05_22",
-      "generatedOn": "2026-05-23",
+      "generatedOn": "2026-05-24",
       "price": 9.35,
       "details": {
         "rsiFast": "49.80",
@@ -189,7 +189,7 @@
       "symbol": "RBCLPO",
       "signal": "SELL",
       "date": "2026_05_22",
-      "generatedOn": "2026-05-23",
+      "generatedOn": "2026-05-24",
       "price": 11800,
       "details": {
         "rsiFast": "46.53",
@@ -202,7 +202,7 @@
       "symbol": "SNLI",
       "signal": "SELL",
       "date": "2026_05_22",
-      "generatedOn": "2026-05-23",
+      "generatedOn": "2026-05-24",
       "price": 447,
       "details": {
         "rsiFast": "42.53",
@@ -213,50 +213,6 @@
     }
   ],
   "signalHistory": [
-    {
-      "date": "2026-04-23",
-      "buyCount": 0,
-      "sellCount": 9,
-      "buySignals": [],
-      "sellSignals": [
-        {
-          "symbol": "API",
-          "price": 339.9
-        },
-        {
-          "symbol": "CHCL",
-          "price": 482.1
-        },
-        {
-          "symbol": "HEI",
-          "price": 514
-        },
-        {
-          "symbol": "NBLD82",
-          "price": 1068.3
-        },
-        {
-          "symbol": "NGPL",
-          "price": 444.9
-        },
-        {
-          "symbol": "NIBD84",
-          "price": 1052.1
-        },
-        {
-          "symbol": "SCBD",
-          "price": 1115.5
-        },
-        {
-          "symbol": "SGIC",
-          "price": 473.6
-        },
-        {
-          "symbol": "SJCL",
-          "price": 308
-        }
-      ]
-    },
     {
       "date": "2026-04-24",
       "buyCount": 0,
@@ -2311,6 +2267,79 @@
     },
     {
       "date": "2026-05-23",
+      "buyCount": 11,
+      "sellCount": 5,
+      "buySignals": [
+        {
+          "symbol": "AKJCL",
+          "price": 402
+        },
+        {
+          "symbol": "CHCL",
+          "price": 482
+        },
+        {
+          "symbol": "GMFIL",
+          "price": 469.9
+        },
+        {
+          "symbol": "HLBSL",
+          "price": 898
+        },
+        {
+          "symbol": "MHCL",
+          "price": 368.9
+        },
+        {
+          "symbol": "NLICL",
+          "price": 591
+        },
+        {
+          "symbol": "RIDI",
+          "price": 366.7
+        },
+        {
+          "symbol": "RMF2",
+          "price": 10.5
+        },
+        {
+          "symbol": "RSY",
+          "price": 10.35
+        },
+        {
+          "symbol": "SARBTM",
+          "price": 855
+        },
+        {
+          "symbol": "SONA",
+          "price": 462
+        }
+      ],
+      "sellSignals": [
+        {
+          "symbol": "FMDBL",
+          "price": 787.3
+        },
+        {
+          "symbol": "NIBD84",
+          "price": 1050.1
+        },
+        {
+          "symbol": "NIBSF2",
+          "price": 9.35
+        },
+        {
+          "symbol": "RBCLPO",
+          "price": 11800
+        },
+        {
+          "symbol": "SNLI",
+          "price": 447
+        }
+      ]
+    },
+    {
+      "date": "2026-05-24",
       "buyCount": 11,
       "sellCount": 5,
       "buySignals": [
