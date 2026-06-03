@@ -1,35 +1,35 @@
 {
-  "lastUpdated": "2026-06-02T15:41:16.040Z",
+  "lastUpdated": "2026-06-03T16:00:26.023Z",
   "institutionalStocks": {
     "490.00": {
       "score": 80,
       "price": 0,
       "patterns": "Volume Spike (Bullish), OBV Bullish Divergence, Below VWAP, Spring Pattern, Statistical Anomaly (Bullish)",
-      "lastUpdated": "2026-06-02T15:41:16.037Z"
+      "lastUpdated": "2026-06-03T16:00:26.021Z"
     },
     "1560.00": {
       "score": 60,
       "price": 20,
       "patterns": "OBV Bullish Divergence, Below VWAP, Spring Pattern, Upthrust Pattern, Statistical Anomaly (Bullish)",
-      "lastUpdated": "2026-06-02T15:41:16.037Z"
+      "lastUpdated": "2026-06-03T16:00:26.021Z"
     },
     "274.00": {
       "score": 60,
       "price": 0,
       "patterns": "Volume Spike (Bullish), OBV Bullish Divergence, Below VWAP, Statistical Anomaly (Bullish)",
-      "lastUpdated": "2026-06-02T15:41:16.037Z"
+      "lastUpdated": "2026-06-03T16:00:26.021Z"
     },
     "785.00": {
       "score": 0,
       "price": 55,
       "patterns": "Volume Spike (Bearish), Narrow Range, High Volume (Bearish), Below VWAP, Upthrust Pattern",
-      "lastUpdated": "2026-06-02T15:41:16.037Z"
+      "lastUpdated": "2026-06-03T16:00:26.021Z"
     },
     "454.30": {
       "score": 0,
       "price": 0,
       "patterns": "Below VWAP, Circular Trading Pattern",
-      "lastUpdated": "2026-06-02T15:41:16.037Z"
+      "lastUpdated": "2026-06-03T16:00:26.021Z"
     }
   },
   "trendlineStocks": {},
@@ -46,27 +46,27 @@
     "490.00": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2026-06-02T15:41:16.039Z"
+      "lastUpdated": "2026-06-03T16:00:26.023Z"
     },
     "1560.00": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2026-06-02T15:41:16.040Z"
+      "lastUpdated": "2026-06-03T16:00:26.023Z"
     },
     "274.00": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2026-06-02T15:41:16.040Z"
+      "lastUpdated": "2026-06-03T16:00:26.023Z"
     },
     "785.00": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2026-06-02T15:41:16.040Z"
+      "lastUpdated": "2026-06-03T16:00:26.023Z"
     },
     "454.30": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2026-06-02T15:41:16.040Z"
+      "lastUpdated": "2026-06-03T16:00:26.023Z"
     }
   }
 }
