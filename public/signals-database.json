@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-06-11T17:01:54.658Z",
+  "lastUpdated": "2026-06-12T16:27:46.561Z",
   "currentBuySignals": [
     {
       "symbol": "BNL",
       "signal": "BUY",
       "date": "2026_06_11",
-      "generatedOn": "2026-06-11",
+      "generatedOn": "2026-06-12",
       "price": 15600,
       "details": {
         "rsiFast": "53.54",
@@ -18,7 +18,7 @@
       "symbol": "CBLD88",
       "signal": "BUY",
       "date": "2026_06_08",
-      "generatedOn": "2026-06-11",
+      "generatedOn": "2026-06-12",
       "price": 1255.7,
       "details": {
         "rsiFast": "54.07",
@@ -28,223 +28,139 @@
       }
     },
     {
-      "symbol": "CITY",
+      "symbol": "GRDBL",
       "signal": "BUY",
-      "date": "2026_06_11",
-      "generatedOn": "2026-06-11",
-      "price": 439,
+      "date": "2026_06_12",
+      "generatedOn": "2026-06-12",
+      "price": 1209,
       "details": {
-        "rsiFast": "53.01",
-        "rsiSlow": "46.18",
-        "downtrendPrice": "437.74",
-        "breakoutStrength": "0.29"
+        "rsiFast": "64.92",
+        "rsiSlow": "54.16",
+        "downtrendPrice": "1116.20",
+        "breakoutStrength": "8.31"
       }
     },
     {
-      "symbol": "CIZBD90",
+      "symbol": "HHL",
       "signal": "BUY",
-      "date": "2026_06_10",
-      "generatedOn": "2026-06-11",
-      "price": 1300,
+      "date": "2026_06_12",
+      "generatedOn": "2026-06-12",
+      "price": 375,
       "details": {
-        "rsiFast": "55.94",
-        "rsiSlow": "54.07",
-        "downtrendPrice": "1273.67",
-        "breakoutStrength": "2.07"
+        "rsiFast": "53.12",
+        "rsiSlow": "51.45",
+        "downtrendPrice": "368.35",
+        "breakoutStrength": "1.80"
       }
     },
     {
-      "symbol": "PHCL",
+      "symbol": "SAND2085",
       "signal": "BUY",
-      "date": "2026_06_11",
-      "generatedOn": "2026-06-11",
-      "price": 326,
+      "date": "2026_06_12",
+      "generatedOn": "2026-06-12",
+      "price": 1165.9,
       "details": {
-        "rsiFast": "60.39",
-        "rsiSlow": "50.11",
-        "downtrendPrice": "312.40",
-        "breakoutStrength": "4.35"
+        "rsiFast": "55.72",
+        "rsiSlow": "52.58",
+        "downtrendPrice": "1136.73",
+        "breakoutStrength": "2.57"
+      }
+    },
+    {
+      "symbol": "TRH",
+      "signal": "BUY",
+      "date": "2026_06_12",
+      "generatedOn": "2026-06-12",
+      "price": 780,
+      "details": {
+        "rsiFast": "56.64",
+        "rsiSlow": "50.72",
+        "downtrendPrice": "771.80",
+        "breakoutStrength": "1.06"
       }
     }
   ],
   "currentSellSignals": [
     {
-      "symbol": "ANLB",
+      "symbol": "HLBSL",
       "signal": "SELL",
-      "date": "2026_06_11",
-      "generatedOn": "2026-06-11",
-      "price": 5775,
+      "date": "2026_06_12",
+      "generatedOn": "2026-06-12",
+      "price": 870,
       "details": {
-        "rsiFast": "40.74",
-        "rsiSlow": "45.80",
-        "uptrendPrice": "5779.73",
-        "breakdownStrength": "0.08"
+        "rsiFast": "42.20",
+        "rsiSlow": "45.79",
+        "uptrendPrice": "872.83",
+        "breakdownStrength": "0.32"
       }
     },
     {
-      "symbol": "GLH",
+      "symbol": "HLI",
       "signal": "SELL",
-      "date": "2026_06_11",
-      "generatedOn": "2026-06-11",
-      "price": 263.5,
+      "date": "2026_06_12",
+      "generatedOn": "2026-06-12",
+      "price": 338,
       "details": {
-        "rsiFast": "44.44",
-        "rsiSlow": "48.43",
-        "uptrendPrice": "263.63",
-        "breakdownStrength": "0.05"
+        "rsiFast": "40.45",
+        "rsiSlow": "43.36",
+        "uptrendPrice": "338.65",
+        "breakdownStrength": "0.19"
       }
     },
     {
-      "symbol": "KBLD90",
+      "symbol": "MSLB",
       "signal": "SELL",
-      "date": "2026_06_10",
-      "generatedOn": "2026-06-11",
-      "price": 1230,
+      "date": "2026_06_12",
+      "generatedOn": "2026-06-12",
+      "price": 1248,
       "details": {
-        "rsiFast": "49.46",
-        "rsiSlow": "51.41",
-        "uptrendPrice": "1234.07",
-        "breakdownStrength": "0.33"
+        "rsiFast": "46.96",
+        "rsiSlow": "47.05",
+        "uptrendPrice": "1248.37",
+        "breakdownStrength": "0.03"
       }
     },
     {
-      "symbol": "KDBY",
+      "symbol": "NICGF2",
       "signal": "SELL",
-      "date": "2026_06_11",
-      "generatedOn": "2026-06-11",
-      "price": 11.26,
+      "date": "2026_06_12",
+      "generatedOn": "2026-06-12",
+      "price": 9.36,
       "details": {
-        "rsiFast": "49.85",
-        "rsiSlow": "54.06",
-        "uptrendPrice": "11.27",
-        "breakdownStrength": "0.13"
-      }
-    },
-    {
-      "symbol": "MBL",
-      "signal": "SELL",
-      "date": "2026_06_11",
-      "generatedOn": "2026-06-11",
-      "price": 248,
-      "details": {
-        "rsiFast": "48.62",
-        "rsiSlow": "51.70",
-        "uptrendPrice": "249.38",
-        "breakdownStrength": "0.55"
-      }
-    },
-    {
-      "symbol": "MBLEF",
-      "signal": "SELL",
-      "date": "2026_06_11",
-      "generatedOn": "2026-06-11",
-      "price": 10.01,
-      "details": {
-        "rsiFast": "47.60",
-        "rsiSlow": "50.60",
-        "uptrendPrice": "10.07",
-        "breakdownStrength": "0.63"
+        "rsiFast": "47.71",
+        "rsiSlow": "50.08",
+        "uptrendPrice": "9.41",
+        "breakdownStrength": "0.48"
       }
     },
     {
       "symbol": "NIMBD90",
       "signal": "SELL",
       "date": "2026_06_10",
-      "generatedOn": "2026-06-11",
+      "generatedOn": "2026-06-12",
       "price": 1215.7,
       "details": {
         "rsiFast": "46.90",
-        "rsiSlow": "50.19",
+        "rsiSlow": "50.26",
         "uptrendPrice": "1215.89",
         "breakdownStrength": "0.02"
       }
     },
     {
-      "symbol": "PBD84",
+      "symbol": "SHIVM",
       "signal": "SELL",
-      "date": "2026_06_09",
-      "generatedOn": "2026-06-11",
-      "price": 1071,
+      "date": "2026_06_12",
+      "generatedOn": "2026-06-12",
+      "price": 658.9,
       "details": {
-        "rsiFast": "40.28",
-        "rsiSlow": "45.63",
-        "uptrendPrice": "1080.39",
-        "breakdownStrength": "0.87"
-      }
-    },
-    {
-      "symbol": "SBLD84",
-      "signal": "SELL",
-      "date": "2026_06_10",
-      "generatedOn": "2026-06-11",
-      "price": 1050,
-      "details": {
-        "rsiFast": "46.90",
-        "rsiSlow": "49.68",
-        "uptrendPrice": "1052.90",
-        "breakdownStrength": "0.28"
-      }
-    },
-    {
-      "symbol": "SEF",
-      "signal": "SELL",
-      "date": "2026_06_11",
-      "generatedOn": "2026-06-11",
-      "price": 10,
-      "details": {
-        "rsiFast": "50.06",
-        "rsiSlow": "50.87",
-        "uptrendPrice": "10.02",
-        "breakdownStrength": "0.23"
+        "rsiFast": "44.81",
+        "rsiSlow": "51.18",
+        "uptrendPrice": "662.25",
+        "breakdownStrength": "0.51"
       }
     }
   ],
   "signalHistory": [
-    {
-      "date": "2026-05-13",
-      "buyCount": 2,
-      "sellCount": 7,
-      "buySignals": [
-        {
-          "symbol": "ICFCD83",
-          "price": 1119.5
-        },
-        {
-          "symbol": "SAGF",
-          "price": 10.51
-        }
-      ],
-      "sellSignals": [
-        {
-          "symbol": "DHPL",
-          "price": 293.6
-        },
-        {
-          "symbol": "NCCD86",
-          "price": 1125.1
-        },
-        {
-          "symbol": "NIBD84",
-          "price": 1052
-        },
-        {
-          "symbol": "PRSF",
-          "price": 12.9
-        },
-        {
-          "symbol": "SBID89",
-          "price": 1130.1
-        },
-        {
-          "symbol": "SFCL",
-          "price": 371
-        },
-        {
-          "symbol": "SIFC",
-          "price": 533
-        }
-      ]
-    },
     {
       "date": "2026-05-14",
       "buyCount": 5,
@@ -2354,6 +2270,63 @@
         {
           "symbol": "SEF",
           "price": 10
+        }
+      ]
+    },
+    {
+      "date": "2026-06-12",
+      "buyCount": 6,
+      "sellCount": 6,
+      "buySignals": [
+        {
+          "symbol": "BNL",
+          "price": 15600
+        },
+        {
+          "symbol": "CBLD88",
+          "price": 1255.7
+        },
+        {
+          "symbol": "GRDBL",
+          "price": 1209
+        },
+        {
+          "symbol": "HHL",
+          "price": 375
+        },
+        {
+          "symbol": "SAND2085",
+          "price": 1165.9
+        },
+        {
+          "symbol": "TRH",
+          "price": 780
+        }
+      ],
+      "sellSignals": [
+        {
+          "symbol": "HLBSL",
+          "price": 870
+        },
+        {
+          "symbol": "HLI",
+          "price": 338
+        },
+        {
+          "symbol": "MSLB",
+          "price": 1248
+        },
+        {
+          "symbol": "NICGF2",
+          "price": 9.36
+        },
+        {
+          "symbol": "NIMBD90",
+          "price": 1215.7
+        },
+        {
+          "symbol": "SHIVM",
+          "price": 658.9
         }
       ]
     }
