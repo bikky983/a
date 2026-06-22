@@ -1,74 +1,121 @@
 {
-  "lastUpdated": "2026-06-20T13:04:55.989Z",
+  "lastUpdated": "2026-06-22T16:11:41.294Z",
   "institutionalStocks": {
-    "1097.90": {
-      "score": 70,
+    "1559.00": {
+      "score": 55,
       "price": 0,
-      "patterns": "Volume Spike (Bullish), Narrow Range, High Volume (Bullish), Above VWAP, Spring Pattern, Statistical Anomaly (Bullish)",
-      "lastUpdated": "2026-06-20T13:04:55.986Z"
+      "patterns": "Volume Spike (Bullish), Below VWAP, Spring Pattern, Statistical Anomaly (Bullish)",
+      "lastUpdated": "2026-06-22T16:11:41.291Z"
     },
-    "648.70": {
-      "score": 20,
-      "price": 50,
-      "patterns": "Volume Spike (Bearish), Narrow Range, High Volume (Bearish), Below VWAP, Stopping Volume (Bearish), Spring Pattern, Statistical Anomaly (Bearish)",
-      "lastUpdated": "2026-06-20T13:04:55.986Z"
+    "1484.90": {
+      "score": 55,
+      "price": 0,
+      "patterns": "Volume Spike (Bullish), Below VWAP, Spring Pattern, Statistical Anomaly (Bullish)",
+      "lastUpdated": "2026-06-22T16:11:41.291Z"
+    },
+    "1129.90": {
+      "score": 55,
+      "price": 0,
+      "patterns": "Volume Spike (Bullish), Narrow Range, High Volume (Bullish), Below VWAP, Spring Pattern",
+      "lastUpdated": "2026-06-22T16:11:41.291Z"
+    },
+    "475.00": {
+      "score": 55,
+      "price": 0,
+      "patterns": "Volume Spike (Bullish), Below VWAP, Spring Pattern, Statistical Anomaly (Bullish)",
+      "lastUpdated": "2026-06-22T16:11:41.291Z"
+    },
+    "813.70": {
+      "score": 55,
+      "price": 20,
+      "patterns": "Volume Spike (Bullish), Above VWAP, Spring Pattern, Upthrust Pattern, Statistical Anomaly (Bullish)",
+      "lastUpdated": "2026-06-22T16:11:41.291Z"
     }
   },
   "trendlineStocks": {},
   "rsiSupportStocks": {
     "USHL\n                New": {
-      "ltp": 593,
-      "rsi": 29.1,
+      "ltp": 589.9,
+      "rsi": 27.78,
       "supportPrice1": 597.41,
       "diff1": "",
-      "lastUpdated": "2026-06-20T13:04:55.989Z"
+      "lastUpdated": "2026-06-22T16:11:41.294Z"
     },
     "NRM\n                New": {
-      "ltp": 331.6,
-      "rsi": 29.6,
+      "ltp": 332,
+      "rsi": 29.96,
       "supportPrice1": 336,
       "diff1": "",
-      "lastUpdated": "2026-06-20T13:04:55.989Z"
-    },
-    "TSHL\n                New": {
-      "ltp": 528.1,
-      "rsi": 33.51,
-      "supportPrice1": 517.5,
-      "diff1": "",
-      "lastUpdated": "2026-06-20T13:04:55.989Z"
-    },
-    "MEN\n                New": {
-      "ltp": 585.5,
-      "rsi": 33.71,
-      "supportPrice1": 580.96,
-      "diff1": "",
-      "lastUpdated": "2026-06-20T13:04:55.989Z"
+      "lastUpdated": "2026-06-22T16:11:41.294Z"
     },
     "JBBL\n                New": {
-      "ltp": 346,
-      "rsi": 33.86,
+      "ltp": 345,
+      "rsi": 32.84,
       "supportPrice1": 331.9,
       "diff1": "",
-      "lastUpdated": "2026-06-20T13:04:55.989Z"
+      "lastUpdated": "2026-06-22T16:11:41.294Z"
     },
-    "SIKLES\n                New": {
-      "ltp": 570,
-      "rsi": 34.35,
-      "supportPrice1": 576,
+    "UPPER\n                NewBought": {
+      "ltp": 198,
+      "rsi": 33.71,
+      "supportPrice1": 200,
       "diff1": "",
-      "lastUpdated": "2026-06-20T13:04:55.989Z"
+      "lastUpdated": "2026-06-22T16:11:41.294Z"
+    },
+    "HRL\n                New": {
+      "ltp": 622,
+      "rsi": 33.86,
+      "supportPrice1": 624,
+      "diff1": "",
+      "lastUpdated": "2026-06-22T16:11:41.294Z"
+    },
+    "TSHL\n                New": {
+      "ltp": 529,
+      "rsi": 33.97,
+      "supportPrice1": 517.5,
+      "diff1": "",
+      "lastUpdated": "2026-06-22T16:11:41.294Z"
+    },
+    "GBBL\n                New": {
+      "ltp": 405.5,
+      "rsi": 34.69,
+      "supportPrice1": 396.83,
+      "diff1": "",
+      "lastUpdated": "2026-06-22T16:11:41.294Z"
+    },
+    "BARUN\n                New": {
+      "ltp": 333.6,
+      "rsi": 34.82,
+      "supportPrice1": 319.06,
+      "diff1": "",
+      "lastUpdated": "2026-06-22T16:11:41.294Z"
     }
   },
   "heatmapStocks": {
-    "1097.90": {
+    "1559.00": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2026-06-20T13:04:55.988Z"
+      "lastUpdated": "2026-06-22T16:11:41.293Z"
     },
-    "648.70": {
+    "1484.90": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2026-06-20T13:04:55.988Z"
+      "lastUpdated": "2026-06-22T16:11:41.293Z"
+    },
+    "1129.90": {
+      "price": 0,
+      "volume": 0,
+      "lastUpdated": "2026-06-22T16:11:41.293Z"
+    },
+    "475.00": {
+      "price": 0,
+      "volume": 0,
+      "lastUpdated": "2026-06-22T16:11:41.293Z"
+    },
+    "813.70": {
+      "price": 0,
+      "volume": 0,
+      "lastUpdated": "2026-06-22T16:11:41.293Z"
     }
   }
 }
