@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-06-23T16:06:20.150Z",
+  "lastUpdated": "2026-06-24T15:38:58.223Z",
   "currentBuySignals": [
     {
       "symbol": "ICFCD83",
       "signal": "BUY",
       "date": "2026_06_17",
-      "generatedOn": "2026-06-23",
+      "generatedOn": "2026-06-24",
       "price": 1120,
       "details": {
         "rsiFast": "49.52",
@@ -18,7 +18,7 @@
       "symbol": "SAND2085",
       "signal": "BUY",
       "date": "2026_06_12",
-      "generatedOn": "2026-06-23",
+      "generatedOn": "2026-06-24",
       "price": 1165.9,
       "details": {
         "rsiFast": "55.72",
@@ -33,7 +33,7 @@
       "symbol": "BANDIPUR",
       "signal": "SELL",
       "date": "2026_06_23",
-      "generatedOn": "2026-06-23",
+      "generatedOn": "2026-06-24",
       "price": 800.2,
       "details": {
         "rsiFast": "42.22",
@@ -46,7 +46,7 @@
       "symbol": "BEDC",
       "signal": "SELL",
       "date": "2026_06_23",
-      "generatedOn": "2026-06-23",
+      "generatedOn": "2026-06-24",
       "price": 351,
       "details": {
         "rsiFast": "35.22",
@@ -59,7 +59,7 @@
       "symbol": "BUNGAL",
       "signal": "SELL",
       "date": "2026_06_23",
-      "generatedOn": "2026-06-23",
+      "generatedOn": "2026-06-24",
       "price": 688.5,
       "details": {
         "rsiFast": "49.42",
@@ -72,7 +72,7 @@
       "symbol": "CMF2",
       "signal": "SELL",
       "date": "2026_06_22",
-      "generatedOn": "2026-06-23",
+      "generatedOn": "2026-06-24",
       "price": 9.85,
       "details": {
         "rsiFast": "46.02",
@@ -85,7 +85,7 @@
       "symbol": "DHPL",
       "signal": "SELL",
       "date": "2026_06_23",
-      "generatedOn": "2026-06-23",
+      "generatedOn": "2026-06-24",
       "price": 290,
       "details": {
         "rsiFast": "40.92",
@@ -98,7 +98,7 @@
       "symbol": "DLBS",
       "signal": "SELL",
       "date": "2026_06_23",
-      "generatedOn": "2026-06-23",
+      "generatedOn": "2026-06-24",
       "price": 1237,
       "details": {
         "rsiFast": "43.53",
@@ -111,7 +111,7 @@
       "symbol": "GFCL",
       "signal": "SELL",
       "date": "2026_06_23",
-      "generatedOn": "2026-06-23",
+      "generatedOn": "2026-06-24",
       "price": 624,
       "details": {
         "rsiFast": "46.36",
@@ -124,7 +124,7 @@
       "symbol": "GMLI",
       "signal": "SELL",
       "date": "2026_06_23",
-      "generatedOn": "2026-06-23",
+      "generatedOn": "2026-06-24",
       "price": 1200.1,
       "details": {
         "rsiFast": "29.89",
@@ -137,7 +137,7 @@
       "symbol": "KBLD90",
       "signal": "SELL",
       "date": "2026_06_22",
-      "generatedOn": "2026-06-23",
+      "generatedOn": "2026-06-24",
       "price": 1223,
       "details": {
         "rsiFast": "49.12",
@@ -150,7 +150,7 @@
       "symbol": "KDL",
       "signal": "SELL",
       "date": "2026_06_23",
-      "generatedOn": "2026-06-23",
+      "generatedOn": "2026-06-24",
       "price": 810,
       "details": {
         "rsiFast": "42.14",
@@ -163,7 +163,7 @@
       "symbol": "KPCL",
       "signal": "SELL",
       "date": "2026_06_23",
-      "generatedOn": "2026-06-23",
+      "generatedOn": "2026-06-24",
       "price": 482,
       "details": {
         "rsiFast": "40.85",
@@ -176,7 +176,7 @@
       "symbol": "MABEL",
       "signal": "SELL",
       "date": "2026_06_23",
-      "generatedOn": "2026-06-23",
+      "generatedOn": "2026-06-24",
       "price": 675,
       "details": {
         "rsiFast": "45.34",
@@ -189,7 +189,7 @@
       "symbol": "MAKAR",
       "signal": "SELL",
       "date": "2026_06_23",
-      "generatedOn": "2026-06-23",
+      "generatedOn": "2026-06-24",
       "price": 480.1,
       "details": {
         "rsiFast": "40.27",
@@ -202,7 +202,7 @@
       "symbol": "MBJC",
       "signal": "SELL",
       "date": "2026_06_23",
-      "generatedOn": "2026-06-23",
+      "generatedOn": "2026-06-24",
       "price": 279.8,
       "details": {
         "rsiFast": "42.25",
@@ -215,7 +215,7 @@
       "symbol": "MSHL",
       "signal": "SELL",
       "date": "2026_06_23",
-      "generatedOn": "2026-06-23",
+      "generatedOn": "2026-06-24",
       "price": 670.5,
       "details": {
         "rsiFast": "34.95",
@@ -228,7 +228,7 @@
       "symbol": "NHPC",
       "signal": "SELL",
       "date": "2026_06_23",
-      "generatedOn": "2026-06-23",
+      "generatedOn": "2026-06-24",
       "price": 271,
       "details": {
         "rsiFast": "42.79",
@@ -241,7 +241,7 @@
       "symbol": "NMB50",
       "signal": "SELL",
       "date": "2026_06_23",
-      "generatedOn": "2026-06-23",
+      "generatedOn": "2026-06-24",
       "price": 10.21,
       "details": {
         "rsiFast": "44.09",
@@ -254,7 +254,7 @@
       "symbol": "SFEF",
       "signal": "SELL",
       "date": "2026_06_23",
-      "generatedOn": "2026-06-23",
+      "generatedOn": "2026-06-24",
       "price": 10,
       "details": {
         "rsiFast": "47.39",
@@ -267,7 +267,7 @@
       "symbol": "SMHL",
       "signal": "SELL",
       "date": "2026_06_23",
-      "generatedOn": "2026-06-23",
+      "generatedOn": "2026-06-24",
       "price": 481,
       "details": {
         "rsiFast": "37.90",
@@ -280,7 +280,7 @@
       "symbol": "TTL",
       "signal": "SELL",
       "date": "2026_06_23",
-      "generatedOn": "2026-06-23",
+      "generatedOn": "2026-06-24",
       "price": 769,
       "details": {
         "rsiFast": "38.89",
@@ -291,95 +291,6 @@
     }
   ],
   "signalHistory": [
-    {
-      "date": "2026-05-25",
-      "buyCount": 19,
-      "sellCount": 1,
-      "buySignals": [
-        {
-          "symbol": "ALBSL",
-          "price": 1148
-        },
-        {
-          "symbol": "CKHL",
-          "price": 695.4
-        },
-        {
-          "symbol": "GILB",
-          "price": 1155
-        },
-        {
-          "symbol": "GVL",
-          "price": 499
-        },
-        {
-          "symbol": "HIDCL",
-          "price": 276
-        },
-        {
-          "symbol": "IGI",
-          "price": 439.8
-        },
-        {
-          "symbol": "KEF",
-          "price": 11
-        },
-        {
-          "symbol": "LICN",
-          "price": 820
-        },
-        {
-          "symbol": "MANDU",
-          "price": 827
-        },
-        {
-          "symbol": "MKJC",
-          "price": 501
-        },
-        {
-          "symbol": "MLBL",
-          "price": 370.9
-        },
-        {
-          "symbol": "NICLBSL",
-          "price": 595
-        },
-        {
-          "symbol": "PRVU",
-          "price": 202.6
-        },
-        {
-          "symbol": "RFPL",
-          "price": 381.9
-        },
-        {
-          "symbol": "RHGCL",
-          "price": 304.8
-        },
-        {
-          "symbol": "SFCL",
-          "price": 379
-        },
-        {
-          "symbol": "SICL",
-          "price": 622
-        },
-        {
-          "symbol": "SMB",
-          "price": 1762
-        },
-        {
-          "symbol": "SPIL",
-          "price": 715.9
-        }
-      ],
-      "sellSignals": [
-        {
-          "symbol": "NIBLGF",
-          "price": 9.43
-        }
-      ]
-    },
     {
       "date": "2026-05-26",
       "buyCount": 8,
@@ -2410,6 +2321,103 @@
     },
     {
       "date": "2026-06-23",
+      "buyCount": 2,
+      "sellCount": 20,
+      "buySignals": [
+        {
+          "symbol": "ICFCD83",
+          "price": 1120
+        },
+        {
+          "symbol": "SAND2085",
+          "price": 1165.9
+        }
+      ],
+      "sellSignals": [
+        {
+          "symbol": "BANDIPUR",
+          "price": 800.2
+        },
+        {
+          "symbol": "BEDC",
+          "price": 351
+        },
+        {
+          "symbol": "BUNGAL",
+          "price": 688.5
+        },
+        {
+          "symbol": "CMF2",
+          "price": 9.85
+        },
+        {
+          "symbol": "DHPL",
+          "price": 290
+        },
+        {
+          "symbol": "DLBS",
+          "price": 1237
+        },
+        {
+          "symbol": "GFCL",
+          "price": 624
+        },
+        {
+          "symbol": "GMLI",
+          "price": 1200.1
+        },
+        {
+          "symbol": "KBLD90",
+          "price": 1223
+        },
+        {
+          "symbol": "KDL",
+          "price": 810
+        },
+        {
+          "symbol": "KPCL",
+          "price": 482
+        },
+        {
+          "symbol": "MABEL",
+          "price": 675
+        },
+        {
+          "symbol": "MAKAR",
+          "price": 480.1
+        },
+        {
+          "symbol": "MBJC",
+          "price": 279.8
+        },
+        {
+          "symbol": "MSHL",
+          "price": 670.5
+        },
+        {
+          "symbol": "NHPC",
+          "price": 271
+        },
+        {
+          "symbol": "NMB50",
+          "price": 10.21
+        },
+        {
+          "symbol": "SFEF",
+          "price": 10
+        },
+        {
+          "symbol": "SMHL",
+          "price": 481
+        },
+        {
+          "symbol": "TTL",
+          "price": 769
+        }
+      ]
+    },
+    {
+      "date": "2026-06-24",
       "buyCount": 2,
       "sellCount": 20,
       "buySignals": [
