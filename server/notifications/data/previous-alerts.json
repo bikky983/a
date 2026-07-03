@@ -1,167 +1,171 @@
 {
-  "lastUpdated": "2026-07-02T13:17:06.388Z",
+  "lastUpdated": "2026-07-03T13:21:04.872Z",
   "institutionalStocks": {
-    "345.00": {
+    "339.90": {
       "score": 60,
       "price": 0,
       "patterns": "OBV Bullish Divergence, Below VWAP, Spring Pattern, Statistical Anomaly (Bullish)",
-      "lastUpdated": "2026-07-02T13:17:06.385Z"
+      "lastUpdated": "2026-07-03T13:21:04.868Z"
     },
-    "2008.00": {
-      "score": 0,
-      "price": 55,
-      "patterns": "Volume Spike (Bearish), Below VWAP, Stopping Volume (Bearish), Upthrust Pattern, Statistical Anomaly (Bearish)",
-      "lastUpdated": "2026-07-02T13:17:06.385Z"
-    },
-    "862.00": {
-      "score": 55,
+    "441.00": {
+      "score": 60,
       "price": 0,
-      "patterns": "Volume Spike (Bullish), Below VWAP, Spring Pattern, Statistical Anomaly (Bullish)",
-      "lastUpdated": "2026-07-02T13:17:06.385Z"
+      "patterns": "OBV Bullish Divergence, Below VWAP, Spring Pattern, Statistical Anomaly (Bullish)",
+      "lastUpdated": "2026-07-03T13:21:04.868Z"
     },
-    "1099.60": {
+    "1119.00": {
       "score": 55,
       "price": 20,
-      "patterns": "Volume Spike (Bullish), Above VWAP, Spring Pattern, Upthrust Pattern, Statistical Anomaly (Bullish)",
-      "lastUpdated": "2026-07-02T13:17:06.385Z"
+      "patterns": "Volume Spike (Bullish), Below VWAP, Spring Pattern, Upthrust Pattern, Statistical Anomaly (Bullish)",
+      "lastUpdated": "2026-07-03T13:21:04.868Z"
     },
-    "6673.00": {
+    "888.00": {
       "score": 55,
-      "price": 0,
-      "patterns": "Volume Spike (Bullish), Above VWAP, Spring Pattern, Statistical Anomaly (Bullish)",
-      "lastUpdated": "2026-07-02T13:17:06.385Z"
+      "price": 20,
+      "patterns": "Volume Spike (Bullish), Below VWAP, Stopping Volume (Bullish), Spring Pattern, Upthrust Pattern, Statistical Anomaly (Bullish)",
+      "lastUpdated": "2026-07-03T13:21:04.868Z"
     },
-    "372.60": {
+    "3100.00": {
       "score": 55,
       "price": 0,
       "patterns": "Volume Spike (Bullish), Below VWAP, Spring Pattern, Statistical Anomaly (Bullish)",
-      "lastUpdated": "2026-07-02T13:17:06.385Z"
+      "lastUpdated": "2026-07-03T13:21:04.868Z"
+    },
+    "670.00": {
+      "score": 55,
+      "price": 0,
+      "patterns": "Volume Spike (Bullish), Below VWAP, Spring Pattern, Statistical Anomaly (Bullish)",
+      "lastUpdated": "2026-07-03T13:21:04.868Z"
+    },
+    "455.00": {
+      "score": 50,
+      "price": 0,
+      "patterns": "Narrow Range, High Volume (Bullish), Below VWAP, Spring Pattern, Statistical Anomaly (Bullish)",
+      "lastUpdated": "2026-07-03T13:21:04.868Z"
     }
   },
   "trendlineStocks": {},
   "rsiSupportStocks": {
     "RAWA\n                New": {
-      "ltp": 446,
-      "rsi": 18.15,
+      "ltp": 444.9,
+      "rsi": 17.95,
       "supportPrice1": 449.6,
       "diff1": "",
-      "lastUpdated": "2026-07-02T13:17:06.387Z"
-    },
-    "MKCL\n                New": {
-      "ltp": 1088,
-      "rsi": 21.28,
-      "supportPrice1": 1058.16,
-      "diff1": "",
-      "lastUpdated": "2026-07-02T13:17:06.387Z"
+      "lastUpdated": "2026-07-03T13:21:04.872Z"
     },
     "MEHL\n                New": {
-      "ltp": 332,
-      "rsi": 26.66,
+      "ltp": 327,
+      "rsi": 24.62,
       "supportPrice1": 320,
       "diff1": "",
-      "lastUpdated": "2026-07-02T13:17:06.387Z"
+      "lastUpdated": "2026-07-03T13:21:04.872Z"
+    },
+    "MKCL\n                New": {
+      "ltp": 1097.9,
+      "rsi": 25.63,
+      "supportPrice1": 1058.16,
+      "diff1": "",
+      "lastUpdated": "2026-07-03T13:21:04.872Z"
     },
     "SJCL\n                NewBought": {
-      "ltp": 271.8,
-      "rsi": 29.66,
+      "ltp": 272,
+      "rsi": 30.05,
       "supportPrice1": 260.91,
       "diff1": "",
-      "lastUpdated": "2026-07-02T13:17:06.387Z"
-    },
-    "ENL\n                New": {
-      "ltp": 831,
-      "rsi": 31.19,
-      "supportPrice1": 840,
-      "diff1": "",
-      "lastUpdated": "2026-07-02T13:17:06.387Z"
+      "lastUpdated": "2026-07-03T13:21:04.872Z"
     },
     "NWCL\n                New": {
-      "ltp": 730,
-      "rsi": 31.28,
+      "ltp": 727.1,
+      "rsi": 30.4,
       "supportPrice1": 719.56,
       "diff1": "",
-      "lastUpdated": "2026-07-02T13:17:06.387Z"
-    },
-    "CKHL\n                New": {
-      "ltp": 609,
-      "rsi": 31.61,
-      "supportPrice1": 614.53,
-      "diff1": "",
-      "lastUpdated": "2026-07-02T13:17:06.388Z"
+      "lastUpdated": "2026-07-03T13:21:04.872Z"
     },
     "SMHL\n                New": {
-      "ltp": 473.8,
-      "rsi": 32.8,
+      "ltp": 472,
+      "rsi": 31.35,
       "supportPrice1": 456,
       "diff1": "",
-      "lastUpdated": "2026-07-02T13:17:06.388Z"
+      "lastUpdated": "2026-07-03T13:21:04.872Z"
     },
     "CHDC\n                New": {
-      "ltp": 2124,
-      "rsi": 32.93,
+      "ltp": 2110,
+      "rsi": 31.35,
       "supportPrice1": 2091.44,
       "diff1": "",
-      "lastUpdated": "2026-07-02T13:17:06.388Z"
-    },
-    "JBBL\n                New": {
-      "ltp": 339,
-      "rsi": 33.41,
-      "supportPrice1": 331.9,
-      "diff1": "",
-      "lastUpdated": "2026-07-02T13:17:06.388Z"
-    },
-    "BARUN\n                New": {
-      "ltp": 322,
-      "rsi": 33.9,
-      "supportPrice1": 319.06,
-      "diff1": "",
-      "lastUpdated": "2026-07-02T13:17:06.388Z"
+      "lastUpdated": "2026-07-03T13:21:04.872Z"
     },
     "SARBTM\n                New": {
-      "ltp": 808.8,
-      "rsi": 33.97,
+      "ltp": 804,
+      "rsi": 31.88,
       "supportPrice1": 796.71,
       "diff1": "",
-      "lastUpdated": "2026-07-02T13:17:06.388Z"
+      "lastUpdated": "2026-07-03T13:21:04.872Z"
+    },
+    "HURJA\n                NewBought": {
+      "ltp": 233.3,
+      "rsi": 33.97,
+      "supportPrice1": 222.86,
+      "diff1": "",
+      "lastUpdated": "2026-07-03T13:21:04.872Z"
     },
     "MEN\n                New": {
-      "ltp": 575,
-      "rsi": 34.81,
+      "ltp": 574,
+      "rsi": 34.14,
       "supportPrice1": 580.96,
       "diff1": "",
-      "lastUpdated": "2026-07-02T13:17:06.388Z"
+      "lastUpdated": "2026-07-03T13:21:04.872Z"
+    },
+    "HLI\n                New": {
+      "ltp": 324,
+      "rsi": 34.45,
+      "supportPrice1": 312,
+      "diff1": "",
+      "lastUpdated": "2026-07-03T13:21:04.872Z"
+    },
+    "BEDC\n                New": {
+      "ltp": 334,
+      "rsi": 34.99,
+      "supportPrice1": 336,
+      "diff1": "",
+      "lastUpdated": "2026-07-03T13:21:04.872Z"
     }
   },
   "heatmapStocks": {
-    "345.00": {
+    "339.90": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2026-07-02T13:17:06.387Z"
+      "lastUpdated": "2026-07-03T13:21:04.871Z"
     },
-    "2008.00": {
+    "441.00": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2026-07-02T13:17:06.387Z"
+      "lastUpdated": "2026-07-03T13:21:04.871Z"
     },
-    "862.00": {
+    "1119.00": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2026-07-02T13:17:06.387Z"
+      "lastUpdated": "2026-07-03T13:21:04.871Z"
     },
-    "1099.60": {
+    "888.00": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2026-07-02T13:17:06.387Z"
+      "lastUpdated": "2026-07-03T13:21:04.871Z"
     },
-    "6673.00": {
+    "3100.00": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2026-07-02T13:17:06.387Z"
+      "lastUpdated": "2026-07-03T13:21:04.871Z"
     },
-    "372.60": {
+    "670.00": {
       "price": 0,
       "volume": 0,
-      "lastUpdated": "2026-07-02T13:17:06.387Z"
+      "lastUpdated": "2026-07-03T13:21:04.871Z"
+    },
+    "455.00": {
+      "price": 0,
+      "volume": 0,
+      "lastUpdated": "2026-07-03T13:21:04.871Z"
     }
   }
 }
